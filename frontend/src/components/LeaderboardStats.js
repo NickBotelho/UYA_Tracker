@@ -18,6 +18,7 @@ function LeaderboardStats(props){
                 stat = {props.stat}
                 stat_key = {props.key}
                 address = {props.address}
+                isDesktop = {props.isDesktop}
             />
         )
         

@@ -237,7 +237,11 @@ function DetailedGame(props){
                         textShadow: '6px 4px 4px black',
     
     
-                    }}>GAME DETAILS</h1>
+                    }}onMouseDown = {
+                        () => {
+                            setBack(true)
+                        }
+                    }>GAME DETAILS</h1>
                 </div>
     
                 <div style = {{

@@ -11,6 +11,16 @@ function Searchbar(props){
     }
     let [search, setSearch] = useState(null)
     let [notFound, setNotFound] = useState("")
+
+    function randomName(){
+        const names = ["THE PYTHON", 'x_x iM DeAd']
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        var index = getRandomInt(names.length)
+        return names[index]
+    }
+    const holder = randomName()
  
     async function buttonSearch(){
 
@@ -105,7 +115,7 @@ function Searchbar(props){
                 <div>
                     <div className='container'>
                         <div >
-                            <input type="text" onChange = {update} id = "tbar" placeholder= "THE PYTHON..." onKeyPress={keySearch}
+                            <input type="text" onChange = {update} id = "tbar" placeholder= {`${holder}...`} onKeyPress={keySearch}
                             style = {{
                                 backgroundColor:"rgba(190, 177, 54, 0.8)",
                                 border : "3px solid rgb(141,113,24)",
@@ -146,10 +156,21 @@ function Searchbar(props){
                 <div>
                     <div className='container'>
                         <div >
-                            <input type="text" onChange = {update} id = "tbar" className = "searchbar" placeholder= "THE PYTHON..." onKeyPress={keySearch} 
+                            <input type="text" onChange = {update} id = "tbar" placeholder= {`${holder}...`} onKeyPress={keySearch} 
                             style = {{
-                                width : "150px",
-                                
+                                backgroundColor:"rgba(190, 177, 54, 0.8)",
+                                border : "3px solid rgb(141,113,24)",
+                                cursor:'pointer',
+                                fontFamily:"Roboto, sans-serif",
+                                fontWeight:"bolder",
+                                paddingRight:'60px',
+                                paddingLeft:'60px',
+                                textAlign:'center',
+                                height:'75%',
+                                textShadow:"0px 0px 1px black",
+                                color: 'rgb(141,113,24)',
+                                width:'100px'
+                                                     
                             }}></input>  
                         </div>
                         <div >

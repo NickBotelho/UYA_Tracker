@@ -252,7 +252,7 @@ function PlayerProfile(props){
                         <div style ={{
                             display:'flex',
                             justifyContent:'center',
-                            marginTop:'100px'
+                            marginTop:'50px'
                         }}>
                             {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} />}
                         </div>

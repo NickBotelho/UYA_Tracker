@@ -3,7 +3,6 @@ import { PlayerGameWeaponTable } from "./PlayerGameWeaponTable";
 
 
 function populateCTFRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setSearchName, isDesktop){
-
     const header = <div style ={{
         display:'flex',
         flexDirection:'row',
@@ -68,7 +67,7 @@ function populateCTFRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setS
                     backgroundColor:"rgba(190, 177, 54, 0.8)",
                     paddingLeft:"10px",
                     borderBottom: '2px solid rgb(251, 245, 180)',
-                    fontSize: isDesktop ? "25px": "11px",
+                    fontSize: isDesktop ? "25pt": "8pt",
 
                 
 
@@ -76,7 +75,8 @@ function populateCTFRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setS
                 key = {i}>
                     <div style = {{
                         width:`${cellWidth}px`,
-                        textAlign:'center'
+                        textAlign:'center',
+                        fontSize: isDesktop ? "25pt": "7pt",
                     }} onMouseDown = { () =>{
                         setSearchName(name)
                     }} 
@@ -86,7 +86,7 @@ function populateCTFRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setS
                         onMouseLeave = {(e) => {
                             e.currentTarget.style.background = 'none'
                         }}>
-                        <h3>{name}</h3>
+                        <h3 >{name}</h3>
 
                     </div>
                     <div style = {{

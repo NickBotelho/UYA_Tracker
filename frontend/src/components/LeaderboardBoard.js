@@ -146,10 +146,10 @@ function LeaderboardBoard(props){
                 
             }}>
                 <table style = {{
-                        fontSize:'20pt',
+                        fontSize: props.isDesktop ? "20pt" : "14pt",
                         color: 'rgb(141,113,24)',
-                        width:"300px",
-                        height:'400px',
+                        width: props.isDesktop ? "300px" : "200px",
+                        height: props.isDesktop ? '400px' : "300px",
                         letterSpacing:"-1.5px",
                         borderCollapse:"collapse",
                         fontWeight:"bolder",
@@ -175,10 +175,10 @@ function LeaderboardBoard(props){
                 }}>
 
                     <img src = '../../static/images/backward_arrow.svg' onMouseDown={prevPage}
-                    height= "25" width = "150"></img>
+                    height= {props.isDesktop ? "25" : "15"} width = {props.isDesktop ? "150" : "75"}></img>
                     
                     <img src = '../../static/images/forward_arrow.svg' onMouseDown={nextPage}
-                    height= "25" width = "150"></img>
+                    height= {props.isDesktop ? "25" : "15"} width = {props.isDesktop ? "150" : "75"}></img>
                 </div>
                
                     

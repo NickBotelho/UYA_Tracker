@@ -30,6 +30,7 @@ def getOnlinePlayers():
 @cross_origin(supports_credentials=True)
 def getTop10Kills():
     # print("GETTING Top 10 Kills...")
+    database.analytics(request)
     res = database.getTop10('overall', 'kills')
     status = {"status":200}
     return jsonify(res), status

@@ -23,7 +23,7 @@ function HomePage(props){
         query: "(min-width: 420px)",
     });
     const isTooLarge = useMediaQuery({
-        query: "(min-height:1110px)"
+        query: "(min-height:600px)"
     })
     
     
@@ -91,16 +91,14 @@ function HomePage(props){
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>
                 
                 <div className='leaderboards'>
-                    <div>
+                    <div style = {{
+                        marginTop:"80px"
+                    }}>
                         <Top10 title = "Overall Kills" category = 'overall' stat = 'kills' address = {address}/>     
                     </div>          
                 </div>
     
-                <div className='leaderboards'>
-                    <div>
-                        <Top10 title = "Overall Wins" category = 'overall' stat = 'wins'address = {address}/>        
-                    </div>                  
-                </div>
+                
                 
                 
             </div>
