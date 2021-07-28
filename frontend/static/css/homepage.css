@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'Eurostyle';
+    src:url("EuroStyle Normal.ttf") format("TrueType");
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+
+.titleHolder{
+    display: block;
+    text-align: center;
+    
+}
+
+/* h1{
+    
+    font-size: 75pt;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: -3px;
+    text-align: center;
+    
+} */
+
+.searchbar{
+    display: block;
+    padding-left:35%;
+}
+
+.leaderboards{
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-evenly;
+}

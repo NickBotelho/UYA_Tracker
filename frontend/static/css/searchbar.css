@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    justify-content: center;
+
+}
+
+.button {
+    flex:1;
+    background: rgba(224, 171, 10, 0.5);
+    margin-left:2px;
+    font-size: 17px;
+    font-weight:bolder;
+    border-top: 2px solid orange;
+    border-bottom: 2px solid orange;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
+    text-shadow: none;
+    width: 100px;
+
+
+}
+.button:hover{
+    background-color: rgb(255, 169, 10);  
+    cursor:pointer;
+}
+.searchbar {
+    background: none;
+    background-color: white;
+    flex:1;
+    margin-right: 88px;
+    height:75%;
+    text-shadow:none;
+    color:black;
+    font-weight: bolder;
+    text-shadow: 0px 0px 1px black
+}
+.not_found{
+    text-align: center;
+    font-size: 12pt;
+    color:black;
+    text-shadow: none;
+}
+.title{
+    color:brown;
+}
+  
+.test {
+    color:orange;
+}

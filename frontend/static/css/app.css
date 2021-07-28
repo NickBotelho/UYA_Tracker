@@ -1,0 +1,15 @@
+@font-face {
+    font-family: Eurostile;
+    src: url("fonts/eurostile\ font/EuroStyle Normal.ttf") format("truetype");
+}
+@font-face {
+    font-family: EurostileBold;
+    src: url("fonts/eurostile\ font/EurostileBold.ttf") format("truetype");
+}
+@font-face {
+    font-family: EurostileOblique;
+    src: url("fonts/eurostile\ font/EurostileOblique.ttf") format("truetype");
+}
+.title{
+    font-family:Eurostile;
+}

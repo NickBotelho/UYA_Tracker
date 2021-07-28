@@ -1,0 +1,23 @@
+
+
+.header{
+    font-size: 30pt;
+    color:brown;
+    display: block;
+}
+.information{
+    display: inline-flex;
+    border: 1pt solid black;
+}
+.stat{
+    padding-right: 50px;
+}
+.stat_name{
+    font-size: 15pt;
+    text-align: left;
+}
+
+.stat_number{
+    font-size: 30pt;
+    text-align: right;
+}

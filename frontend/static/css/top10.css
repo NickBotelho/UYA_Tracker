@@ -1,0 +1,60 @@
+/* background:linear-gradient(to right, orange, orangered);    */
+@font-face {
+    font-family: Eurostile;
+    src:"fonts/eurostile\ font/EuroStyle Normal.ttf" format("truetype");
+}
+
+
+/* table {
+    border:none;
+    border-collapse: collapse;
+    
+    text-shadow: 5px, 10px, 1px black;
+    letter-spacing: -1px;
+    width : 300px;
+    height: 400px;
+    font-size: 20pt;
+} */
+
+
+/* td{
+  
+
+    background-color: rgb(123,76,31);
+    border-bottom: 2px solid rgb(251, 245, 180);
+
+} 
+tr {
+
+
+    background-color: rgb(123,76,31);
+    border-bottom: 2px solid rgb(251, 245, 180);
+
+} 
+tr:hover{
+    background-color: rgb(179, 116, 0);  
+    cursor:pointer;
+} */
+
+caption {
+
+    background: unset;
+    white-space: nowrap;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgb(190, 177, 54);
+    border-bottom: 2pt solid burlywood;
+    font-weight: bolder;
+    
+}
+
+/* .outside_border{
+    background: none;
+    background-color: rgb(190, 177, 54);
+    border :  3px solid rgb(165,154,46);
+    padding-top : 10px;
+    padding-bottom: 10px;
+    padding-right : 10px;
+    padding-left : 10px;
+} */
+
