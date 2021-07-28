@@ -5,11 +5,15 @@ import {GetLargeMap, GetHalfLargeMap, getSpecifiedMap} from "./extras.js";
 import { HomeButton } from "./HomeButton.js";
 import { populateCTFRow, populateDMRow, populateSiegeRow} from "./populateRows.js";
 
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
 }
+else{
+    address = "https://uyatracker.herokuapp.com/"
+}
+
 function DetailedGame(props){
     let [map, changeMap] = useState(GetLargeMap())
     let [searchName, setSearchName] = useState(null)

@@ -6,10 +6,13 @@ import { Redirect } from "react-router";
 import {useMediaQuery} from 'react-responsive'
 import "../../static/css/homepage.css";
 import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
+}
+else{
+    address = "https://uyatracker.herokuapp.com/"
 }
 
 function HomePage(props){
