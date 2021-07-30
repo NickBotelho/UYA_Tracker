@@ -63,7 +63,7 @@ function GameHistoryController(props){
             color: 'rgb(141,113,24)',
             fontWeight:"bolder",
             textShadow:"1px 1px 1px black",
-            userSelect:"none"
+            userSelect:"none",
             
         }}
             ref = {gameControllerRef}

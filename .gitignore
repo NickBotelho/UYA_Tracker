@@ -2,3 +2,4 @@ frontend/node_modules
 __pycache__
 .vscode
 frontend/__pycache__
+config.py

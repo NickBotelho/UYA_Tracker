@@ -16,20 +16,6 @@ function Top10(props){
     const stat = props.stat
     const url = `${props.address}/stats/top10/${category}/${stat}`
 
-    // console.log(url)
-
-
-    function GetMap(){
-        const mapNames = [kisi, bwc, hoven, x12, marcadia, metropolis]
-        
-        //max not inclusive
-        function getRandomInt(max) {
-            return Math.floor(Math.random() * max);
-        }
-        var index = getRandomInt(mapNames.length)
-        return mapNames[index]
-    }
-    const map = GetMap()
 
     
     const [isLoaded, hasLoaded] = useState(null);
@@ -55,9 +41,13 @@ function Top10(props){
    
     const hoverStyle = {
         backgroundColor: "rgb(217,163,58)",
+        cursor:'pointer'
+
     }
     const unHoverStyle = {
         backgroundColor:"rgb(190, 177, 54)",
+        cursor:'pointer'
+
     }
 
     
@@ -85,7 +75,7 @@ function Top10(props){
         }
         return (
             <tr key = {index} ref = {ref3} onMouseEnter = {buttonHover}
-            onMouseLeave={buttonLeave}>
+            onMouseLeave={buttonLeave} >
                 <td 
                 ref = {ref1}
                 style = {{textAlign:"left",
@@ -94,6 +84,8 @@ function Top10(props){
                 whiteSpace:"nowrap", 
                 borderBottom: '2px solid rgb(251, 245, 180)',
                 paddingLeft:"10px",
+                cursor:'pointer'
+
            }} 
                 onClick={() => {
                     setSearch(player.name)
@@ -106,7 +98,9 @@ function Top10(props){
                 whiteSpace:"nowrap", 
                 borderBottom: '2px solid rgb(251, 245, 180)',
                 paddingRight:"10px",
-            }} ref = {ref2}>{player[`${props.category}_${props.stat}`]}</td>
+                cursor:'pointer'
+            }} ref = {ref2}
+            >{player[`${props.category}_${props.stat}`]}</td>
             </tr>
 
         );
@@ -138,7 +132,7 @@ function Top10(props){
                 
                     borderCollapse:"collapse",
                     fontWeight:"bolder",
-                    textShadow:"1px 1px 1px black"
+                    textShadow:"1px 1px 1px black",
                 }}>
                     
                     <caption style = {{

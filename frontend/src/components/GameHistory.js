@@ -169,7 +169,7 @@ function GameHistory(props){
                                 max:games.max
                             })
                         }}height= {isDesktop ? "50" : "15"} width = {isDesktop ? "200" : "75"} 
-                        style = {{userSelect:"none"}}></img>}
+                        style = {{userSelect:"none",cursor:"pointer"}}></img>}
                     {games.start + numEntries > games.max ? null :<img src = '../../static/images/forward_arrow.svg'
                         onMouseDown={ () =>{
 
@@ -182,6 +182,7 @@ function GameHistory(props){
                         }}height= {isDesktop ? "50" : "15"} width = {isDesktop ? "200" : "75"} 
                         style = {{
                             userSelect:"none",
+                            cursor:"pointer"
                             }}></img>} 
                     
                 </div>
@@ -241,7 +242,7 @@ function GameHistory(props){
                                 max:games.max
                             })
                         }}height= "15" width = "75"
-                        style = {{userSelect:"none"}}></img>}
+                        style = {{userSelect:"none",cursor:"pointer"}}></img>}
                     {games.start + numEntries > games.max ? null :<img src = '../../static/images/forward_arrow.svg'
                         onMouseDown={ () =>{
 
@@ -252,7 +253,7 @@ function GameHistory(props){
 
                             })
                         }}height= "15" width = "75"
-                        style = {{userSelect:"none"}}></img>}
+                        style = {{userSelect:"none",cursor:"pointer"}}></img>}
                     
                 </div>
     

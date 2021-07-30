@@ -74,6 +74,7 @@ function LeaderboardBoard(props){
                 opacity:"0.8", 
                 whiteSpace:"nowrap", 
                 borderBottom: '2px solid rgb(251, 245, 180)',
+                cursor:'pointer',
                 paddingLeft:"10px",
            }} 
                 onClick={() => {
@@ -87,6 +88,7 @@ function LeaderboardBoard(props){
                 whiteSpace:"nowrap", 
                 borderBottom: '2px solid rgb(251, 245, 180)',
                 paddingRight:"10px",
+                cursor:'pointer',
             }} ref = {ref2}>{player[stat_keys[props.category][props.stat]]}</td>
             </tr>
 

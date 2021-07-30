@@ -129,6 +129,7 @@ function Searchbar(props){
                                 height:'75%',
                                 textShadow:"0px 0px 1px black",
                                 color: 'rgb(141,113,24)',
+                                userSelect:'none'
                                                      
                             }} onMouseEnter = {buttonHover}
                             onMouseLeave = {buttonLeave}></input>  
@@ -170,7 +171,8 @@ function Searchbar(props){
                                 height:'75%',
                                 textShadow:"0px 0px 1px black",
                                 color: 'rgb(141,113,24)',
-                                width:'100px'
+                                width:'100px',
+                                userSelect:'none'
                                                      
                             }}></input>  
                         </div>

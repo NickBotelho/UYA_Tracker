@@ -118,13 +118,19 @@ function DetailedGame(props){
                         textAlign:"center",
                         color: 'rgb(229, 197, 102)',
                         textShadow: '6px 4px 4px black',
-    
+                        cursor:'pointer'
     
                     }} onMouseDown = {
                         () => {
                             setBack(true)
                         }
-                    }>GAME HISTORY</h1>
+                    }
+                    onMouseOver={ (e) =>{
+                        e.currentTarget.style.color = 'rgb(141,113,24)'
+                    }}
+                    onMouseLeave = { (e) => {
+                        e.currentTarget.style.color = 'rgb(229, 197, 102)'
+                    }}>GAME HISTORY</h1>
                 </div>
     
                 <div style = {{

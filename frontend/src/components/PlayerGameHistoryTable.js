@@ -20,8 +20,7 @@ function PlayerGameHistoryTable(props){
                 backgroundColor:"rgba(190, 177, 54, 0.8)",
                 paddingLeft:"10px",
                 borderBottom: '2px solid rgb(251, 245, 180)',
-            
-
+                cursor:'pointer'
             }}
             key = {entry}
             onMouseDown = {() => {

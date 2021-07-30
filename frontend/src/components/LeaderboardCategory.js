@@ -54,7 +54,7 @@ function LeaderboardCategory(props){
                     backgroundColor:"rgba(190, 177, 54, 0.8)",
                     fontSize:"20pt",
                     whiteSpace:"nowrap",
-                    // borderBottom: '2px solid rgb(251, 245, 180)',
+                    cursor:'pointer',
                     paddingLeft:"10px",
                     userSelect:"none"
                 }} onMouseDown = {showStats}

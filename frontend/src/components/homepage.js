@@ -25,8 +25,16 @@ function HomePage(props){
     const isTooLarge = useMediaQuery({
         query: "(min-height:600px)"
     })
+    // const isMaxWidth = useMediaQuery({
+    //     query:"(min-width: 2000px)"
+    // })
+    // style = {isMaxWidth ? fixedDistance : null}
     
-    
+    const fluidDistance = {
+        display:'flex',
+        justifyContent: 'space-evenly',
+        marginTop:'30px'
+    }
 
     const map = GetLargeMap()
     const background = {
@@ -47,7 +55,6 @@ function HomePage(props){
     const myRef = createRef()
 
     let [search, searchState] = useState()
-
     if (isDesktop){
         return(
             <div style = {background}>
@@ -56,21 +63,21 @@ function HomePage(props){
                 
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>
                 
-                <div className='leaderboards'>
-                    <div>
+                <div style = {fluidDistance}>
+                    <div >
                         <Top10 title = "Overall Kills" category = 'overall' stat = 'kills' address = {address}/>     
                     </div>
-                    <div>
+                    <div >
                         <Top10 title = "Overall Deaths" category = 'overall' stat = 'deaths'address = {address}/>     
                     </div>
                     
                 </div>
     
-                <div className='leaderboards'>
-                    <div>
+                <div  style = {fluidDistance}>
+                    <div >
                         <Top10 title = "Overall Wins" category = 'overall' stat = 'wins'address = {address}/>        
                     </div>
-                    <div>
+                    <div >
                         <Top10 title = "Overall Losses" category = 'overall' stat = 'losses'address = {address}/>       
                     </div>
                     
@@ -89,7 +96,7 @@ function HomePage(props){
                 
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>
                 
-                <div className='leaderboards'>
+                <div style = {fluidDistance}>
                     <div style = {{
                         marginTop:"80px"
                     }}>

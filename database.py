@@ -64,10 +64,9 @@ def getGameDetails(game_id):
 
 def analytics(request):
     '''update site analytics based on request'''
-    website_analytics.updateAnalytics(request.remote_addr)
+    website_analytics.updateAnalytics(request.environ['REMOTE_ADDR'])
     return
 
 def getTotalGames():
     '''returns number of games in records'''
     return game_history.collection.count()
-

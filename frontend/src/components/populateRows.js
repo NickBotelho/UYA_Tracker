@@ -68,6 +68,7 @@ function populateCTFRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setS
                     paddingLeft:"10px",
                     borderBottom: '2px solid rgb(251, 245, 180)',
                     fontSize: isDesktop ? "25px": "11px",
+                    cursor:'pointer',
 
 
                 
@@ -203,7 +204,7 @@ function populateDMRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setSe
                     paddingLeft:"10px",
                     borderBottom: '2px solid rgb(251, 245, 180)',
                     fontSize: isDesktop ? "25px": "11px",
-
+                    cursor:'pointer',
                 
 
                 }}
@@ -278,8 +279,7 @@ function populateSiegeRow(team,  cellWidth, setWeaponBreakdown, game_weapons, se
         borderBottom: '2px solid rgb(251, 245, 180)',
         fontSize: isDesktop ? "28px": "11px",
         paddingLeft:"10px",
-
-
+        cursor:'pointer',
 
     }}
     key = {-1}>
