@@ -9,7 +9,7 @@ function populateCTFRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setS
         justifyContent:'space-evenly',
         backgroundColor:"rgba(190, 177, 54, 1)",
         borderBottom: '2px solid rgb(251, 245, 180)',
-        fontSize: isDesktop ? "25px": "11px",
+        fontSize: isDesktop ? "28px": "14px",
         paddingLeft:"10px",
 
 
@@ -67,7 +67,8 @@ function populateCTFRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setS
                     backgroundColor:"rgba(190, 177, 54, 0.8)",
                     paddingLeft:"10px",
                     borderBottom: '2px solid rgb(251, 245, 180)',
-                    fontSize: isDesktop ? "25pt": "8pt",
+                    fontSize: isDesktop ? "25px": "11px",
+
 
                 
 
@@ -76,7 +77,7 @@ function populateCTFRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setS
                     <div style = {{
                         width:`${cellWidth}px`,
                         textAlign:'center',
-                        fontSize: isDesktop ? "25pt": "7pt",
+                        fontSize: isDesktop ? "25px": "10px",
                     }} onMouseDown = { () =>{
                         setSearchName(name)
                     }} 
@@ -149,7 +150,7 @@ function populateDMRow(team,  cellWidth, setWeaponBreakdown, game_weapons, setSe
         justifyContent:'space-evenly',
         backgroundColor:"rgba(190, 177, 54, 1)",
         borderBottom: '2px solid rgb(251, 245, 180)',
-        fontSize: isDesktop ? "25px": "11px",
+        fontSize: isDesktop ? "28px": "11px",
         paddingLeft:"10px",
 
 
@@ -275,7 +276,7 @@ function populateSiegeRow(team,  cellWidth, setWeaponBreakdown, game_weapons, se
         justifyContent:'space-evenly',
         backgroundColor:"rgba(190, 177, 54, 1)",
         borderBottom: '2px solid rgb(251, 245, 180)',
-        fontSize: isDesktop ? "25px": "11px",
+        fontSize: isDesktop ? "28px": "11px",
         paddingLeft:"10px",
 
 

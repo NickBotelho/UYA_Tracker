@@ -212,21 +212,24 @@ class Database():
         del game['_id']
         return game
     def updateAnalytics(self, ip):
-        user = self.collection.find_one({"user_ip":ip})
+        user = self.collection.find_one({"ip":ip})
         if not user:
             self.collection.insert_one(
                 {
                     'ip':ip,
+                    'num_logins':1,
                     'last_login':time.strftime("%a, %d %b %Y", time.localtime())
                 }
             )
         else:
+            logins = user['num_logins']
             self.collection.find_one_and_update(
                 {
                     'ip':ip
                 },
                 {
                     '$set':{
+                        'num_logins':logins+1,
                         'last_login':time.strftime("%a, %d %b %Y", time.localtime())
                     }
                 }

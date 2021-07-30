@@ -68,7 +68,6 @@ def analytics(request):
     return
 
 def getTotalGames():
+    '''returns number of games in records'''
     return game_history.collection.count()
-# print(getAllGames(0,15))
-# print(getAllGames(15,30))
-# print(getAllGames(30,45))
+

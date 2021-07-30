@@ -58,7 +58,7 @@ function DetailedGame(props){
             </div>
         )
     }
-    const cellWidth = isDesktop ? 250 : 60
+    const cellWidth = isDesktop ? 250 : 80
     let mode = 0
     let winners = []
     let losers = []
@@ -96,6 +96,8 @@ function DetailedGame(props){
         return <Redirect push to = {redirect}/>
     }
     if (isDesktop){
+
+        console.log(winners, losers, tie)
         return (
             <div style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
@@ -189,7 +191,7 @@ function DetailedGame(props){
                             </div>
                         </div>
     
-                        {losers == null ? null : <div style = {{
+                        {losers.length == 1? null : <div style = {{
                             marginTop:'50px'
                         }}>
                             <h4 style = {{color: 'rgb(229, 197, 102)'}}>{losers.length > 1 ?  "Losing Team" : null}</h4>
@@ -334,22 +336,44 @@ function DetailedGame(props){
 
                     }}>
                         <div>
-                            <h4 style = {{color: 'rgb(229, 197, 102)'}}>Winning Team</h4>
-                            {winners}
+                            <h4 style = {{color: 'rgb(229, 197, 102)'}}>{winners.length > 1 ?  "Winning Team" : "Tie Game"}</h4>
+                            <div style = {{
+                                border : "4px solid rgb(141,113,24)",
+
+                            }}>
+                                {winners.length > 1 ? winners : tie}
+                                
+                            </div>
                         </div>
     
-                        <div style = {{
+                        {losers.length == 1? null : <div style = {{
                             marginTop:'50px'
                         }}>
-                            <h4 style = {{color: 'rgb(229, 197, 102)'}}>Losing Team</h4>
-                            {losers}
-                        </div>
-                        <div style = {{
-                            marginTop:'50px'
-                        }}>
+                            <h4 style = {{color: 'rgb(229, 197, 102)'}}>{losers.length > 1 ?  "Losing Team" : null}</h4>
+                            <div style = {{
+                                border : "4px solid rgb(141,113,24)",
+
+                            }}>
+                                {losers.length > 1? losers : null}
+
+                                
+                            </div>
+                        </div>}
+
+                        {disconnects == null ? null : <div style = {{
+                            marginTop:'50px',
+
+                         }}>
                             {disconnects !=  null ? <h4 style = {{color: 'rgb(229, 197, 102)'}}>Disconnects</h4> : null}
-                            {disconnects !=  null ? disconnects : null}
-                        </div>
+                            <div style = {{
+                                border : "4px solid rgb(141,113,24)",
+
+                            }}>
+                                {disconnects !=  null ? disconnects : null}
+
+                                
+                            </div>
+                        </div>}
     
                         <div style = {{
                             marginTop:'25px',
