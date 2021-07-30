@@ -56,6 +56,7 @@ function LeaderboardCategory(props){
                     whiteSpace:"nowrap",
                     // borderBottom: '2px solid rgb(251, 245, 180)',
                     paddingLeft:"10px",
+                    userSelect:"none"
                 }} onMouseDown = {showStats}
                 onMouseEnter = {buttonHover}
                 onMouseLeave = {buttonRest}>

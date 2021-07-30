@@ -85,7 +85,9 @@ function PlayerGameWeaponTable(props){
             justifyContent:'center',
             backgroundColor:"rgba(190, 177, 54, 1)",
             fontSize: props.isDesktop ? "20px" : "15px",
-            width : props.isDesktop? `${props.cellWidth*3}px` : '300px'
+            width : props.isDesktop? `${props.cellWidth*3}px` : '300px',
+            border : "4px solid rgb(141,113,24)",
+
         }}>
 
             <div style = {{

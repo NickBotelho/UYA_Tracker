@@ -6,8 +6,8 @@ function AllGameHistoryTable(props){
     let entries = []
     let [redirectID, isRedirecting] = useState(null)
     const cellWidth = 250 //change for mobile
-    
-    for (let entry = 0; entry < props.numEntries; entry++){
+    let i = 0 
+    for (let entry = props.start; entry < (props.start + props.numEntries); entry++){
         const date = props.games[entry]['date']
         const map = props.games[entry]['map']
         const mode = props.games[entry]['gamemode']
@@ -52,7 +52,7 @@ function AllGameHistoryTable(props){
                     width:`${cellWidth}px`,
                     textAlign:'center'
                 }}>
-                    <h3>{map}</h3>
+                    <h3>{map.replace("_", " ")}</h3>
 
                 </div>
                 {props.isDesktop ? <div style = {{
@@ -67,6 +67,10 @@ function AllGameHistoryTable(props){
             </div>
 
         )
+        i++
+        if (i == Object.keys(props.games).length){
+            break
+        }
     }
     if (redirectID != null){
         const redirect = "/components/detailedgame"+"?id="+encodeURIComponent(redirectID) //redirectt will hoold game id
@@ -93,11 +97,12 @@ function AllGameHistoryTable(props){
                     fontWeight:"bolder",
                     textShadow:"1px 1px 1px black",
                     textAlign:"center",
+                    border : "4px solid rgb(141,113,24)",
                 }}>
                     <h3 style = {{
                         borderBottom: '2pt solid burlywood',
                         backgroundColor:"rgba(190, 177, 54, 1)",
-    
+                        
                     }}
                     >GAME HISTORY</h3>
 
@@ -164,6 +169,8 @@ function AllGameHistoryTable(props){
                     fontWeight:"bolder",
                     textShadow:"1px 1px 1px black",
                     textAlign:"center",
+                    border : "4px solid rgb(141,113,24)",
+                    
                 }}>
                     <h3 style = {{
                         borderBottom: '2pt solid burlywood',

@@ -18,10 +18,10 @@ else{
 
 function Leaderboards(props){
     const isMobile = useMediaQuery({
-        query: "(min-width: 10px) and (max-width: 767px)",
+        query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
     const isDesktop = useMediaQuery({
-        query: "(min-width: 768px)",
+        query: "(min-width: 600px)",
     });
     let [map, changeMap] = useState(GetLargeMap())
     let [currentCategory, changeCategory] = useState(<div></div>)

@@ -12,7 +12,7 @@ function LeaderboardBoard(props){
     
     const address = props.address
     let pages = {}
-    let [currentPage, changePage] = useState(1)
+    let [currentPage, changePage] = useState(0)
     let [isLoaded, hasLoaded] = useState(null);
     let [searching, setSearch] = useState(null);
     if (isLoaded != null && isLoaded.category == props.category && isLoaded.stat != stat_keys[props.category][props.stat]){
@@ -22,8 +22,8 @@ function LeaderboardBoard(props){
         hasLoaded(null)
     }
 
-    if (isLoaded == null && currentPage != 1){
-        changePage(1)
+    if (isLoaded == null && currentPage != 0){
+        changePage(0)
     }
 
     async function getTop10(){
@@ -80,7 +80,7 @@ function LeaderboardBoard(props){
                     setSearch(player.name)
                 }} 
                 value ={player.name}
-                >{player.name}</td>
+                >{`${((page*10)+index)+1}. ${player.name}`}</td>
                 <td style = {{textAlign:"right",
                 backgroundColor:"rgb(190, 177, 54)",
                 opacity:"0.8", 
@@ -92,15 +92,17 @@ function LeaderboardBoard(props){
 
         );
     }
+    var i = 1
+    var page = 0
     if (isLoaded == null){
         getTop10()
     }else{
 
         const total = isLoaded.data.length - (isLoaded.data.length % 10)
         
-        let page = 1
-        var i = 0
-        for (i = 0; i < total; i+=10){
+        // let page = 1
+        
+        for (i = 0; i <= total; i+=10){
             let current = isLoaded.data.slice(i,i+10)
 
             let current_pages = current.map(getPlayerRow)
@@ -123,7 +125,7 @@ function LeaderboardBoard(props){
     }
 
     function prevPage(){
-        if (currentPage > 1){
+        if (currentPage > 0){
             changePage(currentPage-=1)
         }
         
@@ -175,10 +177,12 @@ function LeaderboardBoard(props){
                 }}>
 
                     <img src = '../../static/images/backward_arrow.svg' onMouseDown={prevPage}
-                    height= {props.isDesktop ? "25" : "15"} width = {props.isDesktop ? "150" : "75"}></img>
+                    height= {props.isDesktop ? "25" : "15"} width = {props.isDesktop ? "150" : "75"}
+                    style = {{userSelect:"none"}}></img>
                     
                     <img src = '../../static/images/forward_arrow.svg' onMouseDown={nextPage}
-                    height= {props.isDesktop ? "25" : "15"} width = {props.isDesktop ? "150" : "75"}></img>
+                    height= {props.isDesktop ? "25" : "15"} width = {props.isDesktop ? "150" : "75"}
+                    style = {{userSelect:"none"}}></img>
                 </div>
                
                     

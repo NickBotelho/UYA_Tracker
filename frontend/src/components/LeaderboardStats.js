@@ -37,6 +37,7 @@ function LeaderboardStats(props){
             paddingLeft:"10px",
             marginRight:'10px',
             marginLeft:'10px',
+            userSelect:"none",
             fontSize: props.isDesktop ? "15pt" : "11pt"
                     }}
             ref = {statRef}

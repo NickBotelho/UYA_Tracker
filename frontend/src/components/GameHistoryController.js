@@ -60,6 +60,11 @@ function GameHistoryController(props){
             backgroundColor:"rgba(190, 177, 54, 0.8)",
             opacity:"0.8",
             whiteSpace:"nowrap",
+            color: 'rgb(141,113,24)',
+            fontWeight:"bolder",
+            textShadow:"1px 1px 1px black",
+            userSelect:"none"
+            
         }}
             ref = {gameControllerRef}
             onMouseDown= {showTable}

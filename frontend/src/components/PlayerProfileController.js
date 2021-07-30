@@ -33,6 +33,12 @@ function PlayerProfileController(props){
             opacity:"0.8",
             whiteSpace:"nowrap",
             border : "3px solid rgb(141,113,24)",
+            color: 'rgb(141,113,24)',
+            fontWeight:"bolder",
+            textShadow:"1px 1px 1px black",
+            userSelect:"none"
+
+
 
         }}
         onMouseDown = {showTable}

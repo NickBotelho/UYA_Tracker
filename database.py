@@ -41,16 +41,21 @@ def getRecentGames(username, num_games):
         return res
     return None
 
-def getAllGames(limit):
+def getAllGames(start, end):
     '''returns the game archives'''
     i = 0
     res = {}
     for game in game_history.collection.find().sort([('entry_number', -1)]):
         curr = game_history.getBasicGeneralGameInformation(game['game_id'])
-        res[i] = curr
-        i+=1
-        if i >= limit:
+        if not curr: break
+
+        if i >= start and i < end:
+            res[i] = curr
+
+        if i >= end:
             break
+        else:
+            i+=1
     return res
 
 def getGameDetails(game_id):
@@ -61,3 +66,9 @@ def analytics(request):
     '''update site analytics based on request'''
     website_analytics.updateAnalytics(request.remote_addr)
     return
+
+def getTotalGames():
+    return game_history.collection.count()
+# print(getAllGames(0,15))
+# print(getAllGames(15,30))
+# print(getAllGames(30,45))

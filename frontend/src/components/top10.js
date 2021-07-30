@@ -99,7 +99,7 @@ function Top10(props){
                     setSearch(player.name)
                 }} 
                 value ={player.name}
-                >{player.name}</td>
+                >{`${(index+1)}. ${player.name}`}</td>
                 <td style = {{textAlign:"right",
                 backgroundColor:"rgb(190, 177, 54)",
                 opacity:"0.8", 
@@ -117,7 +117,7 @@ function Top10(props){
     }
     
     if (isLoaded === null){
-        return <div style = {{border:"3pt solid rgb(92, 73, 0)", maxHeight:"100px", minWidth:"100px",
+        return <div style = {{maxHeight:"100px", minWidth:"100px",
         }}>
             <img src = "../../static/images/loading_circle.gif"
         height = '100' width = '100'></img>
@@ -134,13 +134,18 @@ function Top10(props){
                     height:'400px',
                     letterSpacing:"-1.5px",
                     // backgroundImage: `url(${map})`,
-                    
+                    border : "3px solid rgb(141,113,24)",
+                
                     borderCollapse:"collapse",
                     fontWeight:"bolder",
                     textShadow:"1px 1px 1px black"
                 }}>
                     
-                    <caption >{props.title.toUpperCase()}</caption>
+                    <caption style = {{
+                        border : "4px solid rgb(141,113,24)",
+                        borderCollapse:"collapse",
+
+                    }}>{props.title.toUpperCase()}</caption>
                     
                     <tbody>
                         {isLoaded.map(getPlayerRow)}

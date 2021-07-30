@@ -19,7 +19,8 @@ function NavBar(props){
         paddingLeft:"25px",
         paddingRight:'25px',
         marginLeft:'5px',
-        marginRight:'5px'
+        marginRight:'5px',
+        userSelect:"none"
     }
     const hoverStyle={
         background:"rgba(217,163,58,0.8)",

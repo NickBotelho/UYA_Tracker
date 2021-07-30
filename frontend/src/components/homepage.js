@@ -17,15 +17,14 @@ else{
 
 function HomePage(props){
     const isMobile = useMediaQuery({
-        query: "(min-width: 10px) and (max-width: 420px)", //norm is 390x800
+        query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
     const isDesktop = useMediaQuery({
-        query: "(min-width: 420px)",
+        query: "(min-width: 600px)",
     });
     const isTooLarge = useMediaQuery({
         query: "(min-height:600px)"
     })
-    
     
     
 

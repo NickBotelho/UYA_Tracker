@@ -5,6 +5,8 @@ import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
 import { AllGameHistoryTable } from "./AllGameHistoryTable.js";
 import { HomeButton } from "./HomeButton.js";
 import online_circle from '../../static/images/online_circle.png';
+import forward from '../../static/images/forward_arrow.svg';
+import backward from '../../static/images/backward_arrow.svg';
 
 
 const DEBUG = false
@@ -13,22 +15,26 @@ if (DEBUG==true){
     address = "http://127.0.0.1:5000"
 }
 else{
-    address = "https://uyatracker.herokuapp.com/"
+    address = "https://uyatracker.herokuapp.com"
 }
 
 function GameHistory(props){
     let [map, changeMap] = useState(GetLargeMap())
 
     const isMobile = useMediaQuery({
-        query: "(min-width: 10px) and (max-width: 420px)", //norm is 390x800
+        query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
     const isDesktop = useMediaQuery({
-        query: "(min-width: 420px)",
+        query: "(min-width: 600px)",
     });
 
-    let [games, setGames] = useState(null)
+    let [games, setGames] = useState({
+        start : 0,
+        games : null,
+        max : 0
+    })
     const numEntries = 15
-    async function getRecentGames(numEntries){
+    async function getRecentGames(start, end){
         const requestSearch = {
             method: "POST",
             headers:  {
@@ -38,35 +44,84 @@ function GameHistory(props){
             },
             credentials: "include",
             body: JSON.stringify({
-                limit:numEntries
+                start:start,
+                end:end
             }),  
         }
         const res = await fetch(`${address}/general/recent_games`, requestSearch)
         const recent_games = await res.json()
-        setGames(recent_games)
-    }
-
-    if (games == null){
-        getRecentGames(numEntries)
-
-        return <div style = {{
-            position:'fixed',
-            top:"50%",
-            left:"50%",
-            transform :"translate(-50%, -50%)",
-            border: "8pt solid rgb(92, 73, 0)",
-            maxHeight:'250px',
-            minHeight:'250px',
-        }}>
-            <img src = "../../static/images/loading_circle.gif"
-            height = '253' width = '255'></img>
-        </div>
         
+        setGames({
+            start:start,
+            games:recent_games,
+            max: games.max
+        })
     }
+    async function getTotalGames(url){
+        const request = await fetch(url,{
+                method: "GET",
+                    headers:  {
+                        'Content-Type': "application/json; charset=utf-8",
+                        Accept: "application/json",
+                        "Cache-Control": "no-cache"
+                    },
+                    credentials: "include",
+            })
+        const total = await request.json()
+        setGames({
+            start:games.start,
+            games:games.games,
+            max : total
+        })
+    }
+    if (games.max == 0){
+        getTotalGames(`${address}/general/total_games`)
+    }
+    if (games.games == null){
+        getRecentGames(games.start, games.start+numEntries)
+
+        return(
+            <div style = {{
+                background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
+                                    url(${map})`,
+                height:'100vh',
+                fontFamily:"Roboto, sans-serif",
+
+            }}>
+                <HomeButton/>
+
+                <div style = {{
+                    display:"flex",
+                    justifyContent:"center"
+                }}>
     
-
-    if (isDesktop){
+                    <h1 style = {{
+                        fontSize : isDesktop ? "75pt" :"40pt",
+                        textAlign:"center",
+                        color: 'rgb(229, 197, 102)',
+                        textShadow: '6px 4px 4px black',
+                        borderCollapse:"collapse",
+    
+                    }}>GAME HISTORY</h1>
+                </div>
+                <div style = {{
+                            
+                            position:'fixed',
+                            top:"50%",
+                            left:"50%",
+                            transform :"translate(-50%, -50%)",
+                            maxHeight:'250px',
+                            minHeight:'250px',
+                        }}>
+                            <img src = "../../static/images/loading_circle.gif"
+                            height = {isDesktop ? '250' : "125"} width = {isDesktop ? '250' : "125"}></img>
+                        </div>
+            </div>
+        ) 
         
+        
+    }
+    if (isDesktop){
         return (
             <div style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
@@ -87,7 +142,7 @@ function GameHistory(props){
                         textAlign:"center",
                         color: 'rgb(229, 197, 102)',
                         textShadow: '6px 4px 4px black',
-    
+                        borderCollapse:"collapse",
     
                     }}>GAME HISTORY</h1>
                 </div>
@@ -98,7 +153,37 @@ function GameHistory(props){
                     justifyContent:'center',
                     marginTop:'25px'
                 }}>
-                    <AllGameHistoryTable games = {games} numEntries = {numEntries} isDesktop = {isDesktop} />
+                    <AllGameHistoryTable games = {games.games} start = {games.start} numEntries = {numEntries} isDesktop = {isDesktop} />
+                </div>
+                
+                <div style = {{
+                    display:'flex',
+                    justifyContent:'center'
+                }}>
+                    {games.start - numEntries < 0 ? null : <img src = '../../static/images/backward_arrow.svg'
+                        onMouseDown={ () =>{
+
+                            setGames({
+                                start:games.start-numEntries,
+                                games:null,
+                                max:games.max
+                            })
+                        }}height= {isDesktop ? "50" : "15"} width = {isDesktop ? "200" : "75"} 
+                        style = {{userSelect:"none"}}></img>}
+                    {games.start + numEntries > games.max ? null :<img src = '../../static/images/forward_arrow.svg'
+                        onMouseDown={ () =>{
+
+                            setGames({
+                                start:games.start+numEntries,
+                                games:null,
+                                max:games.max
+
+                            })
+                        }}height= {isDesktop ? "50" : "15"} width = {isDesktop ? "200" : "75"} 
+                        style = {{
+                            userSelect:"none",
+                            }}></img>} 
+                    
                 </div>
     
     
@@ -140,7 +225,35 @@ function GameHistory(props){
                     justifyContent:'center',
                     marginTop:'25px'
                 }}>
-                    <AllGameHistoryTable games = {games} numEntries = {numEntries} isDesktop = {isDesktop} />
+                        <AllGameHistoryTable games = {games.games} start = {games.start} numEntries = {numEntries} isDesktop = {isDesktop} />
+                </div>
+                
+                <div style = {{
+                    display:'flex',
+                    justifyContent:'center'
+                }}>
+                    {games.start - numEntries < 0 ? null : <img src = '../../static/images/backward_arrow.svg'
+                        onMouseDown={ () =>{
+
+                            setGames({
+                                start:games.start-numEntries,
+                                games:null,
+                                max:games.max
+                            })
+                        }}height= "15" width = "75"
+                        style = {{userSelect:"none"}}></img>}
+                    {games.start + numEntries > games.max ? null :<img src = '../../static/images/forward_arrow.svg'
+                        onMouseDown={ () =>{
+
+                            setGames({
+                                start:games.start+numEntries,
+                                games:null,
+                                max:games.max
+
+                            })
+                        }}height= "15" width = "75"
+                        style = {{userSelect:"none"}}></img>}
+                    
                 </div>
     
     

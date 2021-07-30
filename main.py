@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, request, render_template, send_file
+from functools import cached_property
+from flask import Flask, json, jsonify, request, render_template, send_file
 from flask_cors import CORS, cross_origin
-
+import time
 import database
 
 app = Flask(__name__, template_folder = 'frontend/server/build/')
@@ -8,6 +9,9 @@ cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 searched_player = {}
+games_cache = {}
+chached_query_time = 0
+refresh_interval = 10 #minutes between caching
 
 @app.route("/player", methods = ["GET"])
 @cross_origin(supports_credentials=True)
@@ -103,18 +107,39 @@ def postRecentGames():
             searched_player = {}
             return jsonify(searched_player), 404
 
+
 @app.route("/general/recent_games", methods = ["POST"])
 @cross_origin(supports_credentials=True)
 def postGeneralRecentGames():
     if request.method == "POST":
-        limit = request.json['limit']
-        # print("POSTING for {} of recent games..".format(limit))
-        res = database.getAllGames(limit)
+        global games_cache, chached_query_time, refresh_interva;
+        start = request.json['start']
+        end = request.json['end']
+        current_query_time = time.time()
+        if abs((chached_query_time - current_query_time)//60) <= refresh_interval:
+            if start in games_cache:
+                res = games_cache[start]
+            else:
+                res = database.getAllGames(start, end)
+                games_cache[start] = res
+        else:
+            games_cache = {}
+            res = database.getAllGames(start, end)
+            games_cache[start] = res
+            chached_query_time = current_query_time
+
         if res:
             return jsonify(res), 200
         else:
             res = {}
             return jsonify(res), 404
+
+@app.route("/general/total_games", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def getNumGames():
+    res = database.getTotalGames()
+    return jsonify(res), 200
+
 
 @app.route("/games/details", methods = ["POST"])
 @cross_origin(supports_credentials=True)

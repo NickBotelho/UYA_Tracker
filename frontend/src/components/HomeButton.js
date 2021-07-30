@@ -15,6 +15,7 @@ function HomeButton(props){
         fontWeight:"bolder",
         textShadow:"1px 1px 1px black",
         color: 'rgb(141,113,24)',
+        userSelect:"none"
 
 
     }

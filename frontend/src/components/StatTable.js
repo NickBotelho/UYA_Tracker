@@ -17,10 +17,7 @@ function StatTable(props){
     return (
         <div style = {{
             // border : "3px solid rgb(165,154,46)",
-            paddingTop :"10px",
-            paddingRight:"10px",
-            paddingBottom:"10px",
-            paddingLeft:"10px",
+            
             display:"inline-block",
             border : "4px solid rgb(141,113,24)",
 

@@ -21,10 +21,10 @@ else{
 
 function PlayerProfile(props){
     const isMobile = useMediaQuery({
-        query: "(min-width: 10px) and (max-width: 767px)",
+        query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
     const isDesktop = useMediaQuery({
-        query: "(min-width: 768px)",
+        query: "(min-width: 600px)",
     });
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
@@ -196,7 +196,6 @@ function PlayerProfile(props){
                 top:"50%",
                 left:"50%",
                 transform :"translate(-50%, -50%)",
-                border: "8pt solid rgb(92, 73, 0)",
                 maxHeight:'250px',
                 minHeight:'250px',
             }}>

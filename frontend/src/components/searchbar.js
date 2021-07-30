@@ -95,7 +95,8 @@ function Searchbar(props){
         fontWeight:"bolder",
         textShadow:"1px 1px 1px black",
         color: 'rgb(141,113,24)',
-        marginLeft:"0"
+        marginLeft:"0",
+        userSelect:"none"
 
     }
     const hoverStyle={

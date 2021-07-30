@@ -18,11 +18,12 @@ function DetailedGame(props){
     let [map, changeMap] = useState(GetLargeMap())
     let [searchName, setSearchName] = useState(null)
     let [goBack, setBack] = useState(null)
+    
     const isMobile = useMediaQuery({
-        query: "(min-width: 10px) and (max-width: 420px)", //norm is 390x800
+        query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
     const isDesktop = useMediaQuery({
-        query: "(min-width: 420px)",
+        query: "(min-width: 600px)",
     });
 
     const queryString = window.location.search
@@ -121,7 +122,7 @@ function DetailedGame(props){
                         () => {
                             setBack(true)
                         }
-                    }>GAME DETAILS</h1>
+                    }>GAME HISTORY</h1>
                 </div>
     
                 <div style = {{
@@ -179,24 +180,43 @@ function DetailedGame(props){
                     }}>
                         <div>
                             <h4 style = {{color: 'rgb(229, 197, 102)'}}>{winners.length > 1 ?  "Winning Team" : "Tie Game"}</h4>
+                            <div style = {{
+                                border : "4px solid rgb(141,113,24)",
 
-                            {winners.length > 1 ? winners : tie}
+                            }}>
+                                {winners.length > 1 ? winners : tie}
+                                
+                            </div>
                         </div>
     
-                        <div style = {{
+                        {losers == null ? null : <div style = {{
                             marginTop:'50px'
                         }}>
                             <h4 style = {{color: 'rgb(229, 197, 102)'}}>{losers.length > 1 ?  "Losing Team" : null}</h4>
-                            {losers.length > 1? losers : null}
-                        </div>
+                            <div style = {{
+                                border : "4px solid rgb(141,113,24)",
 
-                        <div style = {{
+                            }}>
+                                {losers.length > 1? losers : null}
+
+                                
+                            </div>
+                        </div>}
+
+                        {disconnects == null ? null : <div style = {{
                             marginTop:'50px',
 
-                        }}>
+                         }}>
                             {disconnects !=  null ? <h4 style = {{color: 'rgb(229, 197, 102)'}}>Disconnects</h4> : null}
-                            {disconnects !=  null ? disconnects : null}
-                        </div>
+                            <div style = {{
+                                border : "4px solid rgb(141,113,24)",
+
+                            }}>
+                                {disconnects !=  null ? disconnects : null}
+
+                                
+                            </div>
+                        </div>}
     
                         <div style = {{
                             marginTop:'50px',
@@ -241,7 +261,7 @@ function DetailedGame(props){
                         () => {
                             setBack(true)
                         }
-                    }>GAME DETAILS</h1>
+                    }>GAME HISTORY</h1>
                 </div>
     
                 <div style = {{
@@ -268,8 +288,8 @@ function DetailedGame(props){
                         textShadow: '6px 4px 4px black',
                         display:'flex',
                         flexDirection:'row',
-                        justifyContent:'space-evenly'
-    
+                        justifyContent:'space-evenly',
+
     
                     }}>
                         <h2>{game['gamemode']}</h2>
@@ -310,7 +330,8 @@ function DetailedGame(props){
                     <div style = {{
                         display:'flex',
                         flexDirection:'column',
-                        justifyContent:'center'
+                        justifyContent:'center',
+
                     }}>
                         <div>
                             <h4 style = {{color: 'rgb(229, 197, 102)'}}>Winning Team</h4>
