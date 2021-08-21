@@ -39,6 +39,20 @@ def getTop10Kills():
     status = {"status":200}
     return jsonify(res), status
 
+@app.route("/stats/top10", methods = ["POST"])
+@cross_origin(supports_credentials=True)
+def postTop10():
+    if request.method == "POST":
+        category = request.json['category']
+        stat = request.json['stat']
+        # print("POSTING recent {} game info for {}...".format(num_games, name))
+        res = database.getTop10(category, stat)
+        if res:
+            return jsonify(res), 200
+        else:
+            res = {}
+            return jsonify(res), 404
+
 
 
 @app.route("/stats/top10/overall/deaths", methods = ["GET"])

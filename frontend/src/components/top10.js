@@ -20,7 +20,7 @@ function Top10(props){
     
     const [isLoaded, hasLoaded] = useState(null);
     const [searching, setSearch] = useState(null);
-    async function getTop10(url){
+    async function getTop10Kills(url){
         const request = await fetch(url,{
                 method: "GET",
                     headers:  {
@@ -31,12 +31,35 @@ function Top10(props){
                     credentials: "include",
             })
         const players = await request.json()
-        // console.log("1",players)
         hasLoaded(players);
         return players
     }
+    async function getTop10(url){
+        const requestSearch = {
+            method: "POST",
+            headers:  {
+                'Content-Type': "application/json; charset=utf-8",
+                Accept: "application/json",
+                "Cache-Control": "no-cache"
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                category:props.category,
+                stat:props.stat
+            }),  
+        }
+        console.log(`${props.address}/stats/top10`)
+        const res = await fetch(`${props.address}/stats/top10`, requestSearch)
+        const players = await res.json()
+        hasLoaded(players)
+    }
     if (isLoaded === null){
-        getTop10(url)
+        if (stat == 'kills' && category == 'overall'){
+            getTop10Kills(url)
+        }
+        else{
+            getTop10(url)
+        }
     }
    
     const hoverStyle = {
@@ -56,20 +79,13 @@ function Top10(props){
         const ref2 = createRef()
         const ref3 = createRef()
         const buttonHover = (e) => {
-            // for (let prop in hoverStyle) {
-            //     e.target.style[prop] = hoverStyle[prop];
-            // }
-            
+
             ref1.current.style.backgroundColor = hoverStyle.backgroundColor
             ref2.current.style.backgroundColor = hoverStyle.backgroundColor
 
         }
         const buttonLeave = (e) => {
-            // for (let prop in unHoverStyle) {
-            //     e.target.style[prop] = unHoverStyle[prop];
-                
-            // }
-            
+
             ref1.current.style.backgroundColor = unHoverStyle.backgroundColor
             ref2.current.style.backgroundColor = unHoverStyle.backgroundColor
         }

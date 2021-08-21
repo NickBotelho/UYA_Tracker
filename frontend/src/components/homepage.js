@@ -6,7 +6,7 @@ import { Redirect } from "react-router";
 import {useMediaQuery} from 'react-responsive'
 import "../../static/css/homepage.css";
 import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
-const DEBUG = false
+const DEBUG = true
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
@@ -29,7 +29,7 @@ function HomePage(props){
     //     query:"(min-width: 2000px)"
     // })
     // style = {isMaxWidth ? fixedDistance : null}
-    
+
     const fluidDistance = {
         display:'flex',
         justifyContent: 'space-evenly',
@@ -68,17 +68,17 @@ function HomePage(props){
                         <Top10 title = "Overall Kills" category = 'overall' stat = 'kills' address = {address}/>     
                     </div>
                     <div >
-                        <Top10 title = "Overall Deaths" category = 'overall' stat = 'deaths'address = {address}/>     
+                        <Top10 title = "Overall Wins" category = 'overall' stat = 'wins' address = {address}/>     
                     </div>
                     
                 </div>
     
                 <div  style = {fluidDistance}>
                     <div >
-                        <Top10 title = "Overall Wins" category = 'overall' stat = 'wins'address = {address}/>        
+                        <Top10 title = "Flags Captured" category = 'ctf' stat = 'ctf_caps'address = {address}/>        
                     </div>
                     <div >
-                        <Top10 title = "Overall Losses" category = 'overall' stat = 'losses'address = {address}/>       
+                        <Top10 title = "Flux Kills" category = 'weapons' stat = 'flux_kills'address = {address}/>       
                     </div>
                     
                 </div>

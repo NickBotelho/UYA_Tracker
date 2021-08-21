@@ -27,6 +27,9 @@ function GameHistory(props){
     const isDesktop = useMediaQuery({
         query: "(min-width: 600px)",
     });
+    const tooShort = useMediaQuery({
+        query: "(max-height: 940px)",
+    });
 
     let [games, setGames] = useState({
         start : 0,
@@ -74,9 +77,12 @@ function GameHistory(props){
             max : total
         })
     }
+   
+    
     if (games.max == 0){
         getTotalGames(`${address}/general/total_games`)
     }
+    
     if (games.games == null){
         getRecentGames(games.start, games.start+numEntries)
 
@@ -121,13 +127,16 @@ function GameHistory(props){
         
         
     }
+
+
     if (isDesktop){
+        console.log(tooShort)
         return (
-            <div style = {{
+            <div  style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                     url(${map})`,
                 fontFamily:"Roboto, sans-serif",
-                height:'100vh'  
+                height: !tooShort? '100vh' : "100%",
             }}>
                 <HomeButton/>
         
