@@ -141,6 +141,7 @@ class Database():
         return self.collection.count()
     def getEntireStat(self,category, stat):
         MIN_GAMES = 35
+        MIN_CTF_GAMES = 10
         if category != "advanced":
             res = []
             i = 0
@@ -160,7 +161,8 @@ class Database():
             i = 0
             total = self.getTotalPlayerCount()
             for player in self.collection.find().sort([("advanced_stats.{}.{}".format(type,stat),-1)]):
-                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if player['stats']['overall']['games_played'] < MIN_GAMES or\
+                    (player['stats']['ctf']['ctf_wins'] + player['stats']['ctf']['ctf_losses'] < MIN_CTF_GAMES):continue
                 if i < total:
                     i+=1
                     res.append({
