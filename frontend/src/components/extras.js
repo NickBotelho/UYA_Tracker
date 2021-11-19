@@ -509,8 +509,8 @@ const statList = {
     "deathmatch":["wins", "losses",'kills','deaths'],
     'weapon kills':['flux','gravity bomb','blitz', 'n60', 'lava gun', 'mines','rocket','morph','wrench'],
     'weapon deaths':['flux','gravity bomb','blitz', 'n60', 'lava gun', 'mines','rocket','morph','wrench'],
-    'advanced':['kills/min', 'deaths/min','suicides/min','caps/min','saves/min','flux kills/min','blitz kills/min','gravity bomb kills/min',
-    'kills/gm', 'deaths/gm','suicides/gm','caps/gm','saves/gm','flux kills/gm','blitz kills/gm','gravity bomb kills/gm']
+    'advanced':['kills/min', 'deaths/min','suicides/min','caps/min','saves/min','flux kills/min','blitz kills/min','gravity bomb kills/min','flux deaths/min','blitz deaths/min','gravity bomb deaths/min',
+    'kills/gm', 'deaths/gm','suicides/gm','caps/gm','saves/gm','flux kills/gm','blitz kills/gm','gravity bomb kills/gm','flux deaths/gm','blitz deaths/gm','gravity bomb deaths/gm',]
 
 }
 const stat_keys = {
@@ -581,6 +581,9 @@ const stat_keys = {
         'flux kills/min':'flux_kills/min',
         'blitz kills/min':'blitz_kills/min',
         'gravity bomb kills/min':'gravity_bomb_kills/min',
+        'flux deaths/min':'flux_deaths/min',
+        'blitz deaths/min':'blitz_deaths/min',
+        'gravity bomb deaths/min':'gravity_bomb_deaths/min',
         'kills/gm':'kills/gm',
         'deaths/gm':'deaths/gm',
         'suicides/gm':'suicides/gm',
@@ -588,7 +591,10 @@ const stat_keys = {
         'saves/gm':'saves/gm',
         'flux kills/gm':'flux_kills/gm',
         'blitz kills/gm':'blitz_kills/gm',
-        'gravity bomb kills/gm':'gravity_bomb_kills/gm'
+        'gravity bomb kills/gm':'gravity_bomb_kills/gm',
+        'flux deaths/gm':'flux_deaths/gm',
+        'blitz deaths/gm':'blitz_deaths/gm',
+        'gravity bomb deaths/gm':'gravity_bomb_deaths/gm',
     }
 }
 const weapon_keys = {
