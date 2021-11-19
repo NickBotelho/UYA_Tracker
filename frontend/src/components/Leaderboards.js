@@ -6,7 +6,7 @@ import { statList, stat_keys } from "./extras.js";
 import { HomeButton } from './HomeButton'
 import {useMediaQuery} from 'react-responsive'
 
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
