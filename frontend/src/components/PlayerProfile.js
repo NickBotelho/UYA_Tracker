@@ -6,6 +6,8 @@ import {GetLargeMap} from "./extras.js";
 import { Redirect } from "react-router";
 import online_circle from '../../static/images/online_circle.png';
 import { PlayerProfileController } from "./PlayerProfileController";
+import {AdvancedStatsController} from './AdvancedStatsController';
+import { MapStatsController } from "./MapStatsController";
 import { GameHistoryController } from "./GameHistoryController";
 import { HomeButton } from "./HomeButton";
 import {useMediaQuery} from 'react-responsive'
@@ -165,10 +167,15 @@ function PlayerProfile(props){
                         <div style = {{
                             display:'flex',
                             flexDirection:'row',
-                            justifyContent:'center'
+                            justifyContent:'center',
+                            flexWrap:"wrap"
                         }}>
                             {controller}
                             <GameHistoryController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true}/>
+                            <AdvancedStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'per_min'} title = {"ADVANCED (MINS)"}/>
+                            <AdvancedStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'per_gm'} title = {"ADVANCED (GMS)"}/>
+                            <MapStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'maps'}/>
+
                         </div>
     
                         <div style ={{
@@ -176,7 +183,7 @@ function PlayerProfile(props){
                             justifyContent:'center',
                             marginTop:'100px'
                         }}>
-                            {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} />}
+                            {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} advanced = {false} maps = {false}/>}
                         </div>
     
     
@@ -246,6 +253,9 @@ function PlayerProfile(props){
                         }}>
                             {controller}
                             <GameHistoryController player = {player} address = {address} table = {table} changeTable = {changeTable}  isDesktop={false}/>
+                            <AdvancedStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'per_min'} title = {"ADVANCED (MINS)"}/>
+                            <AdvancedStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'per_gm'} title = {"ADVANCED (GMS)"}/>
+                            <MapStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'maps'}/>
                         </div>
     
                         <div style ={{
@@ -253,7 +263,7 @@ function PlayerProfile(props){
                             justifyContent:'center',
                             marginTop:'50px'
                         }}>
-                            {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} />}
+                            {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} advanced = {false} maps = {false}/>}
                         </div>
     
     

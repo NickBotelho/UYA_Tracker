@@ -2,8 +2,16 @@ import React, { createRef, useState, useCallback } from "react";
 
 //prop fields : player, stat (field of player dict)
 function StatField(props){
+    if (props.advanced == true){
+        var stat_value = props.player.advanced_stats[props.category][props.stat]
+    }
+    else if (props.maps == true){
+        var stat_value = props.player.advanced_stats.per_gm[props.category][props.stat]
+    }
+    else{
+        var stat_value = props.player.stats[props.category][props.stat]
 
-    var stat_value = props.player.stats[props.category][props.stat]
+    }
 
     return (
         

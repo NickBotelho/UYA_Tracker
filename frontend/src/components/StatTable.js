@@ -4,16 +4,50 @@ import { categories } from "./extras.js";
 //fields: player json, broad type of stats (general, CTF...)
 function StatTable(props){
     const category = props.category
+    console.log(category)
     
     let arr = []
-    for (let stat in categories[category]){
-        arr.push(<StatField title = {categories[category][stat]['title']}
-        category = {categories[category][stat]['category']} 
-        stat = {categories[category][stat]['stat']} 
-        player = {props.player} 
-        address = {props.address}
-        key = {stat}/>)
+    if (props.advanced == false && props.maps == false){
+
+        for (let stat in categories[category]){
+            arr.push(<StatField title = {categories[category][stat]['title']}
+            category = {categories[category][stat]['category']} 
+            stat = {categories[category][stat]['stat']} 
+            player = {props.player} 
+            address = {props.address}
+            key = {stat}
+            advanced = {false}
+            maps = {false}/>)
+        }
+    }else if (props.maps == true){
+
+        for (let stat in categories[category]){
+            arr.push(<StatField title = {categories[category][stat]['title']}
+            category = {categories[category][stat]['category']} 
+            stat = {categories[category][stat]['stat']} 
+            player = {props.player} 
+            address = {props.address}
+            key = {stat}
+            advanced = {false}
+            maps = {true}/>
+            )
+        }
     }
+    else{
+
+        for (let stat in categories[category]){
+            arr.push(<StatField title = {categories[category][stat]['title']}
+            category = {categories[category][stat]['category']} 
+            stat = {categories[category][stat]['stat']} 
+            player = {props.player} 
+            address = {props.address}
+            key = {stat}
+            advanced = {true}
+            maps = {false}/>
+            )
+        }
+    }
+   
     return (
         <div style = {{
             // border : "3px solid rgb(165,154,46)",
@@ -37,7 +71,7 @@ function StatTable(props){
                     paddingRight:'10px',
                     borderBottom: '2pt solid burlywood',
                 }}>
-                    {category.toUpperCase()}
+                    {category.replace("_"," ").toUpperCase()}
                 </caption>
                 <tbody>
 

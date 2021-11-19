@@ -369,6 +369,138 @@ const categories = {
         },
         
     },
+    'per_min':{
+        0:{
+            'title':"kills/min",
+            'category':'per_min',
+            'stat':'kills/min'
+        },
+        1:{
+            'title':'deaths/min',
+            'category':'per_min',
+            'stat':"deaths/min"
+        },
+        2:{
+            'title':'suicides/min',
+            'category':'per_min',
+            'stat':"suicides/min"
+        },
+        3:{
+            'title':'caps/min',
+            'category':'per_min',
+            'stat':"caps/min"
+        },
+        4:{
+            'title':'saves/min',
+            'category':'per_min',
+            'stat':"saves/min"
+        },
+        5:{
+            'title':'flux kills/min',
+            'category':'per_min',
+            'stat':"flux_kills/min"
+        },
+        6:{
+            'title':'blitz kills/min',
+            'category':'per_min',
+            'stat':"blitz_kills/min"
+        },
+        7:{
+            'title':'grav kills/min',
+            'category':'per_min',
+            'stat':"gravity_bomb_kills/min"
+        },
+    },
+    'per_gm':{
+        0:{
+            'title':"kills/gm",
+            'category':'per_gm',
+            'stat':'kills/gm'
+        },
+        1:{
+            'title':'deaths/gm',
+            'category':'per_gm',
+            'stat':"deaths/gm"
+        },
+        2:{
+            'title':'suicides/gm',
+            'category':'per_gm',
+            'stat':"suicides/gm"
+        },
+        3:{
+            'title':'caps/gm',
+            'category':'per_gm',
+            'stat':"caps/gm"
+        },
+        4:{
+            'title':'saves/gm',
+            'category':'per_gm',
+            'stat':"saves/gm"
+        },
+        5:{
+            'title':'flux kills/gm',
+            'category':'per_gm',
+            'stat':"flux_kills/gm"
+        },
+        6:{
+            'title':'blitz kills/gm',
+            'category':'per_gm',
+            'stat':"blitz_kills/gm"
+        },
+        7:{
+            'title':'grav kills/gm',
+            'category':'per_gm',
+            'stat':"gravity_bomb_kills/gm"
+        },
+    
+    },
+    'maps':{
+        0:{
+            'title':"Bakisi Isle",
+            'category':'maps',
+            'stat':'Bakisi_Isle'
+        },
+        1:{
+            'title':"Hoven Gorge",
+            'category':'maps',
+            'stat':'Hoven_Gorge'
+        },
+        2:{
+            'title':"Outpost x12",
+            'category':'maps',
+            'stat':'Outpost_x12'
+        },
+        3:{
+            'title':"Korgon Outpost",
+            'category':'maps',
+            'stat':'Korgon_Outpost'
+        },
+        4:{
+            'title':"Blackwater City",
+            'category':'maps',
+            'stat':'Blackwater_City'
+        },
+        5:{
+            'title':"Command Center",
+            'category':'maps',
+            'stat':'Command_Center'
+        },
+        6:{
+            'title':"Aquatos Sewers",
+            'category':'maps',
+            'stat':'Aquatos_Sewers'
+        },
+        7:{
+            'title':"Blackwater Dox",
+            'category':'maps',
+            'stat':'Blackwater_Dox'
+        },
+        8:{
+            'title':"Marcadia Palace",
+            'category':'maps',
+            'stat':'Marcadia_Palace'
+        },
+    }
 }
 const statList = {
     "overall":['games played', "wins", "losses",'kills','deaths','base damage', 'nodes', 'suicides'],
@@ -376,7 +508,9 @@ const statList = {
     "siege":["wins", "losses",'kills','deaths','base damage', 'nodes'],
     "deathmatch":["wins", "losses",'kills','deaths'],
     'weapon kills':['flux','gravity bomb','blitz', 'n60', 'lava gun', 'mines','rocket','morph','wrench'],
-    'weapon deaths':['flux','gravity bomb','blitz', 'n60', 'lava gun', 'mines','rocket','morph','wrench']
+    'weapon deaths':['flux','gravity bomb','blitz', 'n60', 'lava gun', 'mines','rocket','morph','wrench'],
+    'advanced':['kills/min', 'deaths/min','suicides/min','caps/min','saves/min','flux kills/min','blitz kills/min','gravity bomb kills/min',
+    'kills/gm', 'deaths/gm','suicides/gm','caps/gm','saves/gm','flux kills/gm','blitz kills/gm','gravity bomb kills/gm']
 
 }
 const stat_keys = {
@@ -438,6 +572,24 @@ const stat_keys = {
         'wrench':'wrench_deaths'
 
     },
+    'advanced':{
+        'kills/min':'kills/min',
+        'deaths/min':'deaths/min',
+        'suicides/min':'suicides/min',
+        'caps/min':'caps/min',
+        'saves/min':'saves/min',
+        'flux kills/min':'flux_kills/min',
+        'blitz kills/min':'blitz_kills/min',
+        'gravity bomb kills/min':'gravity_bomb_kills/min',
+        'kills/gm':'kills/gm',
+        'deaths/gm':'deaths/gm',
+        'suicides/gm':'suicides/gm',
+        'caps/gm':'caps/gm',
+        'saves/gm':'saves/gm',
+        'flux kills/gm':'flux_kills/gm',
+        'blitz kills/gm':'blitz_kills/gm',
+        'gravity bomb kills/gm':'gravity_bomb_kills/gm'
+    }
 }
 const weapon_keys = {
     "Lava Gun":'lava_gun',

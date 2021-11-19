@@ -13,6 +13,10 @@ function PlayerProfileController(props){
                 category = {props.category}
                 player = {props.player}
                 address = {props.address}
+                advanced = {false}
+                maps = {false}
+
+
             />
         )
     }

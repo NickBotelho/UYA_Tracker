@@ -140,17 +140,34 @@ class Database():
     def getTotalPlayerCount(self):
         return self.collection.count()
     def getEntireStat(self,category, stat):
-        res = []
-        i = 0
-        total = self.getTotalPlayerCount()
-        for player in self.collection.find().sort([("stats.{}.{}".format(category, stat),-1)]):
-            if i < total:
-                i+=1
-                res.append({
-                    "name":str(player['username']),
-                    stat:int(player['stats'][category][stat])
-                })
-        return res
+        MIN_GAMES = 35
+        if category != "advanced":
+            res = []
+            i = 0
+            total = self.getTotalPlayerCount()
+            for player in self.collection.find().sort([("stats.{}.{}".format(category, stat),-1)]):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if i < total:
+                    i+=1
+                    res.append({
+                        "name":str(player['username']),
+                        stat:int(player['stats'][category][stat])
+                    })
+            return res
+        else:
+            type = "per_min" if "min" in stat else "per_gm"
+            res = []
+            i = 0
+            total = self.getTotalPlayerCount()
+            for player in self.collection.find().sort([("advanced_stats.{}.{}".format(type,stat),-1)]):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if i < total:
+                    i+=1
+                    res.append({
+                        "name":str(player['username']),
+                        stat:float(player['advanced_stats'][type][stat])
+                    })
+            return res
     def getOnlinePlayers(self):
         res = []
         for player in self.collection.find():
@@ -178,6 +195,7 @@ class Database():
         res['in_game_status'] = player['status']
         res['stats'] = player['stats']
         res['match_history'] = player['match_history']
+        res['advanced_stats'] = player['advanced_stats']
         # res['last_login'] = time.strftime("%a, %d %b %Y", int(player['last_login']))
         return res
     def getBasicGameInformationForPlayer(self, game_id, username):
