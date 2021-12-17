@@ -174,6 +174,29 @@ def postDetailedGame():
 def serveHomepage():
     return render_template("index.html")
 
+
+@app.route('/<path:text>', methods=['GET', 'POST'])
+def all_routes(text):
+        return render_template("index.html")
+
+
+
+############API#######################
+@app.route('/api/players/<path:name>', methods=['GET', 'POST'])
+def playerAPI(name):
+    res = database.getPlayerStats(name)
+    return res if res != None else {}
+
+@app.route('/api/games/<float:game_id>', methods=['GET', 'POST'])
+def gamesAPI(game_id):
+    res = database.getGameDetails(game_id)
+    return res if res != None else {}
+
+@app.route('/api/', methods=['GET'])
+def generalAPI():
+    return "/api/players/player_username<br>/api/games/game_id"
+#################################
+############IMAGES###############
 @app.route("/main.js", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveMain():
@@ -254,10 +277,6 @@ def serveForArrow():
 def serveBackArrow():
     return send_file("frontend/static/images/backward_arrow.svg", mimetype = "image/svg+xml")
 
-
-@app.route('/<path:text>', methods=['GET', 'POST'])
-def all_routes(text):
-        return render_template("index.html")
 
     
 # app.run(debug = True) #COMMENT OUT FOR PRODUCTION
