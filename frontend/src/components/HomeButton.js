@@ -39,7 +39,7 @@ function HomeButton(props){
     }
 
     if (home != null){
-        const redirect = "/components/homepage"
+        const redirect = "/"
         return <Redirect push to = {redirect}/>
     }
 

@@ -122,7 +122,7 @@ function Top10(props){
         );
     }
     if (searching != null){
-        const redirect = "/components/PlayerProfile"+"?name="+encodeURIComponent(searching)
+        const redirect = "/players"+"?name="+encodeURIComponent(searching)
         return <Redirect push to = {redirect}/>
     }
     

@@ -197,7 +197,7 @@ function Searchbar(props){
         }
         
     }else{
-        const redirect = "/components/PlayerProfile"+"?name="+encodeURIComponent(search.name)
+        const redirect = "/players"+"?name="+encodeURIComponent(search.name)
         return <Redirect push to = {redirect}/>
     }
 }

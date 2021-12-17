@@ -22,8 +22,7 @@ function App(props){
             }}>
             
                 <Routing/>
-                {/* <HomePage/>
-                <PlayerProfile/> */}
+
             </div>
             
         );

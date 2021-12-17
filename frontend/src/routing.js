@@ -8,11 +8,11 @@ import {DetailedGame} from './components/DetailedGame'
 
 function Routing(props) {
     const navRoutes={
-        homepage:"/components/homepage",
-        player_profile:"/components/PlayerProfile",
-        leaderboards:"/components/leaderboards",
-        gamehistory:'/components/gamehistory',
-        detailedgame:'/components/detailedgame'
+        homepage:"/home",
+        player_profile:"/players",
+        leaderboards:"/leaderboards",
+        gamehistory:'/gamehistory',
+        detailedgame:'/detailedgame'
     }
     return (
         <div

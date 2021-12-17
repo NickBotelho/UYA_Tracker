@@ -41,11 +41,11 @@ function NavBar(props){
     }
 
     if (leaderboards != null){
-        let redirect = "/components/leaderboards"
+        let redirect = "/leaderboards"
         return <Redirect push to = {redirect}/>
     }
     if (gameHistory != null){
-        let redirect = "/components/gamehistory"
+        let redirect = "/gamehistory"
         return <Redirect push to = {redirect}/>
     }
 

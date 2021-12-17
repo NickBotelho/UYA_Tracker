@@ -88,11 +88,11 @@ function DetailedGame(props){
         mode = 3
     }
     if (searchName != null){
-        const redirect = "/components/PlayerProfile"+"?name="+encodeURIComponent(searchName)
+        const redirect = "/players"+"?name="+encodeURIComponent(searchName)
         return <Redirect push to = {redirect}/>
     }
     if (goBack != null){
-        let redirect = "/components/gamehistory"
+        let redirect = "/gamehistory"
         return <Redirect push to = {redirect}/>
     }
     if (isDesktop){

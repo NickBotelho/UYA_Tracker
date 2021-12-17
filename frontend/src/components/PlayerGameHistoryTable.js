@@ -59,7 +59,7 @@ function PlayerGameHistoryTable(props){
         )
     }
     if (redirectID != null){
-        const redirect = "/components/detailedgame"+"?id="+encodeURIComponent(redirectID) //redirectt will hoold game id
+        const redirect = "/detailedgame"+"?id="+encodeURIComponent(redirectID) //redirectt will hoold game id
         return <Redirect push to = {redirect}/>
     }
     // console.log(`is desktop = ${props.isDesktop}`)

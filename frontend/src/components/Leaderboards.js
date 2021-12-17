@@ -52,7 +52,7 @@ function Leaderboards(props){
         goHome(true)
     }
     if (home != null){
-        const redirect = "/components/homepage"
+        const redirect = "/leaderboards"
         return <Redirect push to = {redirect}/>
     }
  
