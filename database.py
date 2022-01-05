@@ -4,6 +4,7 @@ players_online = Database("UYA","Players_Online")
 game_history = Database("UYA", "Game_History")
 games_active = Database("UYA","Games_Active")
 website_analytics = Database("UYA","Website_Analytics")
+clans = Database("UYA", "Clans")
 
 def getEntireStat(category, stat):
     return player_stats.getEntireStat(category, stat)
@@ -70,3 +71,12 @@ def analytics(request):
 def getTotalGames():
     '''returns number of games in records'''
     return game_history.collection.count()
+
+def getOnlinePlayerObjects():
+    return players_online.getActivePlayers()
+
+def getOnlineGamesObjects():
+    return games_active.getActiveGames()
+
+def getOnlineClans():
+    return clans.getActiveClans(players_online)

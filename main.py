@@ -182,6 +182,21 @@ def all_routes(text):
 
 
 ############API#######################
+@app.route('/api/online/players', methods=['GET'])
+def getOnlinePlayersObjects():
+    res = database.getOnlinePlayerObjects()
+    return json.dumps(res) if res != None else {}
+@app.route('/api/online/games', methods=['GET'])
+def getOnlineGamesObjects():
+    res = database.getOnlineGamesObjects()
+    return json.dumps(res) if res != None else {}
+@app.route('/api/online/clans', methods=['GET'])
+def getOnlineClans():
+    res = database.getOnlineClans()
+    return json.dumps(res) if res != None else {}
+
+
+
 @app.route('/api/players/<path:name>', methods=['GET', 'POST'])
 def playerAPI(name):
     res = database.getPlayerStats(name)

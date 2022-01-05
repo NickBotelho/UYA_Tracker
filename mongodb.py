@@ -175,6 +175,32 @@ class Database():
         for player in self.collection.find():
             res.append(player['username'].lower())
         return res
+    def getActivePlayers(self):
+        '''return list of mongo objects for each player'''
+        res = []
+        for player in self.collection.find():
+            player = dict(player)
+            del player['_id']
+            res.append(player)
+        return res
+    def getActiveGames(self):
+        '''return list of mongo objects for each acitve game'''
+        res = []
+        for game in self.collection.find():
+            game = dict(game)
+            del game['_id']
+            res.append(game)
+        return res
+    def getActiveClans(self, players_online):
+        '''return list of mongo objects for each acitve game'''
+        res = {}
+        for player in players_online.collection.find():
+            if player['clan_id'] != -1:
+                clan = self.collection.find_one({'clan_name': player['clan_name']})
+                if clan['leader_account_id'] == player['account_id']:
+                    res[clan['clan_name']] = clan['clan_tag']
+        return res
+
     def getTop10(self, category, stat):
         res = []
         i = 0
