@@ -1,10 +1,45 @@
 from mongodb import Database
+import pickle
+from model.predictGame import predictGame
+from graphs.graphs import produceGraphs, rulesetBreakdown, weaponBreakdown
 player_stats = Database("UYA","Player_Stats")
 players_online = Database("UYA","Players_Online")
 game_history = Database("UYA", "Game_History")
 games_active = Database("UYA","Games_Active")
 website_analytics = Database("UYA","Website_Analytics")
 clans = Database("UYA", "Clans")
+uyaModel = pickle.load(open('model/uyaModel.sav', 'rb'))
+
+def getGamePrediction(idx):
+    '''given the idx of the game return the predictions'''
+    games = games_active.getActiveGames()
+    idx = int(idx)
+    if idx >= len(games):
+        #error
+        return {"error":"Invalid game ID"}
+    else:
+        game = games[idx]
+        if len(game['details']['players']) % 2 != 0:
+            return {"error":"This model is not build for uneven teams"}
+        else:
+            teams, probs = predictGame(game, uyaModel, player_stats)
+            red, red_p = teams[0], probs[0]
+            blue, blue_p = tuple(teams[1]), probs[1]
+        
+            temp = ''
+            for player in red:
+                temp+= f"{player} "
+            redTeam = temp
+            temp = ''
+            for player in blue:
+                temp+= f"{player} "
+            blueTeam = temp
+
+            return {
+                redTeam:red_p,
+                blueTeam:blue_p
+            }
+
 
 def getEntireStat(category, stat):
     return player_stats.getEntireStat(category, stat)
@@ -80,3 +115,17 @@ def getOnlineGamesObjects():
 
 def getOnlineClans():
     return clans.getActiveClans(players_online)
+
+
+def getActivityInformation(type,gameSize):
+    res = produceGraphs(gameSize)
+
+    if type == "weekdays":
+        return {"gameSize":res['gameSize'],"weekdays":res['weekdays']}
+    
+
+def getWeaponBreakdown():
+    return weaponBreakdown()
+
+def getRulsetBreakdown():
+    return rulesetBreakdown()

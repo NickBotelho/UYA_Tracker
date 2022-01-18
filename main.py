@@ -207,6 +207,26 @@ def gamesAPI(game_id):
     res = database.getGameDetails(game_id)
     return res if res != None else {}
 
+@app.route('/api/model/<idx>', methods=['GET', 'POST'])
+def modelPrediction(idx):
+    res = database.getGamePrediction(idx)
+    return res if res != None else {}
+
+@app.route('/api/graphs/<type>/<gameSize>', methods=['GET', 'POST'])
+def getActivityGraph(type, gameSize):
+    gameSize = int(gameSize)
+    res = database.getActivityInformation(type, gameSize)
+    return res if res != None else {}
+@app.route('/api/graphs/weapons', methods=['GET'])
+def getWeaponGraph():
+    res = database.getWeaponBreakdown()
+    return res if res != None else {}
+@app.route('/api/graphs/ruleset', methods=['GET'])
+def getRuleGraph():
+    res = database.getRulsetBreakdown()
+    return res if res != None else {}
+
+
 @app.route('/api/', methods=['GET'])
 def generalAPI():
     return "/api/players/player_username<br>/api/games/game_id"
@@ -294,7 +314,7 @@ def serveBackArrow():
 
 
     
-# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+app.run(debug = True) #COMMENT OUT FOR PRODUCTION
 
 
     
