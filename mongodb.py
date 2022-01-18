@@ -138,7 +138,7 @@ class Database():
     #             })
     #     return res
     def getTotalPlayerCount(self):
-        return self.collection.count_documents()
+        return self.collection.count_documents({})
     def getEntireStat(self,category, stat):
         MIN_GAMES = 35
         MIN_CTF_GAMES = 10
