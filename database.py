@@ -105,7 +105,7 @@ def analytics(request):
 
 def getTotalGames():
     '''returns number of games in records'''
-    return game_history.collection.count()
+    return game_history.collection.count_documents({})
 
 def getOnlinePlayerObjects():
     return players_online.getActivePlayers()
