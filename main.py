@@ -228,6 +228,9 @@ def getMapsPlayed(gameSize):
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache = database.getGameAnalytics()
         chached_query_time = current_query_time
+    elif gameSize not in analytics_cache:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
     res = analytics_cache[gameSize]['map_count']
     x = list(res.keys())
     x = [map.replace("_", " ") for map in x]
@@ -240,6 +243,9 @@ def getMapsTime(gameSize):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    elif gameSize not in analytics_cache:
         analytics_cache = database.getGameAnalytics()
         chached_query_time = current_query_time
     res = analytics_cache[gameSize]['map_time']
@@ -256,6 +262,9 @@ def getWeekdayActivity(gameSize):
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache = database.getGameAnalytics()
         chached_query_time = current_query_time
+    elif gameSize not in analytics_cache:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
     res = analytics_cache[gameSize]['weekdays']
     return {"x":weekdaysNames, "y":res,
     'title':"Games Played", "xlabel":"Weekday","ylabel":'Minutes'}
@@ -265,6 +274,9 @@ def getMonthActivity(gameSize):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    elif gameSize not in analytics_cache:
         analytics_cache = database.getGameAnalytics()
         chached_query_time = current_query_time
     res = analytics_cache[gameSize]['months']
@@ -278,6 +290,9 @@ def getWeaponUsage(gameSize):
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache = database.getGameAnalytics()
         chached_query_time = current_query_time
+    elif gameSize not in analytics_cache:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
     res = analytics_cache[gameSize]['weapon_usage']
     return {"x":list(res.keys()), "y":list(res.values()),
     'title':"Games Played", "xlabel":"Weapon","ylabel":'Games Played'}
@@ -287,6 +302,9 @@ def getWeaponKills(gameSize):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    elif gameSize not in analytics_cache:
         analytics_cache = database.getGameAnalytics()
         chached_query_time = current_query_time
     res = analytics_cache[gameSize]['weapon_kills']
