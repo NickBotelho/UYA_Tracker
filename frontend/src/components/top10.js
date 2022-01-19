@@ -48,7 +48,6 @@ function Top10(props){
                 stat:props.stat
             }),  
         }
-        console.log(`${props.address}/stats/top10`)
         const res = await fetch(`${props.address}/stats/top10`, requestSearch)
         const players = await res.json()
         hasLoaded(players)

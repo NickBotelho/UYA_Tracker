@@ -1,7 +1,7 @@
 from mongodb import Database
 import pickle
 from model.predictGame import predictGame
-from graphs.graphs import produceGraphs, rulesetBreakdown, weaponBreakdown
+from graphs.graphs import gameAnalytics
 player_stats = Database("UYA","Player_Stats")
 players_online = Database("UYA","Players_Online")
 game_history = Database("UYA", "Game_History")
@@ -117,15 +117,9 @@ def getOnlineClans():
     return clans.getActiveClans(players_online)
 
 
-def getActivityInformation(type,gameSize):
-    res = produceGraphs(gameSize)
 
-    if type == "weekdays":
-        return {"gameSize":res['gameSize'],"weekdays":res['weekdays']}
-    
 
-def getWeaponBreakdown():
-    return weaponBreakdown()
+def getGameAnalytics():
+    res = gameAnalytics()
+    return res
 
-def getRulsetBreakdown():
-    return rulesetBreakdown()

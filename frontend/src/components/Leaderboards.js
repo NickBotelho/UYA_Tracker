@@ -27,7 +27,9 @@ function Leaderboards(props){
     let [currentCategory, changeCategory] = useState(<div></div>)
     let [currentBoard, changeBoard] = useState(<div></div>)
 
-
+    const isTooLarge = useMediaQuery({
+        query: "(max-height:600px)"
+    })
     let stat_categories = []
     for (let category in statList){
         // console.log(category)
@@ -133,12 +135,13 @@ function Leaderboards(props){
         )
     }
     else{
+        console.log(isTooLarge)
         return (
             <div style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                     url(${map})`,
                 fontFamily:"Roboto, sans-serif",
-                height:'100vh'
+                height:'1050px',
     
                 
             }}>

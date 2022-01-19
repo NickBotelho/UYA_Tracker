@@ -3,6 +3,7 @@ from flask import Flask, json, jsonify, request, render_template, send_file
 from flask_cors import CORS, cross_origin
 import time
 import database
+from graphs.graphs import convertSize, monthNames, weekdaysNames
 
 app = Flask(__name__, template_folder = 'frontend/server/build/')
 cors = CORS(app)
@@ -12,6 +13,8 @@ searched_player = {}
 games_cache = {}
 chached_query_time = 0
 refresh_interval = 10 #minutes between caching
+
+analytics_cache = {}
 
 @app.route("/player", methods = ["GET"])
 @cross_origin(supports_credentials=True)
@@ -126,7 +129,7 @@ def postRecentGames():
 @cross_origin(supports_credentials=True)
 def postGeneralRecentGames():
     if request.method == "POST":
-        global games_cache, chached_query_time, refresh_interva;
+        global games_cache, chached_query_time, refresh_interval
         start = request.json['start']
         end = request.json['end']
         current_query_time = time.time()
@@ -182,6 +185,8 @@ def all_routes(text):
 
 
 ############API#######################
+
+########ONLINE APIS###################
 @app.route('/api/online/players', methods=['GET'])
 def getOnlinePlayersObjects():
     res = database.getOnlinePlayerObjects()
@@ -196,7 +201,7 @@ def getOnlineClans():
     return json.dumps(res) if res != None else {}
 
 
-
+#############DB QUERIES################
 @app.route('/api/players/<path:name>', methods=['GET', 'POST'])
 def playerAPI(name):
     res = database.getPlayerStats(name)
@@ -207,26 +212,89 @@ def gamesAPI(game_id):
     res = database.getGameDetails(game_id)
     return res if res != None else {}
 
+################ML MODEL################
 @app.route('/api/model/<idx>', methods=['GET', 'POST'])
 def modelPrediction(idx):
     res = database.getGamePrediction(idx)
     return res if res != None else {}
 
-@app.route('/api/graphs/<type>/<gameSize>', methods=['GET', 'POST'])
-def getActivityGraph(type, gameSize):
-    gameSize = int(gameSize)
-    res = database.getActivityInformation(type, gameSize)
-    return res if res != None else {}
-@app.route('/api/graphs/weapons', methods=['GET'])
-def getWeaponGraph():
-    res = database.getWeaponBreakdown()
-    return res if res != None else {}
-@app.route('/api/graphs/ruleset', methods=['GET'])
-def getRuleGraph():
-    res = database.getRulsetBreakdown()
-    return res if res != None else {}
+###########GRAPH CALLS######################
+@app.route('/api/graphs/map_count/<gameSize>', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getMapsPlayed(gameSize):
+    global analytics_cache, chached_query_time, refresh_interval
+    current_query_time = time.time()
+    # gameSize = convertSize[int(gameSize)] if gameSize != "all" else gameSize
+    if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    res = analytics_cache[gameSize]['map_count']
+    x = list(res.keys())
+    x = [map.replace("_", " ") for map in x]
+
+    return {"x":x, "y":list(res.values()),
+    'title':"Games Played", "xlabel":"Weekday","ylabel":'Games Played'}
+@app.route('/api/graphs/map_time/<gameSize>', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getMapsTime(gameSize):
+    global analytics_cache, chached_query_time, refresh_interval
+    current_query_time = time.time()
+    if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    res = analytics_cache[gameSize]['map_time']
+    x = list(res.keys())
+    x = [map.replace("_", " ") for map in x]
+
+    return {"x":x, "y":list(res.values()),
+    'title':"Average Game Length", "xlabel":"Map","ylabel":'Minutes'}
+@app.route('/api/graphs/weekday_activity/<gameSize>', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getWeekdayActivity(gameSize):
+    global analytics_cache, chached_query_time, refresh_interval
+    current_query_time = time.time()
+    if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    res = analytics_cache[gameSize]['weekdays']
+    return {"x":weekdaysNames, "y":res,
+    'title':"Games Played", "xlabel":"Weekday","ylabel":'Minutes'}
+@app.route('/api/graphs/month_activity/<gameSize>', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getMonthActivity(gameSize):
+    global analytics_cache, chached_query_time, refresh_interval
+    current_query_time = time.time()
+    if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    res = analytics_cache[gameSize]['months']
+    return {"x":monthNames, "y":res,
+    'title':"Games Played", "xlabel":"Month","ylabel":'Games Played'}
+@app.route('/api/graphs/weapon_usage/<gameSize>', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getWeaponUsage(gameSize):
+    global analytics_cache, chached_query_time, refresh_interval
+    current_query_time = time.time()
+    if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    res = analytics_cache[gameSize]['weapon_usage']
+    return {"x":list(res.keys()), "y":list(res.values()),
+    'title':"Games Played", "xlabel":"Weapon","ylabel":'Games Played'}
+@app.route('/api/graphs/weapon_kills/<gameSize>', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getWeaponKills(gameSize):
+    global analytics_cache, chached_query_time, refresh_interval
+    current_query_time = time.time()
+    if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    res = analytics_cache[gameSize]['weapon_kills']
+    return {"x":list(res.keys()), "y":list(res.values()),
+    'title':"Kills", "xlabel":"Weapon","ylabel":'Kills'}
 
 
+#########SUMMARY##################
 @app.route('/api/', methods=['GET'])
 def generalAPI():
     return "/api/players/player_username<br>/api/games/game_id"
@@ -314,7 +382,7 @@ def serveBackArrow():
 
 
     
-# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+app.run(debug = True) #COMMENT OUT FOR PRODUCTION
 
 
     

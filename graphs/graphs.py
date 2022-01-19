@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 from mongodb import Database
 import datetime
+import copy
+import collections
+
 monthNames = [
     "Jan",'Feb',
     'Mar', 'Apr', 'May', "Jun", 'Jul', 'Aug',
@@ -10,38 +13,7 @@ weekdaysNames = [
     'Sun', 'Mon', 'Tue', 'Wed',
     'Thu', 'Fri', 'Sat'
 ]
-def produceGraphs(gameSize = 2):
-    game_history = Database("UYA", "Game_History")
-    dates = {}
-    months = [0 for i in range(12)]
-    weekdays = [0 for i in range(7)]
-    for game in game_history.collection.find():
-        if len(game['player_ids']) < gameSize: continue
 
-        date = game['date'] #"Thu, 22 July 2021"
-        args = date.split(" ")
-        if len(args[2]) > 3: continue
-        dates[date] = 1 if date not in dates else dates[date] + 1
-
-        date = datetime.datetime.strptime(date, "%a, %d %b %Y")
-        month = date.month
-        weekday = date.weekday()
-
-        months[month-1] +=1
-        weekdays[weekday]+=1
-
-    return {
-        "gameSize":gameSize,
-        "weekdays":{
-            "x":weekdaysNames,
-            "y":weekdays
-        },
-        "months":{
-            "x":monthNames,
-            "y":months
-        }
-
-    }
 
 def DAU():
     plt.rcParams['axes.facecolor'] = '#9B5A06'
@@ -102,15 +74,122 @@ def rulesetBreakdown():
     plt.bar(x = labels, height = counter, color = '#FFA836')
     return {"x":labels, "y":counter}
 
-def weaponBreakdown():
-    import collections
+
+
+convertSize = {
+        2:'1v1',
+        4:'2v2',
+        6:'3v3',
+        8:'4v4'
+    }
+def gameAnalytics():
+
     game_history = Database("UYA", "Game_History")
+    months = [0 for i in range(12)]
+    weekdays = [0 for i in range(7)]
 
-    c = collections.Counter()
+    maps={
+        "Bakisi_Isle":0,
+        "Hoven_Gorge":0,
+        "Outpost_x12":0,
+        "Korgon_Outpost":0,
+        "Metropolis":0,
+        "Blackwater_City":0,
+        "Command_Center":0,
+        'Aquatos_Sewers':0,
+        "Blackwater_Dox":0,
+        "Marcadia_Palace":0
+    }
+
+    oneSize = {
+        'map_time':copy.deepcopy(maps),
+        'map_count':copy.deepcopy(maps),
+        'weekdays':copy.deepcopy(weekdays),
+        'months':copy.deepcopy(months),
+        'weapon_usage':collections.Counter(),
+        'weapon_kills':collections.Counter()
+    }
+
+    sizes = {
+        'all':copy.deepcopy(oneSize),
+        '1v1':copy.deepcopy(oneSize),
+        '2v2':copy.deepcopy(oneSize),
+        '3v3':copy.deepcopy(oneSize),
+        '4v4':copy.deepcopy(oneSize)
+    }
+    
     for game in game_history.collection.find():
-        c.update(game['weapons'])
-        
-
-    return {"x":list(c.keys()), "y":list(c.values())}
+        gameSize = len(game['player_ids'])
+        gameSize = gameSize - 1 if gameSize % 2 != 0 else gameSize
 
 
+        date = game['date'] #"Thu, 22 July 2021"
+        args = date.split(" ")
+        if len(args[2]) > 3: continue
+
+
+        date = datetime.datetime.strptime(date, "%a, %d %b %Y")
+        month = date.month
+        weekday = date.weekday()
+
+        players = game['game_results']
+        players = players['winners'] + players['losers']
+        for player in players:
+            sizes['all']['weapon_kills'].update(player['weapons'])
+            sizes[convertSize[gameSize]]['weapon_kills'].update(player['weapons'])
+            
+
+        sizes['all']['months'][month-1] +=1
+        sizes['all']['map_count'][game['map']]+=1
+        sizes['all']['map_time'][game['map']]+=game['minutes']
+        sizes['all']['weekdays'][weekday] +=1
+        sizes['all']['weapon_usage'].update(game['weapons'])
+
+        sizes[convertSize[gameSize]]['months'][month-1] +=1
+        sizes[convertSize[gameSize]]['weekdays'][weekday] +=1
+        sizes[convertSize[gameSize]]['map_count'][game['map']]+=1
+        sizes[convertSize[gameSize]]['map_time'][game['map']]+=game['minutes']
+        sizes[convertSize[gameSize]]['weapon_usage'].update(game['weapons'])
+
+    for size in sizes:
+        sizes[size]['weapon_usage'] = dict(sizes[size]['weapon_usage'])
+
+        times = sizes[size]['map_time']
+        for map in times:
+            times[map] = round(times[map] / sizes[size]['map_count'][map], 2)
+
+        sizes[size]['weapon_kills'] = {
+            "Flux":sizes[size]['weapon_kills']['flux_kills'],
+            "Blitz":sizes[size]['weapon_kills']['blitz_kills'],
+            "Gravity Bomb":sizes[size]['weapon_kills']['gravity_bomb_kills'],
+            "Rockets":sizes[size]['weapon_kills']['rocket_kills'],
+            "N60":sizes[size]['weapon_kills']['n60_kills'],
+            "Lava Gun":sizes[size]['weapon_kills']['lava_gun_kills'],
+            "Morph O' Ray":sizes[size]['weapon_kills']['morph_kills'],
+            "Mines":sizes[size]['weapon_kills']['mines_kills'],
+            'Wrench':sizes[size]['weapon_kills']['wrench_kills'],
+        }
+            
+
+    return sizes
+
+def gunAnalytics():
+    player_stats = Database("UYA", "Player_Stats")
+    counter = collections.Counter()
+    for player in player_stats.collection.find():
+        counter.update(player['stats']['weapons'])
+
+    counter = dict(counter)
+    counter = {gun:counter[gun] for gun in counter if 'kills' in gun}
+    res = {
+        "Flux":counter['flux_kills'],
+        "Blitz":counter['blitz_kills'],
+        "Gravity Bomb":counter['gravity_bomb_kills'],
+        "Rockets":counter['rocket_kills'],
+        "N60":counter['n60_kills'],
+        "Lava Gun":counter['lava_gun_kills'],
+        "Morph O' Ray":counter['morph_kills'],
+        "Mines":counter['mines_killls'],
+        'Wrench':counter['wrench_kills'],
+    }
+    return res

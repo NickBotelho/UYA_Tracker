@@ -4,7 +4,8 @@ import {HomePage} from "./components/homepage.js";
 import {PlayerProfile} from "./components/PlayerProfile.js";
 import {Leaderboards} from "./components/Leaderboards";
 import {GameHistory} from './components/GameHistory';
-import {DetailedGame} from './components/DetailedGame'
+import {DetailedGame} from './components/DetailedGame';
+import {AnalyticsPage} from './components/AnalyticsPage';
 
 function Routing(props) {
     const navRoutes={
@@ -12,7 +13,8 @@ function Routing(props) {
         player_profile:"/players",
         leaderboards:"/leaderboards",
         gamehistory:'/gamehistory',
-        detailedgame:'/detailedgame'
+        detailedgame:'/detailedgame',
+        analytics:'/analytics',
     }
     return (
         <div
@@ -30,6 +32,7 @@ function Routing(props) {
                         <Route exact path={navRoutes.leaderboards} component={ Leaderboards }/>    
                         <Route exact path={navRoutes.gamehistory} component={ GameHistory }/> 
                         <Route exact path={navRoutes.detailedgame} component={ DetailedGame }/>    
+                        <Route exact path={navRoutes.analytics} component={ AnalyticsPage }/>    
 
 
                         <Route component={HomePage} />              

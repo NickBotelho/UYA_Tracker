@@ -98,7 +98,7 @@ function HomePage(props){
                 
                 <div style = {fluidDistance}>
                     <div style = {{
-                        marginTop:"80px"
+                        marginTop:"25px"
                     }}>
                         <Top10 title = "Overall Kills" category = 'overall' stat = 'kills' address = {address}/>     
                     </div>          

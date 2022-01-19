@@ -231,7 +231,15 @@ function PlayerProfile(props){
         
     
             return(
-                    <div style = {general_style}>
+                    <div style = {{
+                        fontFamily:"Roboto, sans-serif",
+                        letterSpacing: "-1px",
+                        color: 'rgb(229, 197, 102)',
+                        position:"relative",
+                        background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
+                        url(${map})`,
+                        height:"100"
+                    }}>
                         <HomeButton/>
                         <div style = {{
                             display:"flex",

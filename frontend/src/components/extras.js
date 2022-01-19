@@ -608,5 +608,14 @@ const weapon_keys = {
     "Flux":'flux'
 }
 
+const graph_keys={
+    'Weapon Kills':'weapon_kills',
+    'Weapon Usage':'weapon_usage',
+    'Maps Played':'map_count',
+    'Avg. Game Length':'map_time',
+    'Weekday Activity':'weekday_activity',
+    'Monthly Activity':'month_activity',
+}
 
-export {GetLargeMap, GetHalfLargeMap, getSpecifiedMap, categories, statList, stat_keys, weapon_keys}
+
+export {graph_keys, GetLargeMap, GetHalfLargeMap, getSpecifiedMap, categories, statList, stat_keys, weapon_keys}

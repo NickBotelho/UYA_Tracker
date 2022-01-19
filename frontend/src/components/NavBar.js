@@ -6,6 +6,8 @@ function NavBar(props){
     let leaderboardRef = createRef()
     let [gameHistory, setGameHistory] = useState(null)
     let gameHistoryRef = createRef()
+    let [analytics, setAnalytics] = useState(null)
+    let analyticsRef = createRef()
     const restingStyle = {
         background:"rgba(190, 177, 54, 0.8)",
         cursor:'pointer',
@@ -31,6 +33,9 @@ function NavBar(props){
     const goToGameHistory = () =>{
         setGameHistory(true)
     }
+    const goToAnalytics = () =>{
+        setAnalytics(true)
+    }
     const buttonHover = (e) => {
         let ref = e.currentTarget
         ref.style.background = hoverStyle.background
@@ -48,7 +53,10 @@ function NavBar(props){
         let redirect = "/gamehistory"
         return <Redirect push to = {redirect}/>
     }
-
+    if (analytics != null){
+        let redirect = "/analytics"
+        return <Redirect push to = {redirect}/>
+    }
     return(
         <div style = {{
             display:'flex',
@@ -67,6 +75,13 @@ function NavBar(props){
             onMouseLeave = {buttonLeave}
             onMouseDown = {goToGameHistory}>
                 Game History
+            </button>
+            <button style = {restingStyle}
+            ref = {analyticsRef}
+            onMouseOver = {buttonHover}
+            onMouseLeave = {buttonLeave}
+            onMouseDown = {goToAnalytics}>
+                Analytics
             </button>
         </div>
     )
