@@ -267,7 +267,7 @@ def getWeekdayActivity(gameSize):
         chached_query_time = current_query_time
     res = analytics_cache[gameSize]['weekdays']
     return {"x":weekdaysNames, "y":res,
-    'title':"Games Played", "xlabel":"Weekday","ylabel":'Minutes'}
+    'title':"Games Played", "xlabel":"Weekday","ylabel":'Games Played'}
 @app.route('/api/graphs/month_activity/<gameSize>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getMonthActivity(gameSize):
