@@ -10,35 +10,7 @@ website_analytics = Database("UYA","Website_Analytics")
 clans = Database("UYA", "Clans")
 uyaModel = pickle.load(open('model/uyaModel.sav', 'rb'))
 
-def getGamePrediction(idx):
-    '''given the idx of the game return the predictions'''
-    games = games_active.getActiveGames()
-    idx = int(idx)
-    if idx >= len(games):
-        #error
-        return {"error":"Invalid game ID"}
-    else:
-        game = games[idx]
-        if len(game['details']['players']) % 2 != 0:
-            return {"error":"This model is not build for uneven teams"}
-        else:
-            teams, probs = predictGame(game, uyaModel, player_stats)
-            red, red_p = teams[0], probs[0]
-            blue, blue_p = tuple(teams[1]), probs[1]
-        
-            temp = ''
-            for player in red:
-                temp+= f"{player} "
-            redTeam = temp
-            temp = ''
-            for player in blue:
-                temp+= f"{player} "
-            blueTeam = temp
 
-            return {
-                redTeam:red_p,
-                blueTeam:blue_p
-            }
 
 
 def getEntireStat(category, stat):
@@ -123,3 +95,62 @@ def getGameAnalytics():
     res = gameAnalytics()
     return res
 
+def getGamePredictionIndex(idx):
+    '''given the idx of the game return the predictions'''
+    games = games_active.getActiveGames()
+    idx = int(idx)
+    if idx >= len(games):
+        #error
+        return {"error":"Invalid game ID"}
+    else:
+        game = games[idx]
+        if len(game['details']['players']) % 2 != 0:
+            return {"error":"This model is not build for uneven teams"}
+        else:
+            teams, probs = predictGame(game, uyaModel, player_stats)
+            red, red_p = teams[0], probs[0]
+            blue, blue_p = tuple(teams[1]), probs[1]
+        
+            temp = ''
+            for player in red:
+                temp+= f"{player} "
+            redTeam = temp
+            temp = ''
+            for player in blue:
+                temp+= f"{player} "
+            blueTeam = temp
+
+            return {
+                redTeam:red_p,
+                blueTeam:blue_p
+            }
+
+def getGamePredictionHost(host):
+    '''given the idx of the game return the predictions'''
+    games = games_active.getActiveGames()
+    hosts = {game['details']['host'].lower():game for game in games}
+    if host.lower() not in hosts:
+        #error
+        return {"error":"Game not found"}
+    else:
+        game =hosts[host.lower()]
+        if len(game['details']['players']) % 2 != 0:
+            return {"error":"This model is not build for uneven teams"}
+        else:
+            teams, probs = predictGame(game, uyaModel, player_stats)
+            red, red_p = teams[0], probs[0]
+            blue, blue_p = tuple(teams[1]), probs[1]
+        
+            temp = ''
+            for player in red:
+                temp+= f"{player} "
+            redTeam = temp
+            temp = ''
+            for player in blue:
+                temp+= f"{player} "
+            blueTeam = temp
+
+            return {
+                redTeam:red_p,
+                blueTeam:blue_p
+            }

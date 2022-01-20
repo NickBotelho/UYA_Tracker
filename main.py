@@ -213,9 +213,15 @@ def gamesAPI(game_id):
     return res if res != None else {}
 
 ################ML MODEL################
-@app.route('/api/model/<idx>', methods=['GET', 'POST'])
-def modelPrediction(idx):
-    res = database.getGamePrediction(idx)
+@app.route('/api/model/index/<idx>', methods=['GET', 'POST'])
+@cross_origin(supports_credentials=True)
+def modelPredictionIndex(idx):
+    res = database.getGamePredictionIndex(idx)
+    return res if res != None else {}
+@app.route('/api/model/host/<name>', methods=['GET', 'POST'])
+@cross_origin(supports_credentials=True)
+def modelPredictionHost(name):
+    res = database.getGamePredictionHost(name)
     return res if res != None else {}
 
 ###########GRAPH CALLS######################
