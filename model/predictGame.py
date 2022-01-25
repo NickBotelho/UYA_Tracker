@@ -31,7 +31,7 @@ def getTeamInformation(team, player_stats):
     for player in team:
         name = player
 
-        player = player_stats.collection.find_one({'username':player})
+        player = player_stats.collection.find_one({'username_lowercase':player.lower()})
         advanced = player['advanced_stats']
         player = player['stats']
         
