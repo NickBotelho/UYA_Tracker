@@ -476,26 +476,31 @@ const categories = {
             'stat':'Korgon_Outpost'
         },
         4:{
+            'title':"Metropolis",
+            'category':'maps',
+            'stat':'Metropolis'
+        },
+        5:{
             'title':"Blackwater City",
             'category':'maps',
             'stat':'Blackwater_City'
         },
-        5:{
+        6:{
             'title':"Command Center",
             'category':'maps',
             'stat':'Command_Center'
         },
-        6:{
+        7:{
             'title':"Aquatos Sewers",
             'category':'maps',
             'stat':'Aquatos_Sewers'
         },
-        7:{
+        8:{
             'title':"Blackwater Dox",
             'category':'maps',
             'stat':'Blackwater_Dox'
         },
-        8:{
+        9:{
             'title':"Marcadia Palace",
             'category':'maps',
             'stat':'Marcadia_Palace'
