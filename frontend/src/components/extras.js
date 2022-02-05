@@ -620,6 +620,7 @@ const graph_keys={
     'Avg. Game Length':'map_time',
     'Weekday Activity':'weekday_activity',
     'Monthly Activity':'month_activity',
+    'Time Played':"month_time"
 }
 
 

@@ -5,7 +5,7 @@ function AnalyticsCategory(props){
 
     let category_stats = []
     const graphTypes = ['Weapon Kills', 'Weapon Usage', 'Maps Played' , 'Avg. Game Length',
-'Weekday Activity', "Monthly Activity"]
+'Weekday Activity', "Monthly Activity", "Time Played"]
 
     for (let stat in graphTypes){
         stat = graphTypes[stat]

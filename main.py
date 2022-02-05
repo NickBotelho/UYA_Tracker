@@ -288,6 +288,20 @@ def getMonthActivity(gameSize):
     res = analytics_cache[gameSize]['months']
     return {"x":monthNames, "y":res,
     'title':"Games Played", "xlabel":"Month","ylabel":'Games Played'}
+@app.route('/api/graphs/month_time/<gameSize>', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getMonthTime(gameSize):
+    global analytics_cache, chached_query_time, refresh_interval
+    current_query_time = time.time()
+    if abs((chached_query_time - current_query_time)//60) > refresh_interval:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    elif gameSize not in analytics_cache:
+        analytics_cache = database.getGameAnalytics()
+        chached_query_time = current_query_time
+    res = analytics_cache[gameSize]['month_time']
+    return {"x":monthNames, "y":res,
+    'title':"Games Played", "xlabel":"Month","ylabel":'Minutes Played'}
 @app.route('/api/graphs/weapon_usage/<gameSize>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getWeaponUsage(gameSize):

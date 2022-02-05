@@ -106,6 +106,7 @@ def gameAnalytics():
         'map_count':copy.deepcopy(maps),
         'weekdays':copy.deepcopy(weekdays),
         'months':copy.deepcopy(months),
+        'month_time':copy.deepcopy(months),
         'weapon_usage':collections.Counter(),
         'weapon_kills':collections.Counter()
     }
@@ -140,12 +141,14 @@ def gameAnalytics():
             
 
         sizes['all']['months'][month-1] +=1
+        sizes['all']['month_time'][month-1] += game['minutes']*gameSize
         sizes['all']['map_count'][game['map']]+=1
         sizes['all']['map_time'][game['map']]+=game['minutes']
         sizes['all']['weekdays'][weekday] +=1
         sizes['all']['weapon_usage'].update(game['weapons'])
 
         sizes[convertSize[gameSize]]['months'][month-1] +=1
+        sizes[convertSize[gameSize]]['month_time'][month-1] += game['minutes']*gameSize
         sizes[convertSize[gameSize]]['weekdays'][weekday] +=1
         sizes[convertSize[gameSize]]['map_count'][game['map']]+=1
         sizes[convertSize[gameSize]]['map_time'][game['map']]+=game['minutes']
