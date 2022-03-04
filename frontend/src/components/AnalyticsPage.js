@@ -71,7 +71,7 @@ function AnalyticsPage(props){
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                     url(${map})`,
                 fontFamily:"Roboto, sans-serif",
-                height:'100vh'
+                height: isDesktop? '100vh' : '750px'
     
                 
             }}>

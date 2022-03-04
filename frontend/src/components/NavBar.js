@@ -11,15 +11,15 @@ function NavBar(props){
     const restingStyle = {
         background:"rgba(190, 177, 54, 0.8)",
         cursor:'pointer',
-        fontSize: props.isDesktop ? "17pt" : "12pt",
+        fontSize: props.isDesktop ? "17pt" : "10pt",
         marginBottom : "15px",
         border : "3px solid rgb(141,113,24)",
         fontFamily:"Roboto, sans-serif",
         fontWeight:"bolder",
         textShadow:"1px 1px 1px black",
         color: 'rgb(141,113,24)',
-        paddingLeft:"25px",
-        paddingRight:'25px',
+        paddingLeft:props.isDesktop ? "25px" : "15px",
+        paddingRight:props.isDesktop ? "25px" : "15px",
         marginLeft:'5px',
         marginRight:'5px',
         userSelect:"none"

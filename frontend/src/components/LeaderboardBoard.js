@@ -179,11 +179,11 @@ function LeaderboardBoard(props){
                 }}>
 
                     <img src = '../../static/images/backward_arrow.svg' onMouseDown={prevPage}
-                    height= {props.isDesktop ? "25" : "15"} width = {props.isDesktop ? "150" : "75"}
+                    height= {props.isDesktop ? "25" : "20"} width = {props.isDesktop ? "150" : "85"}
                     style = {{userSelect:"none"}}></img>
                     
                     <img src = '../../static/images/forward_arrow.svg' onMouseDown={nextPage}
-                    height= {props.isDesktop ? "25" : "15"} width = {props.isDesktop ? "150" : "75"}
+                    height= {props.isDesktop ? "25" : "20"} width = {props.isDesktop ? "150" : "85"}
                     style = {{userSelect:"none"}}></img>
                 </div>
                

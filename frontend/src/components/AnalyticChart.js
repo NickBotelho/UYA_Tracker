@@ -67,8 +67,8 @@ function AnalyticChart(props){
                     }
                 ],
             }}
-                height={props.isDesktop? 700: 375}
-                width = {props.isDesktop? 1200: 375}
+                height={props.isDesktop? 700: 390}
+                width = {props.isDesktop? 1200: 350}
                 options={{
                     maintainAspectRatio: false,
                     scales:{

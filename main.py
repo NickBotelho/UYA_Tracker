@@ -301,7 +301,7 @@ def getMonthTime(gameSize):
         chached_query_time = current_query_time
     res = analytics_cache[gameSize]['month_time']
     return {"x":monthNames, "y":res,
-    'title':"Games Played", "xlabel":"Month","ylabel":'Minutes Played'}
+    'title':"Time Played", "xlabel":"Month","ylabel":'Minutes'}
 @app.route('/api/graphs/weapon_usage/<gameSize>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getWeaponUsage(gameSize):

@@ -250,7 +250,7 @@ function GameHistory(props){
                                 games:null,
                                 max:games.max
                             })
-                        }}height= "15" width = "75"
+                        }}height= "20" width = "100"
                         style = {{userSelect:"none",cursor:"pointer"}}></img>}
                     {games.start + numEntries > games.max ? null :<img src = '../../static/images/forward_arrow.svg'
                         onMouseDown={ () =>{
@@ -261,7 +261,7 @@ function GameHistory(props){
                                 max:games.max
 
                             })
-                        }}height= "15" width = "75"
+                        }}height= "20" width = "100"
                         style = {{userSelect:"none",cursor:"pointer"}}></img>}
                     
                 </div>
