@@ -2,6 +2,7 @@ from mongodb import Database
 import pickle
 from model.predictGame import predictGame
 from graphs.graphs import gameAnalytics
+from graphs.generateMapImage import createMap
 player_stats = Database("UYA","Player_Stats")
 players_online = Database("UYA","Players_Online")
 game_history = Database("UYA", "Game_History")
@@ -9,7 +10,8 @@ games_active = Database("UYA","Games_Active")
 website_analytics = Database("UYA","Website_Analytics")
 clans = Database("UYA", "Clans")
 uyaModel = pickle.load(open('model/uyaModel.sav', 'rb'))
-
+chat = Database("UYA", "Chat")
+log = Database("UYA", "Logger")
 
 
 
@@ -154,3 +156,46 @@ def getGamePredictionHost(host):
                 redTeam:red_p,
                 blueTeam:blue_p
             }
+
+
+def getChat():
+    MAX_LEN =25
+    messages=chat.collection.find_one({})
+    del messages['_id']
+    res = []
+    messages = sorted(messages.items(), key = lambda x: x[0])
+    for message in messages:
+        message = message[1]
+        name = message[2]
+        m = message[1]
+        if len(m) > MAX_LEN:
+            m = m[:MAX_LEN]
+        res.append([name, m])
+    if len(res) > 15:
+        res = res[len(res)-15:]  
+    return res
+
+def getMap(dme_id):
+    game = log.collection.find_one({
+        'dme_id':dme_id
+    })
+    if not game: return None
+
+    map = game['map']
+    graphInfo = game['graph']
+    return createMap(graphInfo['x'],graphInfo['y'],graphInfo['names'],graphInfo['color'],map, graphInfo['hp'])
+
+def getLiveGameInfo(dme_id):
+    game = log.collection.find_one({
+        'dme_id':dme_id
+    })
+    if not game: return None
+    game = dict(game)
+    del game['_id']
+    return game if game != None else None
+
+def getLiveGames():
+    dmes = []
+    for game in log.collection.find():
+        dmes.append(game['dme_id'])
+    return dmes

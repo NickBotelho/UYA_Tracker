@@ -4,7 +4,6 @@ import { categories } from "./extras.js";
 //fields: player json, broad type of stats (general, CTF...)
 function StatTable(props){
     const category = props.category
-    console.log(category)
     
     let arr = []
     if (props.advanced == false && props.maps == false){

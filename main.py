@@ -199,6 +199,10 @@ def getOnlineGamesObjects():
 def getOnlineClans():
     res = database.getOnlineClans()
     return json.dumps(res) if res != None else {}
+@app.route('/api/online/chat', methods=['GET'])
+def getOnlineChat():
+    res = database.getChat()
+    return json.dumps(res) if res != None else {}
 
 
 #############DB QUERIES################
@@ -418,8 +422,30 @@ def serveForArrow():
 def serveBackArrow():
     return send_file("frontend/static/images/backward_arrow.svg", mimetype = "image/svg+xml")
 
+@app.route('/api/live/map', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getLiveMap():
+    if request.method == "POST":
+        dme_id = float(request.json['dme_id'])
+        res = database.getMap(int(dme_id))
+        return jsonify({'status':str(res)})
+        # res = '<img src="data:image/png;base64,{}">'.format(res)
+        # return '<form method="POST" enctype="multipart/form-data"><input type="file" name="image"><button type="submit">Send</button></form><br>' + res
 
-    
+@app.route('/api/live/game', methods=['GET','POST'])
+@cross_origin(supports_credentials=True)
+def getLiveGameInfo():
+    if request.method == "POST":
+        dme_id = float(request.json['dme_id'])
+        res = database.getLiveGameInfo(int(dme_id))
+        return jsonify(res), 200 if res != None else 404   
+
+@app.route('/api/live/available', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def getLiveGames():
+    if request.method == "GET":
+        res = database.getLiveGames()
+        return jsonify(res), 200 if res != None else 404   
 # app.run(debug = True) #COMMENT OUT FOR PRODUCTION
 
 

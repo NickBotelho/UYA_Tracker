@@ -8,6 +8,8 @@ function NavBar(props){
     let gameHistoryRef = createRef()
     let [analytics, setAnalytics] = useState(null)
     let analyticsRef = createRef()
+    let [live, setLive] = useState(null)
+    let liveRef = createRef()
     const restingStyle = {
         background:"rgba(190, 177, 54, 0.8)",
         cursor:'pointer',
@@ -18,8 +20,8 @@ function NavBar(props){
         fontWeight:"bolder",
         textShadow:"1px 1px 1px black",
         color: 'rgb(141,113,24)',
-        paddingLeft:props.isDesktop ? "25px" : "15px",
-        paddingRight:props.isDesktop ? "25px" : "15px",
+        paddingLeft:props.isDesktop ? "25px" : "10px",
+        paddingRight:props.isDesktop ? "25px" : "10px",
         marginLeft:'5px',
         marginRight:'5px',
         userSelect:"none"
@@ -35,6 +37,9 @@ function NavBar(props){
     }
     const goToAnalytics = () =>{
         setAnalytics(true)
+    }
+    const goToLive = () =>{
+        setLive(true)
     }
     const buttonHover = (e) => {
         let ref = e.currentTarget
@@ -55,6 +60,10 @@ function NavBar(props){
     }
     if (analytics != null){
         let redirect = "/analytics"
+        return <Redirect push to = {redirect}/>
+    }
+    if (live != null){
+        let redirect = "/live"
         return <Redirect push to = {redirect}/>
     }
     return(
@@ -82,6 +91,13 @@ function NavBar(props){
             onMouseLeave = {buttonLeave}
             onMouseDown = {goToAnalytics}>
                 Analytics
+            </button>
+            <button style = {restingStyle}
+            ref = {liveRef}
+            onMouseOver = {buttonHover}
+            onMouseLeave = {buttonLeave}
+            onMouseDown = {goToLive}>
+                Live
             </button>
         </div>
     )
