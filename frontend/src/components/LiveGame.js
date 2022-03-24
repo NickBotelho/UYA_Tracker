@@ -324,7 +324,24 @@ function LiveGame(props){
     
     
                     }}>GAME COULD NOT BE LOADED</h1>
-
+                    <h3 style = {{
+                        fontSize : isDesktop? "45pt" : "25pt",
+                        textAlign:"center",
+                        color: 'rgb(229, 197, 102)',
+                        textShadow: '6px 4px 4px black',
+                        marginTop:'100px'
+    
+    
+                    }}>Game needs a few seconds to buffer</h3>
+                    <h3 style = {{
+                        fontSize : isDesktop? "45pt" : "25pt",
+                        textAlign:"center",
+                        color: 'rgb(229, 197, 102)',
+                        textShadow: '6px 4px 4px black',
+                        marginTop:'100px'
+    
+    
+                    }}>OR</h3>
                     <h3 style = {{
                         fontSize : isDesktop? "45pt" : "25pt",
                         textAlign:"center",
