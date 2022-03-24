@@ -7,9 +7,10 @@ import { LiveMap } from "./LiveMap.js";
 import { LiveEvents } from "./LiveEvents.js";
 import { LivePlayerStates } from "./LivePlayerStates.js";
 import { LiveScore } from "./LiveScore.js";
+import { LiveInfo } from "./LiveInfo.js";
 import online_circle from '../../static/images/online_circle.png';
 
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
@@ -243,7 +244,15 @@ function LiveGame(props){
                             <LiveScore address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
                         </div>
                         <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
-                        <LiveEvents address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
+                        <div style = {{
+                            display:'flex',
+                            justifyContent:"space-evenly",
+                            flexDirection:'column'
+                        }}>
+                            <LiveEvents address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
+                            <LiveInfo info = {gameInfo.details} address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} />
+
+                        </div>
                     </div>
         
             

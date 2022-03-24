@@ -7,7 +7,7 @@ import {useMediaQuery} from 'react-responsive'
 import {PlayersOnline} from './PlayersOnline'
 import {GamesOnline} from './GamesOnline'
 import {Chat} from './Chat'
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"

@@ -24,7 +24,6 @@ function Searchbar(props){
  
     async function buttonSearch(){
 
-        console.log(info)
         const requestSearch = {
             method: "POST",
             headers:  {
@@ -40,7 +39,6 @@ function Searchbar(props){
         const search_result = await fetch(`${props.address}/player/stats`, requestSearch)
         const data = await search_result.json()
         if (data.status === 404){
-            console.log("name not found")
             setNotFound("Name not found...")
         }
         else{

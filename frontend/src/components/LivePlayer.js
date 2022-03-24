@@ -13,15 +13,7 @@ function LivePlayer(props){
         query: "(min-width: 600px)",
     });
    
-    // const props.player = {
-    //     name:'props.player#1',
-    //     hp:100,
-    //     kills:50,
-    //     deaths:24,
-    //     caps:1
-    // }
 
-    // console.log(props.player)
     return (  
         <div style = {{
             height : props.isDesktop? '150px' : '75px',

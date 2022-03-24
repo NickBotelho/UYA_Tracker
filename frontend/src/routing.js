@@ -6,10 +6,8 @@ import {Leaderboards} from "./components/Leaderboards";
 import {GameHistory} from './components/GameHistory';
 import {DetailedGame} from './components/DetailedGame';
 import {AnalyticsPage} from './components/AnalyticsPage';
-import {Streams} from './components/Streams'
 import {Live} from './components/Live'
 import {LiveGame} from './components/LiveGame'
-import {LiveMap} from './components/LiveMap'
 function Routing(props) {
     const navRoutes={
         homepage:"/home",
@@ -18,10 +16,8 @@ function Routing(props) {
         gamehistory:'/gamehistory',
         detailedgame:'/detailedgame',
         analytics:'/analytics',
-        streams:'/streams',
         live:'/live',
         game:'/game',
-        map:'/map'
     }
     return (
         <div
@@ -40,10 +36,8 @@ function Routing(props) {
                         <Route exact path={navRoutes.gamehistory} component={ GameHistory }/> 
                         <Route exact path={navRoutes.detailedgame} component={ DetailedGame }/>    
                         <Route exact path={navRoutes.analytics} component={ AnalyticsPage }/>    
-                        <Route exact path={navRoutes.streams} component={ Streams }/>    
                         <Route exact path={navRoutes.live} component={ Live }/>    
                         <Route exact path={navRoutes.game} component={ LiveGame }/>    
-                        <Route exact path={navRoutes.map} component={ LiveMap }/>    
 
 
                         <Route component={HomePage} />              

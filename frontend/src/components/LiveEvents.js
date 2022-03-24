@@ -84,10 +84,6 @@ function LiveEvents(props){
         }, props.refresh);
         return () => clearInterval(interval);
     }, []);
-    const events = [
-        'Nick#1 Killed Jumper',
-
-    ]
 
 
     if(rows.queued == false){

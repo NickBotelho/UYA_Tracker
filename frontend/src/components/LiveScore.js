@@ -47,7 +47,7 @@ function LiveScore(props){
                 score:scores.score,
                 queued:false
             }))
-        }, 3000);
+        }, props.refresh);
         return () => clearInterval(interval);
     }, []);
 

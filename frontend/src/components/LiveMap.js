@@ -55,8 +55,8 @@ function LiveMap(props){
     }, []);
     if (radar == null){
         let cache = myStorage.getItem("radar")
-        cache = cache != null? <img src={`data:image/png;base64, ${cache}`} height = {props.isDesktop? '100%' : '300'} alt = "Map"/> 
-        : <img src = "../../static/images/loading_circle.gif" height = '253' width = '255' alt = "Map"></img>
+        cache = cache != null? <img style = {{border : "3px solid rgb(141,113,24)",}} src={`data:image/png;base64, ${cache}`} height = {props.isDesktop? '100%' : '300'} alt = "Map"/> 
+        : <img style = {{border : "3px solid rgb(141,113,24)",}}  src = "../../static/images/loading_circle.gif" height = '253' width = '255' alt = "Map"></img>
  
         return (
 
@@ -79,9 +79,13 @@ function LiveMap(props){
                 height: props.isDesktop? '100%' : '100%',
                 width: props.isDesktop? '100%' : '100%',
                 display:"flex",
-                justifyContent:"center"
+                justifyContent:"center",
+
             }}>
-              <img src={`data:image/png;base64, ${radar}`} height = {props.isDesktop? '100%' : '300'}/>
+              <img style = {{
+                border : "3px solid rgb(141,113,24)",
+
+              }} src={`data:image/png;base64, ${radar}`} height = {props.isDesktop? '100%' : '300'}/>
                 
             </div>
             
