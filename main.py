@@ -446,7 +446,7 @@ def getLiveGames():
     if request.method == "GET":
         res = database.getLiveGames()
         return jsonify(res), 200 if res != None else 404   
-app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
 
 
     
