@@ -428,7 +428,7 @@ def getLiveMap():
     if request.method == "POST":
         dme_id = float(request.json['dme_id'])
         res = database.getMap(int(dme_id))
-        return jsonify({'status':str(res)})
+        return jsonify({'status':str(res)}), 200 if res != None else 404
         # res = '<img src="data:image/png;base64,{}">'.format(res)
         # return '<form method="POST" enctype="multipart/form-data"><input type="file" name="image"><button type="submit">Send</button></form><br>' + res
 
@@ -446,7 +446,7 @@ def getLiveGames():
     if request.method == "GET":
         res = database.getLiveGames()
         return jsonify(res), 200 if res != None else 404   
-# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+app.run(debug = True) #COMMENT OUT FOR PRODUCTION
 
 
     

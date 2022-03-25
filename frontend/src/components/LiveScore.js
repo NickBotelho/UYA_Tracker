@@ -31,15 +31,18 @@ function LiveScore(props){
             }),    
         }
         const search_result = await fetch(`${props.address}/api/live/game`, requestSearch)
-        const gameInfo = await search_result.json()
-        let s = gameInfo.scores
+        if (search_result.status == 200){
+            const gameInfo = await search_result.json()
+            let s = gameInfo.scores
+            
+    
+            setScores({
+                queued:true,
+                score: s
+            })
+            return gameInfo
+        }
         
-
-        setScores({
-            queued:true,
-            score: s
-        })
-        return gameInfo
     }
     useEffect(() => {
         const interval = setInterval(() => {

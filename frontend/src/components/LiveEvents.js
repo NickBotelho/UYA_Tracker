@@ -59,21 +59,23 @@ function LiveEvents(props){
             }),    
         }
         const search_result = await fetch(`${props.address}/api/live/game`, requestSearch)
-        const gameInfo = await search_result.json()
-        let logger = gameInfo.logger
-        let newRow = logger.map(eventRow)
-        let currentRows = rows.rows
-        let batch_num = myStorage.getItem("batch_num")
-        if (batch_num == null || batch_num!=gameInfo.batch_num){
-            currentRows.unshift(newRow)
-            myStorage.setItem("batch_num", batch_num)
+        if (search_result.status == 200){
+            const gameInfo = await search_result.json()
+            let logger = gameInfo.logger
+            let newRow = logger.map(eventRow)
+            let currentRows = rows.rows
+            let batch_num = myStorage.getItem("batch_num")
+            if (batch_num == null || batch_num!=gameInfo.batch_num){
+                currentRows.unshift(newRow)
+                myStorage.setItem("batch_num", batch_num)
+            }
+            updateRows({
+                queued:true,
+                rows:currentRows,
+                batch_num:gameInfo.batch_num
+            })
+            return gameInfo
         }
-        updateRows({
-            queued:true,
-            rows:currentRows,
-            batch_num:gameInfo.batch_num
-        })
-        return gameInfo
     }
     useEffect(() => {
         const interval = setInterval(() => {
