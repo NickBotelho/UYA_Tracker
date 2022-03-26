@@ -19,7 +19,7 @@ else{
     address = "https://uyatracker.herokuapp.com"
 }
 
-const REFRESH_TIME = 1000
+const REFRESH_TIME = 3000
 function LiveGame(props){
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
