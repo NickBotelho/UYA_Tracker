@@ -8,6 +8,7 @@ import {DetailedGame} from './components/DetailedGame';
 import {AnalyticsPage} from './components/AnalyticsPage';
 import {Live} from './components/Live'
 import {LiveGame} from './components/LiveGame'
+import {Streams} from './components/Streams'
 function Routing(props) {
     const navRoutes={
         homepage:"/home",
@@ -18,6 +19,7 @@ function Routing(props) {
         analytics:'/analytics',
         live:'/live',
         game:'/game',
+        stream:'/streams'
     }
     return (
         <div
@@ -37,7 +39,8 @@ function Routing(props) {
                         <Route exact path={navRoutes.detailedgame} component={ DetailedGame }/>    
                         <Route exact path={navRoutes.analytics} component={ AnalyticsPage }/>    
                         <Route exact path={navRoutes.live} component={ Live }/>    
-                        <Route exact path={navRoutes.game} component={ LiveGame }/>    
+                        <Route exact path={navRoutes.game} component={ LiveGame }/>
+                        <Route exact path={navRoutes.stream} component = {Streams}    />
 
 
                         <Route component={HomePage} />              
