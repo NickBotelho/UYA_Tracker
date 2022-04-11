@@ -65,9 +65,9 @@ function GamesOnline(props){
         return (
             <tr key = {index} ref = {ref3} onMouseEnter = {buttonHover}
             onMouseLeave={buttonLeave} 
-            onClick={() => {
-                setSearch(game.game_id)
-            }} 
+            // onClick={() => {
+            //     setSearch(game.game_id)
+            // }} 
             >
                 <td 
                 ref = {ref1}
