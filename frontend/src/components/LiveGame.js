@@ -287,7 +287,7 @@ function LiveGame(props){
                         textShadow:"1px 1px 1px black",
                         display:"flex",
                         flexDirection:'column',
-                        justifyContent:"center"
+                        justifyContent:"center",
                     }}>
                         <LiveScore address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
                         <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>

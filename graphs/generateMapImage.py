@@ -61,6 +61,7 @@ def createMap(x, y, names, colors, mapName, hp):
         plt.annotate(names[i], (x[i], y[i] + 0.2))
 
     buf = io.BytesIO()
+    plt.savefig("t.png")
     plt.savefig(buf,bbox_inches='tight', pad_inches=0, format='JPEG')
     buf.seek(0)
     data = base64.b64encode(buf.read())
@@ -73,4 +74,4 @@ def createMap(x, y, names, colors, mapName, hp):
 
 
 
-# createMap([9935],[10211], ["Nick#1"], ['aqua'], 'Hoven_Gorge')
+# createMap([20000],[20000], ["Nick#1"], ['aqua'], 'Bakisi_Isle', [100])

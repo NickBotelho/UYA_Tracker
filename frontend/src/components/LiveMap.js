@@ -52,17 +52,18 @@ function LiveMap(props){
         "Marcadia_Palace":[25700,35700,50500,60500],
     }
     const radarBounds = {
+        //[[desktop], [mobile]]
         //[xMax, yMax]
-        'Bakisi_Isle':[350,300],
-        'Aquatos_Sewers':[350,300],
-        "Hoven_Gorge":[350, 300],
-        "Outpost_x12":[450, 225],
-        "Korgon_Outpost":[350, 300],
-        "Metropolis":[350, 300],
-        "Blackwater_City":[150, 350],
-        "Command_Center":[350, 350],
-        "Blackwater_Dox":[350, 350],
-        "Marcadia_Palace":[350, 350],
+        'Bakisi_Isle':[[550,500],[350,300]],
+        'Aquatos_Sewers':[[550,500],[350,300]],
+        "Hoven_Gorge":[[550,500],[350,300]],
+        "Outpost_x12":[[550, 225],[350, 175]],
+        "Korgon_Outpost":[[550,500],[350,300]],
+        "Metropolis":[[550,500],[350,300]],
+        "Blackwater_City":[[400, 550],[300, 350]],
+        "Command_Center":[[550,500],[350,300]],
+        "Blackwater_Dox":[[550,500],[350,300]],
+        "Marcadia_Palace":[[550,500],[350,300]],
     }
     let mapName = props.map
     let [players, setPlayers] = useState(null)
@@ -121,13 +122,13 @@ function LiveMap(props){
                     }}/>
             <h4 style = {{
                 height:"10px",
-                width:'20px',
+                width:'100px',
                 userSelect:"none",
                 marginLeft: `${radarPoints[0]}px`,
                 marginTop:`${radarPoints[1]-15}px`,
                 position:'absolute',
                 fontWeight:'bold',
-                fontSize: '10pt'
+                fontSize: '12pt'
                 }}>
                 {player['name']}
             </h4>
@@ -141,13 +142,15 @@ function LiveMap(props){
         var edges = mapBounds[map]
         var xDist = edges[1] - edges[0]
         var xPercent = (coords[0] - edges[0]) / xDist
-        var xPlot = Math.floor(radarBounds[map][0] * xPercent- bias)
+        var radrBounds = props.isDesktop ? radarBounds[map][0][0] : radarBounds[map][1][0]
+        var xPlot = Math.floor(radrBounds * xPercent)
         edges = mapBounds[map]
         var yDist = edges[3] - edges[2]
         var yPercent = (coords[1] - edges[2]) / yDist
-        var yPlot = Math.floor(radarBounds[map][1] * yPercent + bias)
+        radrBounds = props.isDesktop ? radarBounds[map][0][1] : radarBounds[map][1][1]
+        var yPlot = Math.floor(radrBounds * yPercent + bias)
         
-        return [xPlot, radarBounds[map][1] - yPlot]
+        return [xPlot, radrBounds - yPlot]
     }
     useEffect(() => {
         const interval = setInterval(() => {
@@ -161,10 +164,12 @@ function LiveMap(props){
         if (cache == null){
             return (
                 <div style = {{
-                    paddingTop:props.isDesktop? '75px' : '10px',
-                    height: props.isDesktop? '100%' : '100%',
-                    width: props.isDesktop? '100%' : '100%',
- 
+                    marginTop:props.isDesktop? '75px' : '10px',
+                    height: props.isDesktop? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`,
+                    width: props.isDesktop? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`,
+                    marginLeft: props.isDesktop? '0': '25px',
+                    border : "3px solid rgb(141,113,24)",
+                    borderCollapse:"collapse",
                 }} >
                         <img src = "../../static/images/loading_circle.gif"
                             height = '253' width = '255'></img>  
@@ -175,12 +180,16 @@ function LiveMap(props){
             const points = cache.map(createPlayer)
             return (
                 <div style = {{
-                    paddingTop:props.isDesktop? '75px' : '10px',
-                    height: props.isDesktop? '100%' : '100%',
-                    width: props.isDesktop? '100%' : '100%',
+                    marginTop:props.isDesktop? '35px' : '10px',
+                    height: props.isDesktop? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`,
+                    width: props.isDesktop? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`,
+                    border : "3px solid rgb(141,113,24)",
+                    borderCollapse:"collapse",
+                    marginLeft: props.isDesktop? '0': '5%',
 
                 }}>
-                        <img src = {map} height = {`${radarBounds[mapName][1]}`} width= {`${radarBounds[mapName][0]}`} style = {{
+                        <img src = {map} height = {props.isDesktop? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`} 
+                        width= {props.isDesktop? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`} style = {{
                             position:'absolute'
                         }}></img>
     
@@ -194,12 +203,16 @@ function LiveMap(props){
         const points = players.map(createPlayer)
         return (
             <div style = {{
-                paddingTop:props.isDesktop? '75px' : '10px',
-                height: props.isDesktop? '100%' : '100%',
-                width: props.isDesktop? '100%' : '100%',
- 
+                marginTop:props.isDesktop? '35px' : '10px',
+                height: props.isDesktop? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`,
+                width: props.isDesktop? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`,
+                marginLeft: props.isDesktop? '0': '5%',
+                border : "3px solid rgb(141,113,24)",
+                borderCollapse:"collapse",
+
             }}>
-                    <img src = {map} height = {`${radarBounds[mapName][1]}px`} width= {`${radarBounds[mapName][0]}px`} style = {{
+                    <img src = {map} height = {props.isDesktop? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`} 
+                    width= {props.isDesktop? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`}  style = {{
                         
                         position:'absolute'
                     }}></img>
