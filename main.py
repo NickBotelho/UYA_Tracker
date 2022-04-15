@@ -2,6 +2,7 @@ from functools import cached_property
 from flask import Flask, json, jsonify, request, render_template, send_file
 from flask_cors import CORS, cross_origin
 import time
+
 import database
 from graphs.graphs import convertSize, monthNames, weekdaysNames
 
@@ -422,16 +423,63 @@ def serveForArrow():
 def serveBackArrow():
     return send_file("frontend/static/images/backward_arrow.svg", mimetype = "image/svg+xml")
 
+@app.route("/build/a0fcc87bbf523600488d73b689697ade.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveKisiRadar():
+    return send_file("frontend/server/build/a0fcc87bbf523600488d73b689697ade.png", mimetype = "image/gif")
+@app.route("/build/ca978c3641d3565debfecaf6b1778613.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servehovenRadar():
+    return send_file("frontend/server/build/ca978c3641d3565debfecaf6b1778613.png", mimetype = "image/gif")
+@app.route("/build/61eb1a9d10223e9ab24b33b9247cdf72.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servex12Radar():
+    return send_file("frontend/server/build/61eb1a9d10223e9ab24b33b9247cdf72.png", mimetype = "image/gif")
+@app.route("/build/cc5bd4bbd160af7b40c8e589ba852776.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servekorgonRadar():
+    return send_file("frontend/server/build/cc5bd4bbd160af7b40c8e589ba852776.png", mimetype = "image/gif")
+@app.route("/build/f46532c4fb676864785437ae05af032c.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servemetroRadar():
+    return send_file("frontend/server/build/f46532c4fb676864785437ae05af032c.png", mimetype = "image/gif")
+@app.route("/build/b4290a7814bc36535718def9c60f1854.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servebwcRadar():
+    return send_file("frontend/server/build/b4290a7814bc36535718def9c60f1854.png", mimetype = "image/gif")
+@app.route("/build/42df2b7880a7e742ce9029c28e574716.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servecommandRadar():
+    return send_file("frontend/server/build/42df2b7880a7e742ce9029c28e574716.png", mimetype = "image/gif")
+@app.route("/build/ced578cf338f8ad92821552e996135d8.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servesewersRadar():
+    return send_file("frontend/server/build/ced578cf338f8ad92821552e996135d8.png", mimetype = "image/gif")
+@app.route("/build/33c1399e057c1d3e3ec269f45f8f3dae.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servedoxRadar():
+    return send_file("frontend/server/build/33c1399e057c1d3e3ec269f45f8f3dae.png", mimetype = "image/gif")
+@app.route("/build/e78fc04c78807c4c54718acfa77e9b43.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servemarcadiaRadar():
+    return send_file("frontend/server/build/e78fc04c78807c4c54718acfa77e9b43.png", mimetype = "image/gif")
+@app.route("/static/images/playerIndicator.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveplayerindicator():
+    return send_file("frontend/static/images/playerIndicator.png", mimetype = "image/gif")
+@app.route("/static/images/skull.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveskullindicator():
+    return send_file("frontend/static/images/skull.png", mimetype = "image/gif")
 @app.route('/api/live/map', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getLiveMap():
     if request.method == "POST":
         dme_id = float(request.json['dme_id'])
         res = database.getMap(int(dme_id))
-        return jsonify({'status':str(res)}), 200 if res != None else 404
+        return jsonify(res), 200 if res != None else 404
         # res = '<img src="data:image/png;base64,{}">'.format(res)
         # return '<form method="POST" enctype="multipart/form-data"><input type="file" name="image"><button type="submit">Send</button></form><br>' + res
-
 @app.route('/api/live/game', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getLiveGameInfo():
@@ -446,7 +494,8 @@ def getLiveGames():
     if request.method == "GET":
         res = database.getLiveGames()
         return jsonify(res), 200 if res != None else 404   
-# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+
 
 
     
+app.run(debug = True) #COMMENT OUT FOR PRODUCTION

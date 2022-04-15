@@ -8,7 +8,6 @@ import hmetropolis from "../../static/images/metropolis(4000x1300).png";
 import houtpostx12 from "../../static/images/x12(4000x1250).png";
 import hmarcadia from '../../static/images/marcadia(4000x1400).png'
 
-import hovenRadar from '../../static/images/hovenRadar.png'
 
 function GetLargeMap(){
     const mapNames = [bakisi, metropolis, outpostx12, marcadia]
@@ -43,7 +42,6 @@ function GetHalfLargeMap(){
         return mapNames[index]
 }
 
-const hRadar = hovenRadar
 const categories = {
     'overall':{
         0:{
@@ -628,4 +626,4 @@ const graph_keys={
 }
 
 
-export {graph_keys, GetLargeMap, GetHalfLargeMap, getSpecifiedMap, categories, statList, stat_keys, weapon_keys, hRadar}
+export {graph_keys, GetLargeMap, GetHalfLargeMap, getSpecifiedMap, categories, statList, stat_keys, weapon_keys}

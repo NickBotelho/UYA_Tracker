@@ -7,7 +7,7 @@ import {useMediaQuery} from 'react-responsive'
 import {PlayersOnline} from './PlayersOnline'
 import {GamesOnline} from './GamesOnline'
 import {Chat} from './Chat'
-import { LiveMap2 } from "./LiveMap2.js";
+import { LiveMap2 } from "./LiveMap.js";
 const DEBUG = false
 var address = null
 if (DEBUG==true){

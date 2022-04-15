@@ -183,7 +183,8 @@ def getMap(dme_id):
 
     map = game['map']
     graphInfo = game['graph']
-    return createMap(graphInfo['x'],graphInfo['y'],graphInfo['names'],graphInfo['color'],map, graphInfo['hp'])
+    # return createMap(graphInfo['x'],graphInfo['y'],graphInfo['names'],graphInfo['color'],map, graphInfo['hp']) 
+    return graphInfo
 
 def getLiveGameInfo(dme_id):
     game = log.collection.find_one({

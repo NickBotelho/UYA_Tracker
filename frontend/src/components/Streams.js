@@ -10,7 +10,6 @@ import { LiveMap } from "./LiveMap.js";
 import { LiveEvents } from "./LiveEvents.js";
 import { LivePlayer } from "./LivePlayer.js";
 import { LivePlayerStates } from "./LivePlayerStates.js";
-import { LiveMap2 } from "./LiveMap2.js";
 const DEBUG = true
 var address = null
 if (DEBUG==true){
@@ -86,7 +85,7 @@ function Streams(props){
                 {/* <LiveMap/> */}
                 {/* <LivePlayerStates/> */}
                 {/* <LiveEvents isDesktop = {isDesktop}/> */}
-                <LiveMap2 isDesktop = {isDesktop}/>
+                <LiveMap isDesktop = {isDesktop}/>
     
             </div>
             
