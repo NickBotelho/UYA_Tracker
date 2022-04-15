@@ -107,7 +107,7 @@ function LiveMap(props){
         /**
          * player is a dict object of x,y,names,color,hp
          */
-        const radarPoints = convert([player['x'], player['y']], "Bakisi_Isle")
+        const radarPoints = convert([player['x'], player['y']], mapName)
         return <div key = {idx}>
             {/* <img src = '../../static/images/dot.svg' */}
             <img src = {player['hp'] > 0 ? '../../static/images/playerIndicator.png' : '../../static/images/skull.png'}

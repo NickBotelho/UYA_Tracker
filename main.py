@@ -431,6 +431,10 @@ def serveKisiRadar():
 @cross_origin(supports_credentials=True)
 def servehovenRadar():
     return send_file("frontend/server/build/ca978c3641d3565debfecaf6b1778613.png", mimetype = "image/gif")
+@app.route("/static/images/radars/hoven.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servehovenRadar2():
+    return send_file("frontend/static/images/radars/hoven.png", mimetype = "image/gif")
 @app.route("/build/61eb1a9d10223e9ab24b33b9247cdf72.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def servex12Radar():
