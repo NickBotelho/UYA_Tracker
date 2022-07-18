@@ -8,6 +8,7 @@ import hmetropolis from "../../static/images/metropolis(4000x1300).png";
 import houtpostx12 from "../../static/images/x12(4000x1250).png";
 import hmarcadia from '../../static/images/marcadia(4000x1400).png'
 
+
 function GetLargeMap(){
     const mapNames = [bakisi, metropolis, outpostx12, marcadia]
         function getRandomInt(max) {
@@ -40,6 +41,7 @@ function GetHalfLargeMap(){
         var index = getRandomInt(mapNames.length)
         return mapNames[index]
 }
+
 const categories = {
     'overall':{
         0:{

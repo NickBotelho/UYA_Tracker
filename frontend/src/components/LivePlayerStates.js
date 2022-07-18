@@ -66,7 +66,7 @@ function LivePlayerStates(props){
                         height:"100%",
                         display:'flex',
                         flexWrap:'wrap',
-                        marginTop: props.isDesktop? '50px': '10px',
+                        marginTop: props.isDesktop? '50px': '15px',
                         justifyContent:'space-evenly',
                     }}>
                         {playerComponents}   
@@ -91,7 +91,7 @@ function LivePlayerStates(props){
                 justifyContent:"center",
             }}>
                 <div style = {{
-                marginTop: props.isDesktop? '50px': '10px',
+                marginTop: props.isDesktop? '50px': '15px',
 
                 width:props.isDesktop? '650px':'325px',
                 height:"100%",

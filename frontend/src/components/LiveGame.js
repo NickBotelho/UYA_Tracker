@@ -19,7 +19,7 @@ else{
     address = "https://uyatracker.herokuapp.com"
 }
 
-const REFRESH_TIME = 5000
+const REFRESH_TIME = 1000
 function LiveGame(props){
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
@@ -240,7 +240,7 @@ function LiveGame(props){
                             justifyContent:"space-evenly",
                             flexDirection:'column'
                         }}>
-                            <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} />
+                            <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
                             <LiveScore address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
                         </div>
                         <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
@@ -287,10 +287,10 @@ function LiveGame(props){
                         textShadow:"1px 1px 1px black",
                         display:"flex",
                         flexDirection:'column',
-                        justifyContent:"center"
+                        justifyContent:"center",
                     }}>
                         <LiveScore address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
-                        <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
+                        <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
                         <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
                         {/* <LiveEvents address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id}/> */}
                     </div>
