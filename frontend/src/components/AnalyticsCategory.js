@@ -20,6 +20,7 @@ function AnalyticsCategory(props){
                 isDesktop = {props.isDesktop}
                 key = {stat}
                 color = {props.color}
+                year = {props.year}
             />
         )
 

@@ -230,109 +230,109 @@ def modelPredictionHost(name):
     return res if res != None else {}
 
 ###########GRAPH CALLS######################
-@app.route('/api/graphs/map_count/<gameSize>', methods=['GET','POST'])
+@app.route('/api/graphs/map_count/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
-def getMapsPlayed(gameSize):
+def getMapsPlayed(gameSize, year):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     # gameSize = convertSize[int(gameSize)] if gameSize != "all" else gameSize
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
-        analytics_cache = database.getGameAnalytics()
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    elif gameSize not in analytics_cache:
-        analytics_cache = database.getGameAnalytics()
+    elif year not in analytics_cache:
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    res = analytics_cache[gameSize]['map_count']
+    res = analytics_cache[year][gameSize]['map_count']
     x = list(res.keys())
     x = [map.replace("_", " ") for map in x]
 
     return {"x":x, "y":list(res.values()),
     'title':"Games Played", "xlabel":"Weekday","ylabel":'Games Played'}
-@app.route('/api/graphs/map_time/<gameSize>', methods=['GET','POST'])
+@app.route('/api/graphs/map_time/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
-def getMapsTime(gameSize):
+def getMapsTime(gameSize, year):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
-        analytics_cache = database.getGameAnalytics()
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    elif gameSize not in analytics_cache:
-        analytics_cache = database.getGameAnalytics()
+    elif year not in analytics_cache:
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    res = analytics_cache[gameSize]['map_time']
+    res = analytics_cache[year][gameSize]['map_time']
     x = list(res.keys())
     x = [map.replace("_", " ") for map in x]
 
     return {"x":x, "y":list(res.values()),
     'title':"Average Game Length", "xlabel":"Map","ylabel":'Minutes'}
-@app.route('/api/graphs/weekday_activity/<gameSize>', methods=['GET','POST'])
+@app.route('/api/graphs/weekday_activity/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
-def getWeekdayActivity(gameSize):
+def getWeekdayActivity(gameSize,year):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
-        analytics_cache = database.getGameAnalytics()
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    elif gameSize not in analytics_cache:
-        analytics_cache = database.getGameAnalytics()
+    elif year not in analytics_cache:
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    res = analytics_cache[gameSize]['weekdays']
+    res = analytics_cache[year][gameSize]['weekdays']
     return {"x":weekdaysNames, "y":res,
     'title':"Games Played", "xlabel":"Weekday","ylabel":'Games Played'}
-@app.route('/api/graphs/month_activity/<gameSize>', methods=['GET','POST'])
+@app.route('/api/graphs/month_activity/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
-def getMonthActivity(gameSize):
+def getMonthActivity(gameSize, year):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
-        analytics_cache = database.getGameAnalytics()
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    elif gameSize not in analytics_cache:
-        analytics_cache = database.getGameAnalytics()
+    elif year not in analytics_cache:
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    res = analytics_cache[gameSize]['months']
+    res = analytics_cache[year][gameSize]['months']
     return {"x":monthNames, "y":res,
     'title':"Games Played", "xlabel":"Month","ylabel":'Games Played'}
-@app.route('/api/graphs/month_time/<gameSize>', methods=['GET','POST'])
+@app.route('/api/graphs/month_time/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
-def getMonthTime(gameSize):
+def getMonthTime(gameSize,year):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
-        analytics_cache = database.getGameAnalytics()
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    elif gameSize not in analytics_cache:
-        analytics_cache = database.getGameAnalytics()
+    elif year not in analytics_cache:
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    res = analytics_cache[gameSize]['month_time']
+    res = analytics_cache[year][gameSize]['month_time']
     return {"x":monthNames, "y":res,
     'title':"Time Played", "xlabel":"Month","ylabel":'Minutes'}
-@app.route('/api/graphs/weapon_usage/<gameSize>', methods=['GET','POST'])
+@app.route('/api/graphs/weapon_usage/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
-def getWeaponUsage(gameSize):
+def getWeaponUsage(gameSize, year):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
-        analytics_cache = database.getGameAnalytics()
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    elif gameSize not in analytics_cache:
-        analytics_cache = database.getGameAnalytics()
+    elif year not in analytics_cache:
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    res = analytics_cache[gameSize]['weapon_usage']
+    res = analytics_cache[year][gameSize]['weapon_usage']
     return {"x":list(res.keys()), "y":list(res.values()),
     'title':"Games Played", "xlabel":"Weapon","ylabel":'Games Played'}
-@app.route('/api/graphs/weapon_kills/<gameSize>', methods=['GET','POST'])
+@app.route('/api/graphs/weapon_kills/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
-def getWeaponKills(gameSize):
+def getWeaponKills(gameSize, year):
     global analytics_cache, chached_query_time, refresh_interval
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
-        analytics_cache = database.getGameAnalytics()
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    elif gameSize not in analytics_cache:
-        analytics_cache = database.getGameAnalytics()
+    elif year not in analytics_cache:
+        analytics_cache[year] = database.getGameAnalytics(year)
         chached_query_time = current_query_time
-    res = analytics_cache[gameSize]['weapon_kills']
+    res = analytics_cache[year][gameSize]['weapon_kills']
     return {"x":list(res.keys()), "y":list(res.values()),
     'title':"Kills", "xlabel":"Weapon","ylabel":'Kills'}
 

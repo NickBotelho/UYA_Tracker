@@ -82,12 +82,12 @@ convertSize = {
         6:'3v3',
         8:'4v4'
     }
-def gameAnalytics():
+def gameAnalytics(year):
 
     game_history = Database("UYA", "Game_History")
     months = [0 for i in range(12)]
     weekdays = [0 for i in range(7)]
-
+    year = int(year) if year != "all" else year
     maps={
         "Bakisi_Isle":0,
         "Hoven_Gorge":0,
@@ -133,6 +133,12 @@ def gameAnalytics():
         month = date.month
         weekday = date.weekday()
 
+        if year == "all":
+            pass
+        else:
+            if year != date.year:
+                continue
+
         players = game['game_results']
         players = players['winners'] + players['losers']
         for player in players:
@@ -159,7 +165,8 @@ def gameAnalytics():
 
         times = sizes[size]['map_time']
         for map in times:
-            times[map] = round(times[map] / sizes[size]['map_count'][map], 2)
+            times[map] = round(times[map] / sizes[size]['map_count'][map], 2) \
+                if sizes[size]['map_count'][map] > 0 else 0
 
         sizes[size]['weapon_kills'] = {
             "Flux":sizes[size]['weapon_kills']['flux_kills'],

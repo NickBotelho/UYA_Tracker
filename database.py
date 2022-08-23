@@ -93,8 +93,8 @@ def getOnlineClans():
 
 
 
-def getGameAnalytics():
-    res = gameAnalytics()
+def getGameAnalytics(year):
+    res = gameAnalytics(year)
     return res
 
 def getGamePredictionIndex(idx):

@@ -16,7 +16,7 @@ function AnalyticChart(props){
         setData(null)
     }
     async function getGraphData(){
-        const request = await fetch(`${props.address}/api/graphs/${props.graph_key}/${props.category}`,{
+        const request = await fetch(`${props.address}/api/graphs/${props.graph_key}/${props.category}/${props.year}`,{
             method: "GET",
                 headers:  {
                     'Content-Type': "application/json; charset=utf-8",
