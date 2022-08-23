@@ -14,6 +14,7 @@ searched_player = {}
 games_cache = {}
 chached_query_time = 0
 refresh_interval = 10 #minutes between caching
+valid_years = ['2021', '2022','2023','2024','2025']
 
 analytics_cache = {}
 
@@ -233,7 +234,8 @@ def modelPredictionHost(name):
 @app.route('/api/graphs/map_count/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getMapsPlayed(gameSize, year):
-    global analytics_cache, chached_query_time, refresh_interval
+    global analytics_cache, chached_query_time, refresh_interval, valid_years
+    year = "all" if year not in valid_years else year
     current_query_time = time.time()
     # gameSize = convertSize[int(gameSize)] if gameSize != "all" else gameSize
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
@@ -251,7 +253,8 @@ def getMapsPlayed(gameSize, year):
 @app.route('/api/graphs/map_time/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getMapsTime(gameSize, year):
-    global analytics_cache, chached_query_time, refresh_interval
+    global analytics_cache, chached_query_time, refresh_interval, valid_years
+    year = "all" if year not in valid_years else year
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache[year] = database.getGameAnalytics(year)
@@ -268,7 +271,8 @@ def getMapsTime(gameSize, year):
 @app.route('/api/graphs/weekday_activity/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getWeekdayActivity(gameSize,year):
-    global analytics_cache, chached_query_time, refresh_interval
+    global analytics_cache, chached_query_time, refresh_interval, valid_years
+    year = "all" if year not in valid_years else year
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache[year] = database.getGameAnalytics(year)
@@ -282,7 +286,8 @@ def getWeekdayActivity(gameSize,year):
 @app.route('/api/graphs/month_activity/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getMonthActivity(gameSize, year):
-    global analytics_cache, chached_query_time, refresh_interval
+    global analytics_cache, chached_query_time, refresh_interval, valid_years
+    year = "all" if year not in valid_years else year
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache[year] = database.getGameAnalytics(year)
@@ -296,7 +301,8 @@ def getMonthActivity(gameSize, year):
 @app.route('/api/graphs/month_time/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getMonthTime(gameSize,year):
-    global analytics_cache, chached_query_time, refresh_interval
+    global analytics_cache, chached_query_time, refresh_interval, valid_years
+    year = "all" if year not in valid_years else year
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache[year] = database.getGameAnalytics(year)
@@ -310,7 +316,8 @@ def getMonthTime(gameSize,year):
 @app.route('/api/graphs/weapon_usage/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getWeaponUsage(gameSize, year):
-    global analytics_cache, chached_query_time, refresh_interval
+    global analytics_cache, chached_query_time, refresh_interval, valid_years
+    year = "all" if year not in valid_years else year
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache[year] = database.getGameAnalytics(year)
@@ -324,7 +331,8 @@ def getWeaponUsage(gameSize, year):
 @app.route('/api/graphs/weapon_kills/<gameSize>/<year>', methods=['GET','POST'])
 @cross_origin(supports_credentials=True)
 def getWeaponKills(gameSize, year):
-    global analytics_cache, chached_query_time, refresh_interval
+    global analytics_cache, chached_query_time, refresh_interval, valid_years
+    year = "all" if year not in valid_years else year
     current_query_time = time.time()
     if abs((chached_query_time - current_query_time)//60) > refresh_interval:
         analytics_cache[year] = database.getGameAnalytics(year)

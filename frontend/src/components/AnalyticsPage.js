@@ -6,7 +6,7 @@ import { HomeButton } from './HomeButton'
 import { useMediaQuery } from 'react-responsive'
 import { AnalyticChart } from "./AnalyticChart.js";
 import { AnalyticsCategory } from "./AnalyticsCategory.js";
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG == true) {
     address = "http://127.0.0.1:5000"
