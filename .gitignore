@@ -3,3 +3,4 @@ __pycache__
 .vscode
 frontend/__pycache__
 config.py
+gtag.html

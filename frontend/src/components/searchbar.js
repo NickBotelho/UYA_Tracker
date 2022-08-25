@@ -175,7 +175,7 @@ function Searchbar(props){
                             }}></input>  
                         </div>
                         <div >
-                            <button className="button" onClick = {buttonSearch} className = "button" name = "search_button"
+                            <button className="button" onClick = {buttonSearch} name = "search_button"
                             style = {restingStyle}
                             onMouseEnter = {buttonHover}
                             onMouseLeave = {buttonLeave}>Search</button>

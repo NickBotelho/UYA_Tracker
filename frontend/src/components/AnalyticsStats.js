@@ -19,6 +19,7 @@ function AnalyticsStats(props){
                 graph_key = {graph_keys[props.stat]}
                 address = {props.address}
                 isDesktop = {props.isDesktop}
+                year = {props.year}
             />
         )
         
