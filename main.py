@@ -479,6 +479,46 @@ def servemarcadiaRadar():
 @cross_origin(supports_credentials=True)
 def serveplayerindicator():
     return send_file("frontend/static/images/playerIndicator.png", mimetype = "image/gif")
+@app.route("/static/images/ryno.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveRyno():
+    return send_file("frontend/static/images/ryno.png", mimetype = "image/gif")
+@app.route("/static/images/flag.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveRyno():
+    return send_file("frontend/static/images/flag.png", mimetype = "image/gif")
+@app.route("/static/images/weapons/blitz.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveblitz():
+    return send_file("frontend/static/images/weapons/blitz.png", mimetype = "image/gif")
+@app.route("/static/images/weapons/flux.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveflux():
+    return send_file("frontend/static/images/weapons/flux.png", mimetype = "image/gif")
+@app.route("/static/images/weapons/gravity.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servegravity():
+    return send_file("frontend/static/images/weapons/gravity.png", mimetype = "image/gif")
+@app.route("/static/images/weapons/lava.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servelava():
+    return send_file("frontend/static/images/weapons/lava.png", mimetype = "image/gif")
+@app.route("/static/images/weapons/mines.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servemines():
+    return send_file("frontend/static/images/weapons/mines.png", mimetype = "image/gif")
+@app.route("/static/images/weapons/morph.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def servemorph():
+    return send_file("frontend/static/images/weapons/morph.png", mimetype = "image/gif")
+@app.route("/static/images/weapons/n60.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serven60():
+    return send_file("frontend/static/images/weapons/n60.png", mimetype = "image/gif")
+@app.route("/static/images/weapons/rockets.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serverockets():
+    return send_file("frontend/static/images/weapons/rockets.png", mimetype = "image/gif")
 @app.route("/static/images/skull.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveskullindicator():

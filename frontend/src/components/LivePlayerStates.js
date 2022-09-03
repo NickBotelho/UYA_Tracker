@@ -44,7 +44,7 @@ function LivePlayerStates(props){
     function makePlayers(players, index){
         let res = []
         for (const [key, value] of Object.entries(players)){
-            res.push(<LivePlayer player = {value} key = {key} isDesktop = {props.isDesktop}/>)
+            res.push(<LivePlayer player = {value} key = {key} isDesktop = {props.isDesktop} map = {props.map}/>)
         }
         return res
     }

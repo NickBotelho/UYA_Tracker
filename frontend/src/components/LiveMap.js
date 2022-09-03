@@ -118,6 +118,7 @@ function LiveMap(props){
             current['name'] = info['names'][i]
             current['hp'] = info['hp'][i]
             current['color'] = info['color'][i]
+            current['hasFlag'] = info['hasFlag'][i]
             res.push(current)
         }
         return res
@@ -126,11 +127,12 @@ function LiveMap(props){
         /**
          * player is a dict object of x,y,names,color,hp
          */
+        // console.log(player)
         const radarPoints = convert([player['x'], player['y']], mapName)
         return <div key = {idx}>
             {/* <img src = '../../static/images/dot.svg' */}
-            <img src = {player['hp'] > 0 ? '../../static/images/playerIndicator.png' : '../../static/images/skull.png'}
-                height= "15" width = "15"
+            <img src = {player['hasFlag'] == true? '../../static/images/flag.png' : player['hp'] > 0 ? '../../static/images/playerIndicator.png' : '../../static/images/skull.png'}
+                height= "20" width = "20"
                 style = {{
                     userSelect:"none",
                     marginLeft: `${radarPoints[0]}px`,
