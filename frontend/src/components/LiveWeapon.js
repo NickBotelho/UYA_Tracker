@@ -42,8 +42,9 @@ function LiveWeapon(props) {
     return (
         <div >
             <img src={weaponIcons[props.weapon]}
-                height= {props.isDesktop ? props.isCycle? '60' : '28' : '12'} width= {props.isDesktop ? props.isCycle? '60' : '30' : '12'}
-                onMouseOver = {toggleOn} onMouseLeave = {toggleOff}
+                height= {props.isDesktop ? props.isCycle? '55' : '28' : '12'} width= {props.isDesktop ? props.isCycle? '55' : '30' : '12'}
+                onMouseOver= {toggleOn} 
+                onMouseLeave = {toggleOff}
                 style={{
                     filter: `${props.info.isV2 ? filters['v2'] : filters['v1']}`,
                     paddingRight: `${props.isDesktop ? '5' : '2'}`,
@@ -52,7 +53,7 @@ function LiveWeapon(props) {
 
             <div style={{
                 height: props.isDesktop ? '5px' : '2px',
-                width: props.isDesktop ? props.isCycle? '60px' : '28px' : '12px',
+                width: props.isDesktop ? props.isCycle? '55px' : '28px' : '12px',
                 borderColor: "black",
                 border: '1px solid rgb(144,99,30)',
                 paddingRight: `${props.isDesktop ? '5' : '2'}`,

@@ -32,6 +32,23 @@ function LiveMap(props){
         'aqua':'invert(88%) sepia(75%) saturate(3250%) hue-rotate(114deg) brightness(105%) contrast(108%)',
         'pink':'invert(39%) sepia(46%) saturate(2873%) hue-rotate(291deg) brightness(103%) contrast(101%)',
     }
+    const determineColor = (color, hasFlag) => {
+        if (props.gamemode != "CTF"){
+            return color
+        }
+        else{
+            if (hasFlag == false){
+                return color
+            }
+            else{
+                if (color == "blue"){
+                    return "red"
+                }else{
+                    return "blue"
+                }
+            }
+        }
+    }
     const radars = {
         'Bakisi_Isle':radarKisi,
         'Aquatos_Sewers':radarSewers,
@@ -119,15 +136,19 @@ function LiveMap(props){
             current['hp'] = info['hp'][i]
             current['color'] = info['color'][i]
             current['hasFlag'] = info['hasFlag'][i]
+            current['rotation'] = info['rotations'][i]
             res.push(current)
         }
         return res
+    }
+    const convertGameRotation = (gameRotation) => {
+        return Math.floor(270-(1.38*gameRotation))
     }
     function createPlayer(player, idx){
         /**
          * player is a dict object of x,y,names,color,hp
          */
-        // console.log(player)
+        
         const radarPoints = convert([player['x'], player['y']], mapName)
         return <div key = {idx}>
             {/* <img src = '../../static/images/dot.svg' */}
@@ -137,8 +158,9 @@ function LiveMap(props){
                     userSelect:"none",
                     marginLeft: `${radarPoints[0]}px`,
                     marginTop:`${radarPoints[1]}px`,
-                    filter:filters[player['color']],
-                    position:'absolute'
+                    filter:filters[determineColor(player['color'], player['hasFlag'])],
+                    position:'absolute',
+                    transform:`rotate(${convertGameRotation(player['rotation'])}deg)`
                     }}/>
             <h4 style = {{
                 height:"10px",

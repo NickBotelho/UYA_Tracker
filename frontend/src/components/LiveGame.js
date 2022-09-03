@@ -240,7 +240,7 @@ function LiveGame(props){
                             justifyContent:"space-evenly",
                             flexDirection:'column'
                         }}>
-                            <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
+                            <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map} gamemode = {gameInfo.details.gamemode}/>
                             <LiveScore address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
                         </div>
                         <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
@@ -290,7 +290,7 @@ function LiveGame(props){
                         justifyContent:"center",
                     }}>
                         <LiveScore address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
-                        <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
+                        <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map} gamemode = {gameInfo.details.gamemode}/>
                         <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
                         {/* <LiveEvents address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id}/> */}
                     </div>

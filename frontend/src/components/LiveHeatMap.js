@@ -101,6 +101,8 @@ function LiveHeatMap(props) {
             <img src={radars[props.map]}
                 height={props.isDesktop ? '300px' : '200px'} width={props.isDesktop ? '300px' : '200px'}
                 style={{
+                    top:"10%",
+                    left:"8%",
                     position:'absolute'
                 }} />
                 {killPoints}

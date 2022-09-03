@@ -16,11 +16,10 @@ function LivePlayer(props) {
     });
     let detailedInfoRef = createRef()
     const toggleOn = (e) => {
-        detailedInfoRef.current.style.visibility = "visible"
+        detailedInfoRef.current.style.visibility = 'visible'
     }
     const toggleOff = (e) => {
-        detailedInfoRef.current.style.visibility = "hidden"
-
+        detailedInfoRef.current.style.visibility = 'hidden'
     }
     console.log()
     if (props.isDesktop) {
@@ -35,14 +34,14 @@ function LivePlayer(props) {
                     fontSize: props.isDesktop ? "18pt" : "9pt",
                     color: 'rgb(229, 197, 102)',
                     textShadow: '2px 2px 2px black',
-                }}onMouseOver={toggleOn} onMouseLeave={toggleOff}
+                }}
                 >
-                    <h3 style={{ color: props.player.team }} >{props.player.name}</h3>
+                    <h3 style={{ color: props.player.team }} onMouseDown = {toggleOn}>{props.player.name}</h3>
                     <div ref={detailedInfoRef}
                         style={{
                             marginTop: '10px',
-                            height: props.isDesktop ? '300px' : '75px',
-                            width: props.isDesktop ? '525px' : '125px',
+                            height: props.isDesktop ? '400px' : '75px',
+                            width: props.isDesktop ? '700px' : '125px',
                             borderColor: "black",
                             border: '1px solid rgb(144,99,30)',
                             textAlign: "right",
@@ -55,16 +54,20 @@ function LivePlayer(props) {
                             position: "absolute",
                             display: 'flex',
                             flexDirection: 'row',
-                            left:'0%',
-                            top:'0%'
-                        }}>
+                            justifyContent:"center",
+                            left:'40%',
+                            top:'30%',
+                        }} >
+                        <div>
+                            <img src = "../../static/images/X.png" height ='45' width='45' onMouseDown={toggleOff}></img>
+                        </div>
                         <div>
                             <LiveHeatMap map={props.map} kills={props.player.killHeatMap} deaths={props.player.deathHeatMap} isDesktop={props.isDesktop} />
                         </div>
                         <div style={{
                             height: props.isDesktop ? '300px' : '100px',
                             width: props.isDesktop ? '1000px' : '333px',
-                            fontSize: props.isDesktop ? '18t' : '10pt'
+                            fontSize: props.isDesktop ? '25pt' : '10pt'
                         }}
                         >
                             <p>Distance Travelled: {props.player.distance_travelled}</p>
