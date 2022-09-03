@@ -487,38 +487,38 @@ def serveRyno():
 @cross_origin(supports_credentials=True)
 def serveRyno():
     return send_file("frontend/static/images/flag.png", mimetype = "image/gif")
-@app.route("/static/images/weapons/blitz.png", methods = ["GET"])
+@app.route("build/1c7b001f6b68343eeceb6fd700781982.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveblitz():
-    return send_file("frontend/static/images/weapons/blitz.png", mimetype = "image/gif")
-@app.route("/static/images/weapons/flux.png", methods = ["GET"])
+    return send_file("frontend/server/build/1c7b001f6b68343eeceb6fd700781982.png", mimetype = "image/gif")
+@app.route("build/233a53c6da5a53deb1446f4d911de0f9.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveflux():
-    return send_file("frontend/static/images/weapons/flux.png", mimetype = "image/gif")
-@app.route("/static/images/weapons/gravity.png", methods = ["GET"])
+    return send_file("frontend/server/build/233a53c6da5a53deb1446f4d911de0f9.png", mimetype = "image/gif")
+@app.route("build/536e3c67229684527c27bb0aa212c110.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def servegravity():
-    return send_file("frontend/static/images/weapons/gravity.png", mimetype = "image/gif")
-@app.route("/static/images/weapons/lava.png", methods = ["GET"])
+    return send_file("frontend/server/build/536e3c67229684527c27bb0aa212c110.png", mimetype = "image/gif")
+@app.route("build/254655516cb16697b464fa2304e719c7.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def servelava():
-    return send_file("frontend/static/images/weapons/lava.png", mimetype = "image/gif")
-@app.route("/static/images/weapons/mines.png", methods = ["GET"])
+    return send_file("frontend/server/build/254655516cb16697b464fa2304e719c7.png", mimetype = "image/gif")
+@app.route("build/f1c0fe25e07b3debe781db5ca3a0c541.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def servemines():
-    return send_file("frontend/static/images/weapons/mines.png", mimetype = "image/gif")
-@app.route("/static/images/weapons/morph.png", methods = ["GET"])
+    return send_file("frontend/server/build/f1c0fe25e07b3debe781db5ca3a0c541.png", mimetype = "image/gif")
+@app.route("build/ec79c22b7e01b6b091eea7b3e0952531.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def servemorph():
-    return send_file("frontend/static/images/weapons/morph.png", mimetype = "image/gif")
-@app.route("/static/images/weapons/n60.png", methods = ["GET"])
+    return send_file("frontend/server/build/ec79c22b7e01b6b091eea7b3e0952531.png", mimetype = "image/gif")
+@app.route("build/e133c0b3e28411f5cc96b330a20613f2.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serven60():
-    return send_file("frontend/static/images/weapons/n60.png", mimetype = "image/gif")
-@app.route("/static/images/weapons/rockets.png", methods = ["GET"])
+    return send_file("frontend/server/build/e133c0b3e28411f5cc96b330a20613f2.png", mimetype = "image/gif")
+@app.route("build/9c02e1c207096a9e93f2d9cb0936a83d.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serverockets():
-    return send_file("frontend/static/images/weapons/rockets.png", mimetype = "image/gif")
+    return send_file("frontend/server/build/9c02e1c207096a9e93f2d9cb0936a83d.png", mimetype = "image/gif")
 @app.route("/static/images/skull.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveskullindicator():
