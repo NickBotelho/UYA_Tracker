@@ -485,7 +485,7 @@ def serveRyno():
     return send_file("frontend/static/images/ryno.png", mimetype = "image/gif")
 @app.route("/static/images/flag.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
-def serveRyno():
+def serveFlag():
     return send_file("frontend/static/images/flag.png", mimetype = "image/gif")
 @app.route("build/1c7b001f6b68343eeceb6fd700781982.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
