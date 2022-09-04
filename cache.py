@@ -52,6 +52,8 @@ class Cache():
             self.storeGameDetails(key)
         elif cacheType == 'playerStats':
             self.storePlayerStats(key)
+        elif cacheType == 'entireStat':
+            self.storeEntireStat(key)
 
         return self.cache[key] if key in self.cache else None
                 
