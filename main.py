@@ -612,4 +612,4 @@ def getIP():
         }
         return res
     
-app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
