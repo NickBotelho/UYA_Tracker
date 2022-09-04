@@ -74,7 +74,7 @@ def getGameDetails(game_id):
 
 def analytics(request):
     '''update site analytics based on request'''
-    website_analytics.updateAnalytics(request.environ['REMOTE_ADDR'])
+    website_analytics.updateAnalytics(request.access_route[0])
     return
 
 def getTotalGames():

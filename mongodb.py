@@ -1,6 +1,7 @@
 import pymongo
 from pymongo import MongoClient
 import time
+import datetime
 from config import MongoPW, MongoUser
 import os
 try:
@@ -258,25 +259,32 @@ class Database():
         del game['_id']
         return game
     def updateAnalytics(self, ip):
+        #datetime.datetime.fromisoformat(date string) reverts to datetime obj
         user = self.collection.find_one({"ip":ip})
+        now = datetime.datetime.now()
+        now = str(now)
         if not user:
             self.collection.insert_one(
                 {
                     'ip':ip,
                     'num_logins':1,
-                    'last_login':time.strftime("%a, %d %b %Y", time.localtime())
+                    'last_login':now,
+                    'logins': [now]
                 }
             )
         else:
-            logins = user['num_logins']
+            numLogins = user['num_logins']
+            logins = user['logins']
+            logins.append(now)
             self.collection.find_one_and_update(
                 {
                     'ip':ip
                 },
                 {
                     '$set':{
-                        'num_logins':logins+1,
-                        'last_login':time.strftime("%a, %d %b %Y", time.localtime())
+                        'num_logins':numLogins+1,
+                        'last_login':now,
+                        'logins':logins,
                     }
                 }
             )

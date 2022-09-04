@@ -37,71 +37,6 @@ def getOnlinePlayers():
         return jsonify(online), 200
 
 
-
-#DEPRECATED
-# @app.route("/stats/top10", methods = ["POST"])
-# @cross_origin(supports_credentials=True)
-# def postTop10():
-#     if request.method == "POST":
-#         category = request.json['category']
-#         stat = request.json['stat']
-#         # print("POSTING recent {} game info for {}...".format(num_games, name))
-#         res = database.getTop10(category, stat)
-#         if res:
-#             return jsonify(res), 200
-#         else:
-#             res = {}
-#             return jsonify(res), 404
-
-
-#DEPRECATED
-# @app.route("/stats/all", methods = ["POST"])
-# @cross_origin(supports_credentials=True)
-# def postEntireStat():
-#     if request.method == "POST":
-#         # print("Getting requested stat...")
-#         # print(request.json)
-#         category = request.json['category']
-#         category = "tdm" if category == 'deathmatch' else category
-#         category = "weapons" if category == 'weapon kills' or category == 'weapon deaths' else category
-#         stat = request.json['stat']
-#         res = database.getEntireStat(category, stat)
-#         status = {"status":200}
-        
-#         return jsonify(res), status
-
-#DEPRECATED
-# @app.route("/player/stats", methods = ["POST"])
-# @cross_origin(supports_credentials=True)
-# def postPlayer():
-#     if request.method == "POST":
-#         name = request.json['name']
-#         # print("POSTING info for {}...".format(name))
-#         searched_player = database.getPlayerStats(name)
-#         if searched_player:
-#             searched_player['status'] = 200
-#             return jsonify(searched_player), searched_player['status']
-#         else:
-#             searched_player = {}
-#             searched_player['status'] = 404
-#             return jsonify(searched_player), searched_player['status']
-
-#DEPRECATED
-# @app.route("/player/recent_games", methods = ["POST"])
-# @cross_origin(supports_credentials=True)
-# def postRecentGames():
-#     if request.method == "POST":
-#         name = request.json['name']
-#         num_games = int(request.json['num_games'])
-#         # print("POSTING recent {} game info for {}...".format(num_games, name))
-#         searched_player = database.getRecentGames(name, num_games)
-#         if searched_player:
-#             return jsonify(searched_player), 200
-#         else:
-#             searched_player = {}
-#             return jsonify(searched_player), 404
-
-
 @app.route("/general/recent_games", methods = ["POST"])
 @cross_origin(supports_credentials=True)
 def postGeneralRecentGames():
@@ -128,37 +63,19 @@ def postGeneralRecentGames():
             res = {}
             return jsonify(res), 404
 
-#DEPRECATED
-# @app.route("/general/total_games", methods = ["GET"])
-# @cross_origin(supports_credentials=True)
-# def getNumGames():
-#     res = database.getTotalGames()
-#     return jsonify(res), 200
-
-#DEPRECATED 
-# @app.route("/games/details", methods = ["POST"])
-# @cross_origin(supports_credentials=True)
-# def postDetailedGame():
-#     if request.method == "POST":
-#         game_id = float(request.json['id'])
-#         # print("POSTING for game {}..".format(game_id))
-#         res = database.getGameDetails(game_id)
-#         if res:
-#             return jsonify(res), 200
-#         else:
-#             res = {}
-#             return jsonify(res), 404
 
 
 @app.route("/", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveHomepage():
+    database.analytics(request)
     return render_template("index.html")
 
 
 @app.route('/<path:text>', methods=['GET', 'POST'])
 def all_routes(text):
-        return render_template("index.html")
+    database.analytics(request)
+    return render_template("index.html")
 
 
 
@@ -601,15 +518,15 @@ def getLiveGames():
         return jsonify(res), 200 if res != None else 404   
 
 
-@app.route('/ip', methods=['GET'])
-@cross_origin(supports_credentials=True)
-def getIP():
-    if request.method == "GET":
-        res = {
-            "acces_route":request.access_route[0],
-            'remote_addr':request.remote_addr,
-            'environ':request.environ['REMOTE_ADDR']
-        }
-        return res
+# @app.route('/ip', methods=['GET'])
+# @cross_origin(supports_credentials=True)
+# def getIP():
+#     if request.method == "GET":
+#         res = {
+#             "acces_route":request.access_route[0],
+#             'remote_addr':request.remote_addr,
+#             'environ':request.environ['REMOTE_ADDR']
+#         }
+#         return res
     
 # app.run(debug = True) #COMMENT OUT FOR PRODUCTION
