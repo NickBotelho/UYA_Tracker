@@ -275,7 +275,7 @@ class Database():
         else:
             numLogins = user['num_logins']
             logins = user['logins']
-            logins.append(now)
+            logins.push(now)
             self.collection.find_one_and_update(
                 {
                     'ip':ip
