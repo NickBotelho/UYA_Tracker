@@ -80,7 +80,7 @@ function GameHistory(props){
    
     
     if (games.max == 0){
-        getTotalGames(`${address}/general/total_games`)
+        getTotalGames(`${address}/api/general/total_games`)
     }
     
     if (games.games == null){

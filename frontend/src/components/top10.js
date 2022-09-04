@@ -14,26 +14,13 @@ import {GetMap} from '../../static/images/maps.js';
 function Top10(props){
     const category = props.category
     const stat = props.stat
-    const url = `${props.address}/stats/top10/${category}/${stat}`
+    const url = `${props.address}/api/stats/top10/${category}/${stat}`
 
 
     
     const [isLoaded, hasLoaded] = useState(null);
     const [searching, setSearch] = useState(null);
-    async function getTop10Kills(url){
-        const request = await fetch(url,{
-                method: "GET",
-                    headers:  {
-                        'Content-Type': "application/json; charset=utf-8",
-                        Accept: "application/json",
-                        "Cache-Control": "no-cache"
-                    },
-                    credentials: "include",
-            })
-        const players = await request.json()
-        hasLoaded(players);
-        return players
-    }
+    
     async function getTop10(url){
         const requestSearch = {
             method: "POST",
@@ -48,17 +35,12 @@ function Top10(props){
                 stat:props.stat
             }),  
         }
-        const res = await fetch(`${props.address}/stats/top10`, requestSearch)
+        const res = await fetch(`${props.address}/api/stats/top10`, requestSearch)
         const players = await res.json()
         hasLoaded(players)
     }
     if (isLoaded === null){
-        if (stat == 'kills' && category == 'overall'){
-            getTop10Kills(url)
-        }
-        else{
-            getTop10(url)
-        }
+        getTop10(url)
     }
    
     const hoverStyle = {

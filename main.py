@@ -2,6 +2,7 @@ from functools import cached_property
 from flask import Flask, json, jsonify, request, render_template, send_file
 from flask_cors import CORS, cross_origin
 import time
+from cache import Cache
 
 import database
 from graphs.graphs import convertSize, monthNames, weekdaysNames
@@ -15,7 +16,7 @@ games_cache = {}
 chached_query_time = 0
 refresh_interval = 10 #minutes between caching
 valid_years = ['2021', '2022','2023','2024','2025']
-
+cache = Cache()
 analytics_cache = {}
 
 @app.route("/player", methods = ["GET"])
@@ -35,96 +36,70 @@ def getOnlinePlayers():
         online = database.getOnlinePlayers()
         return jsonify(online), 200
 
-@app.route("/stats/top10/overall/kills", methods = ["GET"])
-@cross_origin(supports_credentials=True)
-def getTop10Kills():
-    # print("GETTING Top 10 Kills...")
-    database.analytics(request)
-    res = database.getTop10('overall', 'kills')
-    status = {"status":200}
-    return jsonify(res), status
-
-@app.route("/stats/top10", methods = ["POST"])
-@cross_origin(supports_credentials=True)
-def postTop10():
-    if request.method == "POST":
-        category = request.json['category']
-        stat = request.json['stat']
-        # print("POSTING recent {} game info for {}...".format(num_games, name))
-        res = database.getTop10(category, stat)
-        if res:
-            return jsonify(res), 200
-        else:
-            res = {}
-            return jsonify(res), 404
 
 
+#DEPRECATED
+# @app.route("/stats/top10", methods = ["POST"])
+# @cross_origin(supports_credentials=True)
+# def postTop10():
+#     if request.method == "POST":
+#         category = request.json['category']
+#         stat = request.json['stat']
+#         # print("POSTING recent {} game info for {}...".format(num_games, name))
+#         res = database.getTop10(category, stat)
+#         if res:
+#             return jsonify(res), 200
+#         else:
+#             res = {}
+#             return jsonify(res), 404
 
-@app.route("/stats/top10/overall/deaths", methods = ["GET"])
-@cross_origin(supports_credentials=True)
-def getTop10Deaths():
-    res = database.getTop10('overall', 'deaths')
-    status = {"status":200}
-    return jsonify(res), status
+
+#DEPRECATED
+# @app.route("/stats/all", methods = ["POST"])
+# @cross_origin(supports_credentials=True)
+# def postEntireStat():
+#     if request.method == "POST":
+#         # print("Getting requested stat...")
+#         # print(request.json)
+#         category = request.json['category']
+#         category = "tdm" if category == 'deathmatch' else category
+#         category = "weapons" if category == 'weapon kills' or category == 'weapon deaths' else category
+#         stat = request.json['stat']
+#         res = database.getEntireStat(category, stat)
+#         status = {"status":200}
         
-@app.route("/stats/top10/overall/wins", methods = ["GET"])
-@cross_origin(supports_credentials=True)
-def getTop10Wins():
-    res = database.getTop10('overall', 'wins')
-    status = {"status":200}
-    return jsonify(res), status
+#         return jsonify(res), status
 
-        
-@app.route("/stats/top10/overall/losses", methods = ["GET"])
-@cross_origin(supports_credentials=True)
-def getTop10Losses():
-    res = database.getTop10('overall', 'losses')
-    status = {"status":200}
-    return jsonify(res), status
+#DEPRECATED
+# @app.route("/player/stats", methods = ["POST"])
+# @cross_origin(supports_credentials=True)
+# def postPlayer():
+#     if request.method == "POST":
+#         name = request.json['name']
+#         # print("POSTING info for {}...".format(name))
+#         searched_player = database.getPlayerStats(name)
+#         if searched_player:
+#             searched_player['status'] = 200
+#             return jsonify(searched_player), searched_player['status']
+#         else:
+#             searched_player = {}
+#             searched_player['status'] = 404
+#             return jsonify(searched_player), searched_player['status']
 
-@app.route("/stats/all", methods = ["POST"])
-@cross_origin(supports_credentials=True)
-def postEntireStat():
-    if request.method == "POST":
-        # print("Getting requested stat...")
-        # print(request.json)
-        category = request.json['category']
-        category = "tdm" if category == 'deathmatch' else category
-        category = "weapons" if category == 'weapon kills' or category == 'weapon deaths' else category
-        stat = request.json['stat']
-        res = database.getEntireStat(category, stat)
-        status = {"status":200}
-        
-        return jsonify(res), status
-
-@app.route("/player/stats", methods = ["POST"])
-@cross_origin(supports_credentials=True)
-def postPlayer():
-    if request.method == "POST":
-        name = request.json['name']
-        # print("POSTING info for {}...".format(name))
-        searched_player = database.getPlayerStats(name)
-        if searched_player:
-            searched_player['status'] = 200
-            return jsonify(searched_player), searched_player['status']
-        else:
-            searched_player = {}
-            searched_player['status'] = 404
-            return jsonify(searched_player), searched_player['status']
-
-@app.route("/player/recent_games", methods = ["POST"])
-@cross_origin(supports_credentials=True)
-def postRecentGames():
-    if request.method == "POST":
-        name = request.json['name']
-        num_games = int(request.json['num_games'])
-        # print("POSTING recent {} game info for {}...".format(num_games, name))
-        searched_player = database.getRecentGames(name, num_games)
-        if searched_player:
-            return jsonify(searched_player), 200
-        else:
-            searched_player = {}
-            return jsonify(searched_player), 404
+#DEPRECATED
+# @app.route("/player/recent_games", methods = ["POST"])
+# @cross_origin(supports_credentials=True)
+# def postRecentGames():
+#     if request.method == "POST":
+#         name = request.json['name']
+#         num_games = int(request.json['num_games'])
+#         # print("POSTING recent {} game info for {}...".format(num_games, name))
+#         searched_player = database.getRecentGames(name, num_games)
+#         if searched_player:
+#             return jsonify(searched_player), 200
+#         else:
+#             searched_player = {}
+#             return jsonify(searched_player), 404
 
 
 @app.route("/general/recent_games", methods = ["POST"])
@@ -153,25 +128,26 @@ def postGeneralRecentGames():
             res = {}
             return jsonify(res), 404
 
-@app.route("/general/total_games", methods = ["GET"])
-@cross_origin(supports_credentials=True)
-def getNumGames():
-    res = database.getTotalGames()
-    return jsonify(res), 200
+#DEPRECATED
+# @app.route("/general/total_games", methods = ["GET"])
+# @cross_origin(supports_credentials=True)
+# def getNumGames():
+#     res = database.getTotalGames()
+#     return jsonify(res), 200
 
-
-@app.route("/games/details", methods = ["POST"])
-@cross_origin(supports_credentials=True)
-def postDetailedGame():
-    if request.method == "POST":
-        game_id = float(request.json['id'])
-        # print("POSTING for game {}..".format(game_id))
-        res = database.getGameDetails(game_id)
-        if res:
-            return jsonify(res), 200
-        else:
-            res = {}
-            return jsonify(res), 404
+#DEPRECATED 
+# @app.route("/games/details", methods = ["POST"])
+# @cross_origin(supports_credentials=True)
+# def postDetailedGame():
+#     if request.method == "POST":
+#         game_id = float(request.json['id'])
+#         # print("POSTING for game {}..".format(game_id))
+#         res = database.getGameDetails(game_id)
+#         if res:
+#             return jsonify(res), 200
+#         else:
+#             res = {}
+#             return jsonify(res), 404
 
 
 @app.route("/", methods = ["GET"])
@@ -187,6 +163,16 @@ def all_routes(text):
 
 
 ############API#######################
+##############COMMANDS################
+@app.route('/cache/clear', methods=['GET'])
+def clearCache():
+    cache.clear()
+    return "Cache Cleared!", 200
+
+@app.route('/cache/status', methods=['GET'])
+def cacheStatus():
+    res = cache.status()
+    return res, 200
 
 ########ONLINE APIS###################
 @app.route('/api/online/players', methods=['GET'])
@@ -210,13 +196,80 @@ def getOnlineChat():
 #############DB QUERIES################
 @app.route('/api/players/<path:name>', methods=['GET', 'POST'])
 def playerAPI(name):
-    res = database.getPlayerStats(name)
+    key = cache.generatePlayerStatsKey(name)
+    res = cache.get(key)
     return res if res != None else {}
 
 @app.route('/api/games/<float:game_id>', methods=['GET', 'POST'])
 def gamesAPI(game_id):
-    res = database.getGameDetails(game_id)
+    game_id = float(request.json['id'])
+    key = cache.generateGameDetailKey(game_id)
+    res = cache.get(key)
     return res if res != None else {}
+
+@app.route("/api/stats/top10", methods = ["POST"])
+@cross_origin(supports_credentials=True)
+def postTop10_2():
+    if request.method == "POST":
+        category = request.json['category']
+        stat = request.json['stat']
+        cacheKey = cache.generateTop10Key(category, stat)
+        res = cache.get(cacheKey)
+        if res:
+            return jsonify(res), 200
+        else:
+            res = {}
+            return jsonify(res), 404
+@app.route("/api/players/recent_games", methods = ["POST"])
+@cross_origin(supports_credentials=True)
+def postRecentGames_2():
+    if request.method == "POST":
+        name = request.json['name']
+        num_games = int(request.json['num_games'])
+        cacheKey = cache.generateRecentGamesKey(name, num_games)
+        searched_player = cache.get(cacheKey)
+        if searched_player:
+            return jsonify(searched_player), 200
+        else:
+            searched_player = {}
+            return jsonify(searched_player), 404
+@app.route("/api/general/total_games", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def getNumGames_2():
+    key = cache.generateGeneralKey("totalGames")
+    res = cache.get(key)
+
+    return jsonify(res), 200
+@app.route("/api/players/stats", methods = ["POST"])
+@cross_origin(supports_credentials=True)
+def postPlayer_2():
+    if request.method == "POST":
+        name = request.json['name']
+        key = cache.generatePlayerStatsKey(name)
+        res = cache.get(key)
+        return res if res != None else {}
+
+@app.route("/api/stats/all", methods = ["POST"])
+@cross_origin(supports_credentials=True)
+def postEntireStat_2():
+    if request.method == "POST":
+        category = request.json['category']
+        category = "tdm" if category == 'deathmatch' else category
+        category = "weapons" if category == 'weapon kills' or category == 'weapon deaths' else category
+        stat = request.json['stat']
+
+        cacheKey = cache.generateEntireStatKey(category, stat)
+        res = cache.get(cacheKey)
+        
+        return jsonify(res), 200
+@app.route("/api/games/details", methods = ["POST"])
+@cross_origin(supports_credentials=True)
+def postDetailedGame_2():
+    if request.method == "POST":
+        game_id = float(request.json['id'])
+        key = cache.generateGameDetailKey(game_id)
+        res = cache.get(key)
+        return res if res != None else {}
 
 ################ML MODEL################
 @app.route('/api/model/index/<idx>', methods=['GET', 'POST'])
@@ -548,6 +601,15 @@ def getLiveGames():
         return jsonify(res), 200 if res != None else 404   
 
 
-
+@app.route('/ip', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def getIP():
+    if request.method == "GET":
+        res = {
+            "acces_route":request.access_route[0],
+            'remote_addr':request.remote_addr,
+            'environ':request.environ['REMOTE_ADDR']
+        }
+        return res
     
-# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+app.run(debug = True) #COMMENT OUT FOR PRODUCTION

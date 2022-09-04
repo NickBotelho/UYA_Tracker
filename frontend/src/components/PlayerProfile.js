@@ -99,7 +99,7 @@ function PlayerProfile(props){
                 name: player_name,
             }),    
         }
-        const search_result = await fetch(`${address}/player/stats`, requestSearch)
+        const search_result = await fetch(`${address}/api/players/stats`, requestSearch)
         const data = await search_result.json()
         setData(data)
     }

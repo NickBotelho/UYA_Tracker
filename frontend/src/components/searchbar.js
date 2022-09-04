@@ -36,7 +36,7 @@ function Searchbar(props){
                 name: info.name,
             }),    
         }
-        const search_result = await fetch(`${props.address}/player/stats`, requestSearch)
+        const search_result = await fetch(`${props.address}/api/players/stats`, requestSearch)
         const data = await search_result.json()
         if (data.status === 404){
             setNotFound("Name not found...")
@@ -64,7 +64,7 @@ function Searchbar(props){
                     name: info.name,
                 }),    
             }
-            const search_result = await fetch(`${props.address}/player/stats`, requestSearch)
+            const search_result = await fetch(`${props.address}/api/players/stats`, requestSearch)
             const data = await search_result.json()
             if (data.status === 404){
                 console.log("name not found")

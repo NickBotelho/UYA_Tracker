@@ -160,7 +160,7 @@ function LiveMap(props){
                     marginTop:`${radarPoints[1]}px`,
                     filter:filters[determineColor(player['color'], player['hasFlag'])],
                     position:'absolute',
-                    transform:`rotate(${convertGameRotation(player['rotation'])}deg)`
+                    transform: player['hp'] > 0 ? `rotate(${convertGameRotation(player['rotation'])}deg)` : 'rotate(0deg)'
                     }}/>
             <h4 style = {{
                 height:"10px",

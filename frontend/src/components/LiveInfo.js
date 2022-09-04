@@ -12,7 +12,7 @@ function LiveInfo(props){
         <div style = {{
             height : props.isDesktop? '150px' : '75px',
             width: props.isDesktop? '320px' : '125px',
-            fontSize : props.isDesktop? "9pt" : "9pt",
+            fontSize : props.isDesktop? "16pt" : "9pt",
             textAlign:"center",
             color: 'rgb(229, 197, 102)',
             textShadow: '2px 2px 2px black',
@@ -20,10 +20,7 @@ function LiveInfo(props){
         }}>
 
             <h1>{`Gamemode: ${props.info.gamemode}`}</h1>
-            <h1>{`Weapons: ${props.info.weapons}`}</h1>
             
-
-
         </div>
     )
 

@@ -101,6 +101,7 @@ function LiveGame(props){
             maxHeight:'250px',
             minHeight:'250px',
         }}>
+            <HomeButton/>
             <img src = "../../static/images/loading_circle.gif"
             height = '253' width = '255'></img>
         </div>

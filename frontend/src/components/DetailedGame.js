@@ -45,7 +45,7 @@ function DetailedGame(props){
                 id:game_id
             }),  
         }
-        const res = await fetch(`${address}/games/details`, requestSearch)
+        const res = await fetch(`${address}/api/games/details`, requestSearch)
         const gameInfo = await res.json()
         setGame(gameInfo)
     }

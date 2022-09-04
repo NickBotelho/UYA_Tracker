@@ -196,6 +196,7 @@ def getLiveGameInfo(dme_id):
     return game if game != None else None
 
 def getLiveGames():
+    '''list of live dme ids'''
     dmes = []
     for game in log.collection.find():
         dmes.append(game['dme_id'])

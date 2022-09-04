@@ -19,7 +19,7 @@ function GameHistoryController(props){
                 num_games:10
             }),  
         }
-        const res = await fetch(`${props.address}/player/recent_games`, requestSearch)
+        const res = await fetch(`${props.address}/api/players/recent_games`, requestSearch)
         const recent_games = await res.json()
         setGames(recent_games)
     }
