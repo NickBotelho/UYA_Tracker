@@ -70,7 +70,8 @@ class Cache():
 
     def storeRecentGames(self, key):
         args = key.split('-')
-        name, num = args[1], args[2]
+        name = "".join(args[1:len(args)-1])
+        num = int(args[-1])
         res = database.getRecentGames(name, num)
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
