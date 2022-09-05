@@ -90,7 +90,7 @@ def cacheStatus():
     res = cache.status()
     return res, 200
 @app.route('/server/status', methods=['GET'])
-def cacheStatus():
+def serverStatus():
     return "Up and running!", 200
 
 ########ONLINE APIS###################
