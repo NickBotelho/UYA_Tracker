@@ -4,7 +4,6 @@ from model.predictGame import predictGame
 from graphs.graphs import gameAnalytics
 uyaModel = pickle.load(open('model/uyaModel.sav', 'rb'))
 log = Database("UYA", "Logger")
-print("opening db")
 
 
 def getEntireStat(category, stat):
