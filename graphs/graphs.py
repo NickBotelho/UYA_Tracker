@@ -119,7 +119,7 @@ def gameAnalytics(year, game_history):
         '4v4':copy.deepcopy(oneSize)
     }
     
-    for game in game_history.collection.find():
+    for game in game_history.collection.find().max_time_ms(60000):
         gameSize = len(game['player_ids'])
         gameSize = gameSize - 1 if gameSize % 2 != 0 else gameSize
 

@@ -13,7 +13,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 searched_player = {}
 games_cache = {}
 chached_query_time = 0
-refresh_interval = 10 #minutes between caching
+refresh_interval = 60*12 #minutes between caching
 valid_years = ['2021', '2022','2023','2024','2025']
 cache = Cache()
 analytics_cache = {}
@@ -41,10 +41,11 @@ def getOnlinePlayers():
 def postGeneralRecentGames():
     if request.method == "POST":
         global games_cache, chached_query_time, refresh_interval
+        GAME_REFRESH = 10
         start = request.json['start']
         end = request.json['end']
         current_query_time = time.time()
-        if abs((chached_query_time - current_query_time)//60) <= refresh_interval:
+        if abs((chached_query_time - current_query_time)//60) <= GAME_REFRESH:
             if start in games_cache:
                 res = games_cache[start]
             else:
