@@ -89,6 +89,9 @@ def clearCache():
 def cacheStatus():
     res = cache.status()
     return res, 200
+@app.route('/server/status', methods=['GET'])
+def cacheStatus():
+    return "Up and running!", 200
 
 ########ONLINE APIS###################
 @app.route('/api/online/players', methods=['GET'])
