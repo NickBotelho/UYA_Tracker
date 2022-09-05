@@ -1,5 +1,5 @@
 import datetime
-import database
+from database import getRecentGames, getTotalGames, getGameDetails, getPlayerStats, getEntireStat, getTop10
 
 class Cache():
     def __init__(self):
@@ -63,7 +63,7 @@ class Cache():
     def storeTop10(self, key):
         args = key.split('-')
         category, stat = args[1], args[2]
-        res = database.getTop10(category, stat)
+        res = getTop10(category, stat)
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
 
@@ -74,7 +74,7 @@ class Cache():
         args = key.split('-')
         name = "".join(args[1:len(args)-1])
         num = int(args[-1])
-        res = database.getRecentGames(name, num)
+        res = getRecentGames(name, num)
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
 
@@ -82,7 +82,7 @@ class Cache():
         return f"general-{arg}"
 
     def storeTotalGames(self,key):
-        res = database.getTotalGames()
+        res = getTotalGames()
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
 
@@ -91,7 +91,7 @@ class Cache():
     def storeGameDetails(self, key):
         args = key.split('-')
         gameId = float(args[1])
-        res = database.getGameDetails(gameId)
+        res = getGameDetails(gameId)
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
     
@@ -100,7 +100,7 @@ class Cache():
     def storePlayerStats(self, key):
         args = key.split('-')
         name = "".join(args[1:])
-        res = database.getPlayerStats(name)
+        res = getPlayerStats(name)
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
 
@@ -109,6 +109,6 @@ class Cache():
     def storeEntireStat(self, key):
         args = key.split('-')
         category, stat = args[1], args[2]
-        res = database.getEntireStat(category, stat)
+        res = getEntireStat(category, stat)
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
