@@ -154,6 +154,8 @@ class Database():
                         "name":str(player['username']),
                         stat:int(player['stats'][category][stat])
                     })
+                else:
+                    break
             return res
         else:
             type = "per_min" if "min" in stat else "per_gm"
@@ -169,6 +171,8 @@ class Database():
                         "name":str(player['username']),
                         stat:float(player['advanced_stats'][type][stat])
                     })
+                else:
+                    break
             return res
     def getOnlinePlayers(self):
         res = []
@@ -213,6 +217,8 @@ class Database():
                         '{}_{}'.format(category, stat):int(player['stats'][category][stat])
                     }
                 )
+            else:
+                break
         return res
     def getAllPlayerStats(self, username):
         res = {}

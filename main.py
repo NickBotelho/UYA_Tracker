@@ -129,16 +129,19 @@ def gamesAPI(game_id):
 @app.route("/api/stats/top10", methods = ["GET","POST"])
 @cross_origin(supports_credentials=True)
 def postTop10_2():
+    global cache
     if request.method == "POST":
         category = request.json['category']
         stat = request.json['stat']
         cacheKey = cache.generateTop10Key(category, stat)
+        print(cacheKey)
         res = cache.get(cacheKey)
         if res:
             return jsonify(res), 200
         else:
             res = {}
             return jsonify(res), 404
+
 @app.route("/api/players/recent_games", methods = ["POST"])
 @cross_origin(supports_credentials=True)
 def postRecentGames_2():
