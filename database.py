@@ -2,39 +2,43 @@ from mongodb import Database
 import pickle
 from model.predictGame import predictGame
 from graphs.graphs import gameAnalytics
-from graphs.generateMapImage import createMap
-player_stats = Database("UYA","Player_Stats")
-players_online = Database("UYA","Players_Online")
-game_history = Database("UYA", "Game_History")
-games_active = Database("UYA","Games_Active")
-website_analytics = Database("UYA","Website_Analytics")
-clans = Database("UYA", "Clans")
 uyaModel = pickle.load(open('model/uyaModel.sav', 'rb'))
-chat = Database("UYA", "Chat")
 log = Database("UYA", "Logger")
-
+print("opening db")
 
 
 def getEntireStat(category, stat):
-    return player_stats.getEntireStat(category, stat)
+    player_stats = Database("UYA","Player_Stats")
+    res = player_stats.getEntireStat(category, stat)
+    player_stats.client.close()
+    return res
 
 def getOnlinePlayers():
-    return players_online.getOnlinePlayers()
-    
+    players_online = Database("UYA","Players_Online")
+    res = players_online.getOnlinePlayers()
+    players_online.client.close()
+    return res
 
 def getTop10(category, stat):
+    player_stats = Database("UYA","Player_Stats")
     res = player_stats.getTop10(category, stat)
+    player_stats.client.close()
     return res
 
 def getPlayerStats(username):
+    player_stats = Database("UYA","Player_Stats")
+    res = None
     if player_stats.exists(username):
         res = player_stats.getAllPlayerStats(username)
-        return res
-    return None
+    player_stats.client.close()
+    return res
 
 def getRecentGames(username, num_games):
     '''returns the num_games or as many possible games of basic info 
     relative to the given username (ie if they win or lost...maybe add their kd at some point'''
+    player_stats = Database("UYA","Player_Stats")
+    game_history = Database("UYA", "Game_History")
+    res = None
     if player_stats.exists(username):
         res = player_stats.getAllPlayerStats(username)
         res = res['match_history']
@@ -48,11 +52,13 @@ def getRecentGames(username, num_games):
         game_ids = game_ids[::-1]
         for game_id in game_ids:
             res.append(game_history.getBasicGameInformationForPlayer(game_id=game_id, username=username))
-        return res
-    return None
+    player_stats.client.close()
+    game_history.client.close()
+    return res
 
 def getAllGames(start, end):
     '''returns the game archives'''
+    game_history = Database("UYA", "Game_History")
     i = 0
     res = {}
     for game in game_history.collection.find().sort([('entry_number', -1)]):
@@ -66,40 +72,64 @@ def getAllGames(start, end):
             break
         else:
             i+=1
+    game_history.client.close()
     return res
 
 def getGameDetails(game_id):
     '''returns a detailed dict for the single passed game id'''
-    return game_history.getDetailedGameInformation(game_id)
+    game_history = Database("UYA", "Game_History")
+    res = game_history.getDetailedGameInformation(game_id)
+    game_history.client.close()
+    return res
 
 def analytics(request):
     '''update site analytics based on request'''
+    website_analytics = Database("UYA","Website_Analytics")
     website_analytics.updateAnalytics(request.access_route[0])
     return
 
 def getTotalGames():
     '''returns number of games in records'''
-    return game_history.collection.count_documents({})
+    game_history = Database("UYA", "Game_History") 
+    res = game_history.collection.count_documents({})
+    game_history.client.close()
+    return  res
 
 def getOnlinePlayerObjects():
-    return players_online.getActivePlayers()
+    players_online = Database("UYA","Players_Online")
+    res = players_online.getActivePlayers()
+    players_online.client.close()
+    return res
 
 def getOnlineGamesObjects():
-    return games_active.getActiveGames()
+    games_active = Database("UYA","Games_Active")
+    res = games_active.getActiveGames()
+    games_active.client.close()
+    return res
 
 def getOnlineClans():
-    return clans.getActiveClans(players_online)
+    clans = Database("UYA", "Clans")
+    players_online = Database("UYA","Players_Online")
+    res = clans.getActiveClans(players_online)
+    clans.client.close()
+    players_online.client.close()
+    return res
 
 
 
 
 def getGameAnalytics(year):
-    res = gameAnalytics(year)
+    game_history = Database("UYA", "Game_History") 
+    res = gameAnalytics(year, game_history)
+    game_history.client.close()
     return res
 
 def getGamePredictionIndex(idx):
     '''given the idx of the game return the predictions'''
+    games_active = Database("UYA","Games_Active")
+    player_stats = Database("UYA","Player_Stats")
     games = games_active.getActiveGames()
+    games_active.client.close()
     idx = int(idx)
     if idx >= len(games):
         #error
@@ -121,6 +151,7 @@ def getGamePredictionIndex(idx):
             for player in blue:
                 temp+= f"{player} "
             blueTeam = temp
+            player_stats.client.close()
 
             return {
                 redTeam:red_p,
@@ -129,7 +160,11 @@ def getGamePredictionIndex(idx):
 
 def getGamePredictionHost(host):
     '''given the idx of the game return the predictions'''
+    games_active = Database("UYA","Games_Active")
+    player_stats = Database("UYA","Player_Stats")
+
     games = games_active.getActiveGames()
+    games_active.client.close()
     hosts = {game['details']['host'].lower():game for game in games}
     if host.lower() not in hosts:
         #error
@@ -151,6 +186,7 @@ def getGamePredictionHost(host):
             for player in blue:
                 temp+= f"{player} "
             blueTeam = temp
+            player_stats.client.close()
 
             return {
                 redTeam:red_p,
@@ -160,7 +196,9 @@ def getGamePredictionHost(host):
 
 def getChat():
     MAX_LEN =25
+    chat = Database("UYA", "Chat")
     messages=chat.collection.find_one({})
+    chat.client.close()
     del messages['_id']
     res = []
     messages = sorted(messages.items(), key = lambda x: x[0])

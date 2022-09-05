@@ -1,5 +1,4 @@
 import pymongo
-from pymongo import MongoClient
 import time
 import datetime
 from config import MongoPW, MongoUser

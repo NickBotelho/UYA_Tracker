@@ -1,11 +1,10 @@
-from functools import cached_property
 from flask import Flask, json, jsonify, request, render_template, send_file
 from flask_cors import CORS, cross_origin
 import time
 from cache import Cache
 
 import database
-from graphs.graphs import convertSize, monthNames, weekdaysNames
+from graphs.graphs import monthNames, weekdaysNames
 
 app = Flask(__name__, template_folder = 'frontend/server/build/')
 cors = CORS(app)
@@ -124,7 +123,7 @@ def gamesAPI(game_id):
     res = cache.get(key)
     return res if res != None else {}
 
-@app.route("/api/stats/top10", methods = ["POST"])
+@app.route("/api/stats/top10", methods = ["GET","POST"])
 @cross_origin(supports_credentials=True)
 def postTop10_2():
     if request.method == "POST":
@@ -176,9 +175,9 @@ def postEntireStat_2():
         stat = request.json['stat']
 
         cacheKey = cache.generateEntireStatKey(category, stat)
-        res = cache.get(cacheKey)
-        
+        res = cache.get(cacheKey)   
         return jsonify(res), 200
+        
 @app.route("/api/games/details", methods = ["POST"])
 @cross_origin(supports_credentials=True)
 def postDetailedGame_2():
@@ -529,4 +528,4 @@ def getLiveGames():
 #         }
 #         return res
     
-# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+app.run(debug = True) #COMMENT OUT FOR PRODUCTION
