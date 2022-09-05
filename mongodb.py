@@ -13,7 +13,8 @@ except:
     exit(1)
 class Database():
     def __init__(self,db,collection):
-        self.client = pymongo.MongoClient("mongodb+srv://{}:{}@cluster0.jydx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(MongoUser, MongoPW))
+        self.client = pymongo.MongoClient("mongodb://{}:{}@cluster0-shard-00-00.jydx7.mongodb.net:27017,cluster0-shard-00-01.jydx7.mongodb.net:27017,\
+        cluster0-shard-00-02.jydx7.mongodb.net:27017/?ssl=true&replicaSet=atlas-w3y0so-shard-0&authSource=admin&retryWrites=true&w=majority".format(MongoUser, MongoPW))
         self.db = self.client[db]
         self.collection = self.db[collection]
     def getDB(self):
