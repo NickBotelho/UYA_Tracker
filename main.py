@@ -134,7 +134,6 @@ def postTop10_2():
         category = request.json['category']
         stat = request.json['stat']
         cacheKey = cache.generateTop10Key(category, stat)
-        print(cacheKey)
         res = cache.get(cacheKey)
         if res:
             return jsonify(res), 200
@@ -179,7 +178,6 @@ def postEntireStat_2():
         category = "tdm" if category == 'deathmatch' else category
         category = "weapons" if category == 'weapon kills' or category == 'weapon deaths' else category
         stat = request.json['stat']
-
         cacheKey = cache.generateEntireStatKey(category, stat)
         res = cache.get(cacheKey)   
         return jsonify(res), 200

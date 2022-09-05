@@ -147,7 +147,7 @@ class Database():
             res = []
             i = 0
             total = self.getTotalPlayerCount()
-            for player in self.collection.find().sort([("stats.{}.{}".format(category, stat),-1)]):
+            for player in self.collection.find().sort([("stats.{}.{}".format(category, stat),-1)]).limit(100):
                 if player['stats']['overall']['games_played'] < MIN_GAMES:continue
                 if i < total:
                     i+=1
@@ -163,7 +163,7 @@ class Database():
             res = []
             i = 0
             total = self.getTotalPlayerCount()
-            for player in self.collection.find().sort([("advanced_stats.{}.{}".format(type,stat),-1)]):
+            for player in self.collection.find().sort([("advanced_stats.{}.{}".format(type,stat),-1)]).limit(100):
                 if player['stats']['overall']['games_played'] < MIN_GAMES or\
                     (player['stats']['ctf']['ctf_wins'] + player['stats']['ctf']['ctf_losses'] < MIN_CTF_GAMES):continue
                 if i < total:
@@ -209,7 +209,7 @@ class Database():
     def getTop10(self, category, stat):
         res = []
         i = 0
-        for player in self.collection.find().sort([('stats.{}.{}'.format(category,stat), -1)]):
+        for player in self.collection.find().sort([('stats.{}.{}'.format(category,stat), -1)]).limit(10):
             if i < 10:
                 i+=1
                 res.append(
