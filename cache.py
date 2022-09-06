@@ -114,13 +114,3 @@ class Cache():
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
     
-
-    ####LIVE GAME HANDLING
-    def logGame(self, gameInfo):
-        self.dmeIdToLiveGameInfo[gameInfo['dme_id']] = gameInfo
-    def getLiveGames(self):
-        return list(self.dmeIdToLiveGameInfo.keys())
-    def getLiveGameInfo(self, dme_id):
-        return self.dmeIdToLiveGameInfo[dme_id]
-    def getMap(self, dme_id):
-        return self.dmeIdToLiveGameInfo[dme_id]['graph']
