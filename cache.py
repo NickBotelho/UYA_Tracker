@@ -15,6 +15,7 @@ class Cache():
             'entireStat':30,
         }
         self.dmeIdToLiveGameInfo = {}
+
     def clear(self):
         self.cache = {} #key to cache
         self.keyToCurrentTime = {} #key to datetime obj
@@ -114,3 +115,19 @@ class Cache():
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
     
+    ####LIVE GAME HANDLING
+    def logGame(self, gameInfo):
+        if gameInfo['dme_id'] not in self.dmeIdToLiveGameInfo:
+            self.dmeIdToLiveGameInfo[gameInfo['dme_id']] = gameInfo
+        else:
+            if gameInfo['updateId'] > self.dmeIdToLiveGameInfo[gameInfo['dme_id']]['updateId']:
+                self.dmeIdToLiveGameInfo[gameInfo['dme_id']] = gameInfo
+    def getLiveGames(self):
+        return list(self.dmeIdToLiveGameInfo.keys())
+    def getLiveGameInfo(self, dme_id):
+        print(self.dmeIdToLiveGameInfo[dme_id]['updateId'])
+        return self.dmeIdToLiveGameInfo[dme_id]
+    def getMap(self, dme_id):
+        res = self.dmeIdToLiveGameInfo[dme_id]['graph']
+        res['updateId'] = self.dmeIdToLiveGameInfo[dme_id]['updateId']
+        return res
