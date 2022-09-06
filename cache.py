@@ -119,7 +119,7 @@ class Cache():
     def logGame(self, gameInfo):
         self.dmeIdToLiveGameInfo[gameInfo['dme_id']] = gameInfo
     def getLiveGames(self):
-        return self.dmeIdToLiveGameInfo.keys()
+        return list(self.dmeIdToLiveGameInfo.keys())
     def getLiveGameInfo(self, dme_id):
         return self.dmeIdToLiveGameInfo[dme_id]
     def getMap(self, dme_id):
