@@ -15,7 +15,7 @@ class Cache():
             'entireStat':30,
         }
         self.dmeIdToLiveGameInfo = {}
-
+        self.lastUpdate = 0
     def clear(self):
         self.cache = {} #key to cache
         self.keyToCurrentTime = {} #key to datetime obj
@@ -125,7 +125,7 @@ class Cache():
     def getLiveGames(self):
         return list(self.dmeIdToLiveGameInfo.keys())
     def getLiveGameInfo(self, dme_id):
-        print(self.dmeIdToLiveGameInfo[dme_id]['updateId'])
+        
         return self.dmeIdToLiveGameInfo[dme_id]
     def getMap(self, dme_id):
         res = self.dmeIdToLiveGameInfo[dme_id]['graph']

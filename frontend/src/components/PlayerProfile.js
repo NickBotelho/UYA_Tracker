@@ -18,7 +18,7 @@ if (DEBUG==true){
     address = "http://127.0.0.1:5000"
 }
 else{
-    address = "https://uyatracker.herokuapp.com/"
+    address = "https://uyatracker.herokuapp.com"
 }
 
 function PlayerProfile(props){

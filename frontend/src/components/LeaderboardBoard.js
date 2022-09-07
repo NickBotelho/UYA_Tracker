@@ -37,7 +37,8 @@ function LeaderboardBoard(props){
             credentials: "include",
             body: JSON.stringify({
                 category:props.category,
-                stat:stat_keys[props.category][props.stat]
+                stat:stat_keys[props.category][props.stat],
+
             }),    
         }
         const search_result = await fetch(`${address}/api/stats/all`, requestSearch)
@@ -45,7 +46,7 @@ function LeaderboardBoard(props){
         hasLoaded({
             data:players,
             category:props.category,
-            stat:stat_keys[props.category][props.stat]
+            stat:stat_keys[props.category][props.stat],
         })
         return players
     }
