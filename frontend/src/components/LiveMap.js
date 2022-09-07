@@ -202,6 +202,16 @@ function LiveMap(props) {
         return () => clearInterval(interval);
     }, []);
 
+    /**
+     * if players not loaded:
+     * 1) load empty map if no cache
+     * 2) load cache if theres cache
+     * players is loaded:
+     * 3) if its the first batch (no update id cached yet) - render this packet
+     * we have an update ID and players
+     * 4) the update ID is forward moving - render this and cache 
+     * 5) the update ID is backwards, should not render and instead render whats cached
+     */
     if (players == null) {
         getMap(props.dme_id)
         let cache = myStorage.getItem("playerInfo")
@@ -247,7 +257,12 @@ function LiveMap(props) {
         console.log(updateId, updateId == null, typeof(updateId))
         if (updateId == null || updateId == "undefined") {
             const p = JSON.stringify(players)
-            myStorage.setItem("updateId", players[0]['updateId'])
+            let uid = {
+                'update_id':players[0]['updateId'],
+                'dme_id':props.dme_id
+            }
+            uid = JSON.stringify(uid)
+            myStorage.setItem("updateId", uid)
             myStorage.setItem("playerInfo", p)
             const points = players.map(createPlayer)
             return (
@@ -272,14 +287,20 @@ function LiveMap(props) {
             )
         }
         else {
-            updateId = parseInt(updateId)
+            updateId = JSON.parse(updateId)
             const p = JSON.stringify(players)
+            console.log(updateId)
 
-            if (players[0]['updateId'] >= updateId) { //forward batch
-                myStorage.setItem("updateId", players[0]['updateId'])
+            if (players[0]['updateId'] >= updateId['updateId'] || updateId['dme_id'] != props.dme_id) { //forward batch
+                let uid = {
+                    'updateId': players[0]['updateId'],
+                    'dme_id':props.dme_id
+                }
+                uid = JSON.stringify(uid)
+                myStorage.setItem("updateId", uid)
                 myStorage.setItem("playerInfo", p)
                 const points = players.map(createPlayer)
-
+                console.log(`update id is forward ${updateId}`)
                 return (
                     <div style={{
                         marginTop: props.isDesktop ? '35px' : '10px',
