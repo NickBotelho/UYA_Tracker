@@ -3,7 +3,7 @@ import pickle
 from model.predictGame import predictGame
 from graphs.graphs import gameAnalytics
 uyaModel = pickle.load(open('model/uyaModel.sav', 'rb'))
-log = Database("UYA", "Logger")
+log = Database("UYA", "Logger", live=True)
 
 
 def getEntireStat(category, stat):
@@ -77,8 +77,19 @@ def getAllGames(start, end):
 def getGameDetails(game_id):
     '''returns a detailed dict for the single passed game id'''
     game_history = Database("UYA", "Game_History")
+    live_history = Database("UYA", "LiveGame_History")
     res = game_history.getDetailedGameInformation(game_id)
+    liveInfo = live_history.getLiveGame(res['game_id'])
+    if liveInfo != None:
+        players = list(liveInfo['results'].keys())
+        for player in players:
+            if player.lower() not in liveInfo['results']:
+                liveInfo['results'][player.lower()] = liveInfo['results'][player]
+                del liveInfo['results'][player]
+        liveInfo = liveInfo['results']
+    res['liveGame'] =liveInfo
     game_history.client.close()
+    live_history.client.close()
     return res
 
 def analytics(request):
