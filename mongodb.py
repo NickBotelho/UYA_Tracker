@@ -12,9 +12,11 @@ except:
     print('failed to load credentials')
     exit(1)
 class Database():
-    def __init__(self,db,collection):
-        self.client = pymongo.MongoClient("mongodb://{}:{}@cluster0-shard-00-00.jydx7.mongodb.net:27017,cluster0-shard-00-01.jydx7.mongodb.net:27017,\
-        cluster0-shard-00-02.jydx7.mongodb.net:27017/?ssl=true&replicaSet=atlas-w3y0so-shard-0&authSource=admin&retryWrites=true&w=majority".format(MongoUser, MongoPW))
+    def __init__(self,db,collection, live = False):
+        if live:
+            self.client = pymongo.MongoClient("mongodb+srv://{}:{}@cluster0.xipwxkq.mongodb.net/?retryWrites=true&w=majority".format(MongoUser, MongoPW))
+        else:
+            self.client = pymongo.MongoClient("mongodb+srv://{}:{}@cluster0.jydx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(MongoUser, MongoPW))
         self.db = self.client[db]
         self.collection = self.db[collection]
     def getDB(self):
@@ -82,6 +84,12 @@ class Database():
         name = name.lower().strip()
         player = self.collection.find_one({"username_lowercase":name})
         if player != None:
+            return True
+        else:
+            return False
+    def hasLive(self, id):
+        game = self.collection.find_one({"game_id":id})
+        if game != None:
             return True
         else:
             return False
@@ -294,6 +302,13 @@ class Database():
                     }
                 }
             )
+    def getLiveGame(self, id):
+        game = self.collection.find_one({"game_id":id})
+        if game != None:
+            del game['_id']
+            return game
+        else:
+            return None
 
 
 

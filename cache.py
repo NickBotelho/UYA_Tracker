@@ -10,7 +10,7 @@ class Cache():
             'top10':20, #minutes
             'recentGames':10,
             'general':10,
-            'gameId':60,
+            'gameId':60*24,
             'playerStats':10,
             'entireStat':30,
         }
