@@ -9,7 +9,7 @@ import forward from '../../static/images/forward_arrow.svg';
 import backward from '../../static/images/backward_arrow.svg';
 
 
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
