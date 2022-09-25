@@ -162,12 +162,29 @@ function LiveMap(props){
                     position:'absolute',
                     transform: player['hp'] > 0 ? `rotate(${convertGameRotation(player['rotation'])}deg)` : 'rotate(0deg)'
                     }}/>
+            <div style={{
+                height: props.isDesktop ? '4px' : '2px',
+                width: props.isDesktop ? "30px ": '12px',
+                borderColor: "black",
+                border: '1px solid rgb(144,99,30)',
+                // paddingRight: `${props.isDesktop ? '5' : '2'}`,
+                textAlign: "center",
+                background: `linear-gradient(to right,  rgb(198,151,64) 0%,rgb(198,151,64) ${player['hp']}%,rgb(118,83,25) ${player['hp']}%,rgb(118,83,25) 100%)`,
+                color: "rgb(225,218,113)",
+                textShadow: '2px 2px 2px black',
+                fontSize: props.isDesktop ? "24pt" : '12pt',
+                marginLeft: `${radarPoints[0]}px`,
+                marginTop:`${radarPoints[1]-8}px`,
+                position:'absolute',
+
+            }}>
+            </div>
             <h4 style = {{
                 height:"10px",
                 width:'100px',
                 userSelect:"none",
                 marginLeft: `${radarPoints[0]}px`,
-                marginTop:`${radarPoints[1]-15}px`,
+                marginTop:`${radarPoints[1]-30}px`,
                 position:'absolute',
                 fontWeight:'bold',
                 fontSize: '12pt'

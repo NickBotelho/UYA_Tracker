@@ -52,10 +52,10 @@ function GameHistoryController(props){
         return(
             <div style = {{
             border : "3px solid rgb(141,113,24)",
-            paddingTop :"10px",
-            paddingRight:"50px",
-            paddingBottom:"10px",
-            paddingLeft:"50px",
+            paddingTop :props.isDesktop? "10px" : "2px",
+            paddingRight:props.isDesktop? "50px" : "10px",
+            paddingBottom:props.isDesktop? "10px" : "2px",
+            paddingLeft:props.isDesktop? "50px" : "10px",
             textAlign:"center",
             backgroundColor:"rgba(190, 177, 54, 0.8)",
             opacity:"0.8",

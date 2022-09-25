@@ -9,7 +9,7 @@ import forward from '../../static/images/forward_arrow.svg';
 import backward from '../../static/images/backward_arrow.svg';
 
 
-const DEBUG = false
+const DEBUG = true
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
@@ -130,7 +130,6 @@ function GameHistory(props){
 
 
     if (isDesktop){
-        console.log(tooShort)
         return (
             <div  style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 

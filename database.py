@@ -2,6 +2,7 @@ from mongodb import Database
 import pickle
 from model.predictGame import predictGame
 from graphs.graphs import gameAnalytics
+import datetime
 uyaModel = pickle.load(open('model/uyaModel.sav', 'rb'))
 log = Database("UYA", "Logger", live=True)
 
@@ -249,3 +250,29 @@ def getLiveGames():
     for game in log.collection.find():
         dmes.append(game['dme_id'])
     return dmes
+
+def saveAnnouncements(content, days):
+    announcements = Database("UYA", "Announcements")
+    announcements.collection.insert_one({
+        "content":content,
+        'days':datetime.datetime.today() + datetime.timedelta(days = days)
+    })
+
+def getAnnouncements():
+    announcements = Database("UYA", "Announcements")
+    res = []
+    today = datetime.datetime.today()
+    for announcement in announcements.collection.find():
+        date = announcement['days']
+        if today > date:
+            #delete
+            announcements.collection.find_one_and_delete({
+                "_id":announcement['_id']
+            })
+        else:
+            res.append(announcement['content'])
+    return res
+
+def clearAnnouncements():
+    announcements = Database("UYA", "Announcements")
+    announcements.collection.delete_many({})

@@ -6,7 +6,8 @@ import { Redirect } from "react-router";
 import {useMediaQuery} from 'react-responsive'
 import "../../static/css/homepage.css";
 import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
-const DEBUG = false
+import { AnnouncementsWindow } from "./AnnouncementsWindow";
+const DEBUG = true
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
@@ -43,6 +44,7 @@ function HomePage(props){
         url(${map})`,
         fontFamily:"Roboto, sans-serif",
         height: isTooLarge ? "100vh" : "100",
+        zIndex:"1"
     }
     const titleStyle = {
         fontSize: isDesktop ? "75pt" : "40pt",
@@ -52,16 +54,22 @@ function HomePage(props){
         color: 'rgb(229, 197, 102)',
         textShadow: '6px 4px 4px black',
     }
-    const myRef = createRef()
+    let announcementsRef = createRef()
 
+    const hideAnnouncements = () => {
+        announcementsRef.current.style.visibility = "hidden"
+        console.log(announcementsRef)
+    }
+    const myRef = createRef()
     let [search, searchState] = useState()
     if (isDesktop){
         return(
-            <div style = {background}>
+            <div style = {background} onMouseDown = {hideAnnouncements}>
                 <NavBar />
                 <h1 style = {titleStyle}>UYA Tracker</h1>
                 
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>
+                <AnnouncementsWindow address = {address} isDesktop = {isDesktop} reference = {announcementsRef} hide = {hideAnnouncements} />
                 
                 <div style = {fluidDistance}>
                     <div >
@@ -95,6 +103,7 @@ function HomePage(props){
                 <h1 style = {titleStyle}>UYA Tracker</h1>
                 
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>
+                <AnnouncementsWindow address = {address} isDesktop = {isDesktop} reference = {announcementsRef} hide = {hideAnnouncements} />
                 
                 <div style = {fluidDistance}>
                     <div style = {{

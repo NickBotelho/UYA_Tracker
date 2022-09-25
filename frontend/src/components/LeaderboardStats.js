@@ -14,9 +14,9 @@ function LeaderboardStats(props){
     const getBoard = () =>{
         props.changeBoard(
             <LeaderboardBoard 
-                category = {props.category}
-                stat = {props.stat}
-                stat_key = {props.key}
+                category = {props.category} //ctf
+                stat = {props.stat}         //wins
+                stat_key = {props.stat_key}      //wins
                 address = {props.address}
                 isDesktop = {props.isDesktop}
             />
@@ -27,19 +27,18 @@ function LeaderboardStats(props){
     return (
         <div style = {{
             border : "3px solid rgb(141,113,24)",
-            paddingTop :"10px",
-            paddingRight:"10px",
-            paddingBottom:"10px",
-            paddingLeft:"10px",
+            paddingTop :props.isDesktop? "10px" : "2px",
+            paddingRight:props.isDesktop? "25px" : "10px",
+            paddingBottom:props.isDesktop? "10px" : "2px",
+            paddingLeft:props.isDesktop? "25px" : "10px",
+            fontSize:props.isDesktop?"18pt":"12pt",
             textAlign:"center",
             backgroundColor:"rgba(190, 177, 54, 0.8)",
             whiteSpace:"nowrap",
-            paddingLeft:"10px",
-            marginRight:'10px',
-            marginLeft:'10px',
+            marginRight:props.isDesktop ? "5px" : "0px",
+            marginLeft:props.isDesktop ? "5px" : "0px",
             cursor:'pointer',
             userSelect:"none",
-            fontSize: props.isDesktop ? "15pt" : "11pt"
                     }}
             ref = {statRef}
             onMouseDown = {getBoard}

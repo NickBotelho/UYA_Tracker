@@ -1,20 +1,18 @@
 import React, { createRef, useState, useCallback } from "react";
 import { Redirect } from "react-router";
 import { StatTable } from "./StatTable";
-function AdvancedStatsController(props){
+function StreaksController(props){
 
 
     const showTable = () =>{
         props.changeTable(
             <StatTable
                 player = {props.player}
-                advanced = {true}
+                advanced = {false}
                 category = {props.category}
                 address = {props.address}
-                maps = {false}
+                streaks = {true}
                 medals = {false}
-                streaks = {false}
-
             />
         )
     }
@@ -57,4 +55,4 @@ function AdvancedStatsController(props){
 }
 
 
-export { AdvancedStatsController }
+export { StreaksController }

@@ -116,7 +116,7 @@ function Top10(props){
     }else{
         // console.log(isLoaded)
         return(
-            <div className='outside_border' >
+            <div className='outside_border' ref = {props.reference}>
                 <table 
                 style = {{
                     fontSize:'20pt',

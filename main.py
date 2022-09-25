@@ -1,3 +1,4 @@
+from glob import glob
 from flask import Flask, json, jsonify, request, render_template, send_file
 from flask_cors import CORS, cross_origin
 import time
@@ -15,6 +16,7 @@ games_cache = {}
 chached_query_time = 0
 refresh_interval = 60*12 #minutes between caching
 valid_years = ['2021', '2022','2023','2024','2025']
+announcements = []
 cache = Cache()
 analytics_cache = {}
 
@@ -94,6 +96,23 @@ def cacheStatus():
 def serverStatus():
     return "Up and running!", 200
 
+@app.route('/server/announcements/read', methods=['GET'])
+def serverAnnouncementsRead():
+    return jsonify(cache.get('announcements')), 200
+
+@app.route('/server/announcements/clear', methods=['GET'])
+def serverAnnouncementsClear():
+    database.clearAnnouncements()
+    cache.clear(key="announcements")
+    return "Annoucements cleared", 200
+
+@app.route('/server/announcements/post', methods=['POST'])
+def serverAnnouncementsPost():
+    announcements.append(request.json['content'])
+    message = request.json['content']
+    days = request.json['days']
+    database.saveAnnouncements(message, days)
+    return "Messaged Saved", 200
 ########ONLINE APIS###################
 @app.route('/api/online/players', methods=['GET'])
 def getOnlinePlayersObjects():
@@ -549,4 +568,4 @@ def getLiveGames():
 #         }
 #         return res
     
-# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+app.run(debug = True) #COMMENT OUT FOR PRODUCTION

@@ -151,7 +151,9 @@ class Database():
     def getEntireStat(self,category, stat):
         MIN_GAMES = 35
         MIN_CTF_GAMES = 10
-        if category != "advanced":
+        live_categories = {"medals"}
+        originals = {"overall", "ctf", "siege", "tdm", 'weapons'}
+        if category in originals:
             res = []
             i = 0
             total = self.getTotalPlayerCount()
@@ -166,6 +168,68 @@ class Database():
                 else:
                     break
             return res
+        elif category == 'live' or category == 'live/gm':
+            res = []
+            i = 0
+            total = self.getTotalPlayerCount()
+            for player in self.collection.find().sort([("advanced_stats.{}.{}".format(category, stat),-1)]).limit(100):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if i < total:
+                    i+=1
+                    res.append({
+                        "name":str(player['username']),
+                        stat:int(player['advanced_stats'][category][stat])
+                    })
+                else:
+                    break
+            return res
+        elif category in live_categories:
+            res = []
+            i = 0
+            total = self.getTotalPlayerCount()
+            for player in self.collection.find().sort([("advanced_stats.live.{}.{}".format(category, stat),-1)]).limit(100):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if i < total:
+                    i+=1
+                    res.append({
+                        "name":str(player['username']),
+                        stat:int(player['advanced_stats']['live'][category][stat])
+                    })
+                else:
+                    break
+            return res
+        elif category == 'best streaks':
+            dbstat = stat.split(":")
+            mode, dbstat = dbstat[0], dbstat[1]
+            res = []
+            i = 0
+            for player in self.collection.find().sort([("advanced_stats.streaks.{}.{}".format(mode, dbstat),-1)]).limit(100):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+
+                res.append({
+                    "name":str(player['username']),
+                    stat:int(player['advanced_stats']['streaks'][mode][dbstat])
+                })
+
+            return res
+        elif category == 'current streaks':
+            dbstat = stat.split(":")
+            mode, dbstat = dbstat[0], dbstat[1]
+            res = []
+            i = 0
+            now = datetime.datetime.now()
+            for player in self.collection.find().sort([("advanced_stats.streaks.{}.{}".format(mode, dbstat),-1)]).limit(2000):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if 'last_login' in player and player['last_login'] != None:
+                    lastLogin = datetime.datetime.fromtimestamp(player['last_login'])
+                    if (now - lastLogin).days > 90: continue
+                    res.append({
+                        "name":str(player['username']),
+                        stat:int(player['advanced_stats']['streaks'][mode][dbstat])
+                    })
+
+            return res
+
         else:
             type = "per_min" if "min" in stat else "per_gm"
             res = []

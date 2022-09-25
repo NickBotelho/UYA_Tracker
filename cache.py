@@ -1,5 +1,5 @@
 import datetime
-from database import getRecentGames, getTotalGames, getGameDetails, getPlayerStats, getEntireStat, getTop10
+from database import getRecentGames, getTotalGames, getGameDetails, getPlayerStats, getEntireStat, getTop10, getAnnouncements
 
 class Cache():
     def __init__(self):
@@ -13,11 +13,16 @@ class Cache():
             'gameId':60*24,
             'playerStats':10,
             'entireStat':30,
+            'announcements':60*12
         }
         self.dmeIdToLiveGameInfo = {}
-    def clear(self):
-        self.cache = {} #key to cache
-        self.keyToCurrentTime = {} #key to datetime obj
+    def clear(self, key = None):
+        if key != None:
+            del self.cache[key]
+            del self.keyToCurrentTime[key]
+        else:
+            self.cache = {} #key to cache
+            self.keyToCurrentTime = {} #key to datetime obj
         return True
     def status(self):
         res = {}
@@ -55,6 +60,8 @@ class Cache():
             self.storePlayerStats(key)
         elif cacheType == 'entireStat':
             self.storeEntireStat(key)
+        elif cacheType == 'announcements':
+            self.announcements()
 
         return self.cache[key] if key in self.cache else None
                 
@@ -111,6 +118,11 @@ class Cache():
         args = key.split('-')
         category, stat = args[1], args[2]
         res = getEntireStat(category, stat)
+        self.cache[key] = res
+        self.keyToCurrentTime[key] = datetime.datetime.now()
+
+    def announcements(self, key = 'announcements'):
+        res = getAnnouncements()
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
     
