@@ -101,7 +101,10 @@ function LiveMap(props){
         }
     }
     let mapName = props.map
-    let [players, setPlayers] = useState(null)
+    let [players, setPlayers] = useState({
+        playerInfo:null,
+        updateId:null
+    })
     let map = radars[mapName]
     let myStorage = window.localStorage;
 
@@ -122,7 +125,10 @@ function LiveMap(props){
         // const search_result = await fetch(`${props.address}/api/live/map`, requestSearch)
         // const radarPost = await search_result
         const playerInfos = await search_result.json()
-        setPlayers(sortPlayers(playerInfos))
+        setPlayers({
+            playerInfo:sortPlayers(playerInfos),
+            updateId:playerInfos['updateId']
+        })
         
     }
     function sortPlayers(info){
@@ -213,11 +219,14 @@ function LiveMap(props){
     }
     useEffect(() => {
         const interval = setInterval(() => {
-            setPlayers(null);
+            setPlayers({
+                updateId: players['updateId'],
+                playerInfo:null,
+            });
         }, props.refresh);
         return () => clearInterval(interval);
     }, []);
-    if (players == null){
+    if (players.playerInfo == null){
         getMap(props.dme_id)
         let cache = myStorage.getItem("playerInfo")
         if (cache == null){
@@ -236,6 +245,7 @@ function LiveMap(props){
             )
         }else{
             cache = JSON.parse(cache)
+            let updateId = JSON.parse(myStorage.getItem("updateId"))
             const points = cache.map(createPlayer)
             return (
                 <div style = {{
@@ -258,8 +268,36 @@ function LiveMap(props){
             )
         }
     }else{
-        myStorage.setItem("playerInfo", JSON.stringify(players))
-        const points = players.map(createPlayer)
+        let lastUpdateId = JSON.parse(myStorage.getItem("updateId"))
+        if (lastUpdateId > players.updateId){ //not a new update
+            console.log("display cache")
+            let cache = JSON.parse(cache)
+            const points = cache.map(createPlayer)
+            return (
+                <div style = {{
+                    marginTop:props.isDesktop? '35px' : '10px',
+                    height: props.isDesktop? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`,
+                    width: props.isDesktop? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`,
+                    border : "3px solid rgb(141,113,24)",
+                    borderCollapse:"collapse",
+                    marginLeft: props.isDesktop? '0': '5%',
+
+                }}>
+                        <img src = {map} height = {props.isDesktop? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`} 
+                        width= {props.isDesktop? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`} style = {{
+                            position:'absolute'
+                        }}></img>
+    
+                        {points}
+     
+                </div>
+            )
+        }
+        myStorage.setItem("playerInfo", JSON.stringify(players.playerInfo))
+        myStorage.setItem("updateId", JSON.stringify(players.updateId))
+        const points = players.playerInfo.map(createPlayer)
+        console.log("display new update")
+
         return (
             <div style = {{
                 marginTop:props.isDesktop? '35px' : '10px',
