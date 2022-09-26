@@ -17,7 +17,7 @@ else{
 }
 
 function HomePage(props){
-    console.log("v3.1.2")
+    console.log("v3.1.3")
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
