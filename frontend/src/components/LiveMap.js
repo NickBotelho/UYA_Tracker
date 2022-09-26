@@ -271,7 +271,7 @@ function LiveMap(props){
         let lastUpdateId = JSON.parse(myStorage.getItem("updateId"))
         if (lastUpdateId > players.updateId){ //not a new update
             console.log("display cache")
-            let cache = JSON.parse(cache)
+            let cache = JSON.parse(myStorage.getItem("playerInfo"))
             const points = cache.map(createPlayer)
             return (
                 <div style = {{
