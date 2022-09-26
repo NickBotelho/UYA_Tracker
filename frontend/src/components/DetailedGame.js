@@ -5,7 +5,7 @@ import { GetLargeMap, GetHalfLargeMap, getSpecifiedMap } from "./extras.js";
 import { HomeButton } from "./HomeButton.js";
 import { populateCTFRow, populateDMRow, populateSiegeRow } from "./populateRows.js";
 
-const DEBUG = false
+const DEBUG = true
 var address = null
 if (DEBUG == true) {
     address = "http://127.0.0.1:5000"

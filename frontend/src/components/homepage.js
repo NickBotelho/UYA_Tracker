@@ -7,7 +7,7 @@ import {useMediaQuery} from 'react-responsive'
 import "../../static/css/homepage.css";
 import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
 import { AnnouncementsWindow } from "./AnnouncementsWindow";
-const DEBUG = false
+const DEBUG = true
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"

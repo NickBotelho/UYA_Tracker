@@ -10,7 +10,7 @@ import { LiveScore } from "./LiveScore.js";
 import { LiveInfo } from "./LiveInfo.js";
 import online_circle from '../../static/images/online_circle.png';
 
-const DEBUG = false
+const DEBUG = true
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"

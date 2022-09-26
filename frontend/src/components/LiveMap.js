@@ -127,7 +127,8 @@ function LiveMap(props){
         const playerInfos = await search_result.json()
         setPlayers({
             playerInfo:sortPlayers(playerInfos),
-            updateId:playerInfos['updateId']
+            updateId:playerInfos['updateId'],
+            dme_id:dme_id
         })
         
     }
@@ -226,6 +227,13 @@ function LiveMap(props){
         }, props.refresh);
         return () => clearInterval(interval);
     }, []);
+    let cachedDmeId = JSON.parse(myStorage.getItem("dmeId"))
+    if (cachedDmeId != null){
+        if (cachedDmeId != props.dme_id){
+            myStorage.setItem("updateId", JSON.stringify(-1))
+            myStorage.setItem("dmeId", JSON.stringify(players.dmeId))
+        }
+    }
     if (players.playerInfo == null){
         getMap(props.dme_id)
         let cache = myStorage.getItem("playerInfo")
@@ -245,6 +253,7 @@ function LiveMap(props){
             )
         }else{
             cache = JSON.parse(cache)
+            console.log("")
             let updateId = JSON.parse(myStorage.getItem("updateId"))
             const points = cache.map(createPlayer)
             return (
@@ -270,7 +279,7 @@ function LiveMap(props){
     }else{
         let lastUpdateId = JSON.parse(myStorage.getItem("updateId"))
         if (lastUpdateId > players.updateId){ //not a new update
-            console.log("display cache")
+            console.log("display cache b/c update id is behind", lastUpdateId)
             let cache = JSON.parse(myStorage.getItem("playerInfo"))
             const points = cache.map(createPlayer)
             return (
@@ -295,6 +304,7 @@ function LiveMap(props){
         }
         myStorage.setItem("playerInfo", JSON.stringify(players.playerInfo))
         myStorage.setItem("updateId", JSON.stringify(players.updateId))
+        myStorage.setItem("dmeId", JSON.stringify(players.dmeId))
         const points = players.playerInfo.map(createPlayer)
         console.log("display new update")
 

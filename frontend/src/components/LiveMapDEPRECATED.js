@@ -3,7 +3,7 @@ import { Redirect } from "react-router";
 import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
 import { HomeButton } from './HomeButton'
 import {useMediaQuery} from 'react-responsive'
-const DEBUG = false
+const DEBUG = true
 
 //<img src={`data:image/png;base64,${this.state.image}`}/>
 function LiveMapDEPRECATED(props){
