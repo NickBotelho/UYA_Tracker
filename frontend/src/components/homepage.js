@@ -7,7 +7,7 @@ import {useMediaQuery} from 'react-responsive'
 import "../../static/css/homepage.css";
 import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
 import { AnnouncementsWindow } from "./AnnouncementsWindow";
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
@@ -17,7 +17,7 @@ else{
 }
 
 function HomePage(props){
-    console.log("v3.1.1")
+    console.log("v3.1.2")
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
