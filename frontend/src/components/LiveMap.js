@@ -296,7 +296,7 @@ function LiveMap(props) {
         let cache = myStorage.getItem("playerInfo")
         if (cache == null) {
             let blankMap = displayBlankMap()
-            return { blankMap }
+            return <div>{ blankMap }</div>
         } else {
             console.log("Player info not loaded, display last good cache")
             cache = JSON.parse(cache)
