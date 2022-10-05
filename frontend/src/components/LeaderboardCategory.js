@@ -18,6 +18,7 @@ function LeaderboardCategory(props){
                 changeBoard = {props.changeBoard}
                 isDesktop = {props.isDesktop}
                 stat_key = {stat}
+                key = {stat}
             />
         )
 
@@ -55,7 +56,8 @@ function LeaderboardCategory(props){
                 backgroundColor:"rgba(190, 177, 54, 0.8)",
                 whiteSpace:"nowrap",
                 cursor:'pointer',
-                userSelect:"none"
+                userSelect:"none",
+
             }} onMouseDown = {showStats}
             onMouseEnter = {buttonHover}
             onMouseLeave = {buttonRest}>

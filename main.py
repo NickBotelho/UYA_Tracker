@@ -544,18 +544,7 @@ def getLiveGames():
         res = cache.getLiveGames()
         return jsonify(res), 200 if res != None else 404   
 
-#             update = { 
-#                 'dme_id':self.id,
-#                 'map':self.map,
-#                 'start_time':self.startTime,
-#                 'logger':self.batch,
-#                 'graph': self.coords,
-#                 'player_states': self.players,
-#                 'scores':self.scores,
-#                 'batch_num':self.currentMessage,
-#                 'isRunning': running,
-#                 'duration': "{}:{}".format(duration.seconds//60, seconds),
-#             }
+
 # # @app.route('/ip', methods=['GET'])
 # @cross_origin(supports_credentials=True)
 # def getIP():

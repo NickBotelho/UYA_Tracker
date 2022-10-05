@@ -277,7 +277,7 @@ function LiveMap(props) {
 
 
     let cachedDmeId = myStorage.getItem("dmeId")
-    console.log(cachedDmeId, typeof cachedDmeId)
+    // console.log(cachedDmeId, typeof cachedDmeId)
     if (cachedDmeId == null || cachedDmeId == "undefined") {
         myStorage.setItem("updateId", JSON.stringify(-1))
         myStorage.setItem("dmeId", JSON.stringify(props.dme_id))
@@ -298,7 +298,7 @@ function LiveMap(props) {
             let blankMap = displayBlankMap()
             return <div>{ blankMap }</div>
         } else {
-            console.log("Player info not loaded, display last good cache")
+            // console.log("Player info not loaded, display last good cache")
             cache = JSON.parse(cache)
             const points = cache.map(createPlayer)
             let lastGoodUpdate = displayMap(points)
@@ -309,7 +309,7 @@ function LiveMap(props) {
         let lastUpdateId = parseInt(myStorage.getItem("updateId"))
         let dmeId = parseInt(myStorage.getItem("dmeId"))
         if (lastUpdateId != null && lastUpdateId > players.updateId) { //not a new update
-            console.log("display cache b/c update id is behind", lastUpdateId, dmeId, props.dme_id)
+            // console.log("display cache b/c update id is behind", lastUpdateId, dmeId, props.dme_id)
             let cache = JSON.parse(myStorage.getItem("playerInfo"))
             const points = cache.map(createPlayer)
             let lastGoodUpdate = displayMap(points)
@@ -321,7 +321,7 @@ function LiveMap(props) {
         myStorage.setItem("updateId", JSON.stringify(players.updateId))
         myStorage.setItem("dmeId", JSON.stringify(players.dmeId))
         const points = players.playerInfo.map(createPlayer)
-        console.log("Updating caches and display new update")
+        // console.log("Updating caches and display new update")
         let newUpdate = displayMap(points)
         return <div>{newUpdate}</div>
 

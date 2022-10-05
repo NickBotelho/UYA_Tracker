@@ -21,7 +21,7 @@ function LivePlayer(props) {
     const toggleOff = (e) => {
         detailedInfoRef.current.style.visibility = 'hidden'
     }
-    console.log()
+    // console.log()
     if (props.isDesktop) {
         return (
             <div style={{

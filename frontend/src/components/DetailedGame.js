@@ -105,14 +105,13 @@ function DetailedGame(props) {
     let disconnects = []
 
     let tie = []
-    console.log(game)
     if (game['gamemode'] == "CTF") {
         winners = populateCTFRow(game['game_results']['winners'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'], false)
         losers = populateCTFRow(game['game_results']['losers'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'], false)
         disconnects = 'disconnect' in game['game_results'] ? populateCTFRow(game['game_results']['disconnect'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'], true) : null
         mode = 5
         if (winners.length == 1 && losers.length == 1) {
-            tie = populateCTFRow(game['game_results']['tie'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'])
+            tie = populateCTFRow(game['game_results']['tie'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'], false, true)
         }
     }
     else if (game['gamemode'] == 'Siege') {
@@ -135,19 +134,21 @@ function DetailedGame(props) {
     if (goBack != null) {
         let redirect = "/gamehistory"
         return <Redirect push to={redirect} />
-    }
-    if (isDesktop) {
-        let firstWinner = "winners" in game['game_results'] ? game['game_results']['winners'][0]['username'] : null
-        let winningColor = game['liveGame'] != null && firstWinner != null ? game['liveGame'][firstWinner.toLowerCase()]['team'] : null
+    }   
+    // console.log(game)     
+    let firstWinner = game['game_results']["winners"].length > 0 ? game['game_results']['winners'][0]['username'] : null
+    let winningColor = game['liveGame'] != null && firstWinner != null ? game['liveGame'][firstWinner.toLowerCase()]['team'] : null
 
-        console.log(firstWinner)
-        // console.log(winners, losers, tie)s
+    if (isDesktop) {
+
+
+
         return (
             <div style={{
                 background: `linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                     url(${map})`,
                 fontFamily: "Roboto, sans-serif",
-                height: '100vh'
+                height: '100vh',
             }}>
                 <HomeButton />
 
@@ -231,7 +232,7 @@ function DetailedGame(props) {
                         justifyContent: 'center'
                     }}>
                         <div>
-                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 1 && game['live'] != null ? `Winning Team: ${winningColor.toUpperCase()}` : "Tie Game"}</h4>
+                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 1 && game['liveGame'] != null ? `Winning Team: ${winningColor.toUpperCase()}` : "Tie Game"}</h4>
                             <div style={{
                                 border: "4px solid rgb(141,113,24)",
 
@@ -292,7 +293,8 @@ function DetailedGame(props) {
                 background: `linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                     url(${map})`,
                 fontFamily: "Roboto, sans-serif",
-                height: '1100px'
+                height: '1100px',
+                width:"410px"
             }}>
                 <HomeButton />
 
@@ -391,7 +393,7 @@ function DetailedGame(props) {
 
                     }}>
                         <div>
-                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 1 ? "Winning Team" : "Tie Game"}</h4>
+                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 1 && game['liveGame'] != null ? `Winning Team: ${winningColor.toUpperCase()}` : "Tie Game"}</h4>
                             <div style={{
                                 border: "4px solid rgb(141,113,24)",
 

@@ -17,7 +17,7 @@ else{
 }
 
 function HomePage(props){
-    console.log("v3.1.4")
+    console.log("v3.0.0")
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
@@ -25,7 +25,7 @@ function HomePage(props){
         query: "(min-width: 600px)",
     });
     const isTooLarge = useMediaQuery({
-        query: "(min-height:600px)"
+        query: "(min-height:1300px)"
     })
     // const isMaxWidth = useMediaQuery({
     //     query:"(min-width: 2000px)"
@@ -39,12 +39,20 @@ function HomePage(props){
     }
 
     const map = GetLargeMap()
-    const background = {
+    const desktopBackground = {
         position:"relative",
         background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
         url(${map})`,
         fontFamily:"Roboto, sans-serif",
         height: isTooLarge ? "100vh" : "100",
+        zIndex:"1"
+    }
+    const mobileBackground = {
+        position:"relative",
+        background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
+        url(${map})`,
+        fontFamily:"Roboto, sans-serif",
+        height: "100vh",
         zIndex:"1"
     }
     const titleStyle = {
@@ -58,14 +66,15 @@ function HomePage(props){
     let announcementsRef = createRef()
 
     const hideAnnouncements = () => {
-        announcementsRef.current.style.visibility = "hidden"
-        console.log(announcementsRef)
+        if (announcementsRef.current != null){
+            announcementsRef.current.style.visibility = "hidden"
+        }
     }
     const myRef = createRef()
     let [search, searchState] = useState()
     if (isDesktop){
         return(
-            <div style = {background} onMouseDown = {hideAnnouncements}>
+            <div style = {desktopBackground} onMouseDown = {hideAnnouncements}>
                 <NavBar />
                 <h1 style = {titleStyle}>UYA Tracker</h1>
                 
@@ -99,7 +108,7 @@ function HomePage(props){
     }
     else{
         return(
-            <div style = {background}>
+            <div style = {mobileBackground}>
                 <NavBar />
                 <h1 style = {titleStyle}>UYA Tracker</h1>
                 

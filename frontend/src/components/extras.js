@@ -728,8 +728,8 @@ const statList = { //for leaderboards
         'kills/gm', 'deaths/gm', 'suicides/gm', 'caps/gm', 'saves/gm', 'flux kills/gm', 'blitz kills/gm', 'gravity bomb kills/gm', 'flux deaths/gm', 'blitz deaths/gm', 'gravity bomb deaths/gm',],
     'live': ['total distance', 'no flag distance', 'flag distance', 'flag pickups', 'flag drops', 'health boxes', 'packs grabbed', 'niks given', 'niks received'],
     'live/gm': ['total distance', 'no flag distance', 'flag distance', 'flag pickups', 'flag drops', 'health boxes', 'packs grabbed', 'niks given', 'niks received'],
-    'medals': ['nuke', 'brutal', 'relentless', 'undying', 'merciless', 'bloodthirsty', 'distributor', 'brutalized', 'thickskull', 
-    'shifty', 'juggernaut', 'olympiad', 'lockon', 'dropper', 'ratfuck', "healthrunner", 'machinegun', 'untouchable', 'heatingup'],
+    'medals': ['nuke', 'brutal', 'relentless', 'undying', 'merciless', 'bloodthirsty', 'thickskull', 
+    'shifty','olympiad', 'lockon', 'dropper', "healthrunner", 'machinegun', 'untouchable', 'heatingup'],
     'best streaks':['overall winstreak', 'overall killstreak', 'overall deathstreak' , 'ctf winstreak', 'ctf killstreak', 'ctf deathstreak',
         'siege winstreak', 'siege killstreak', 'siege deathstreak' ,'tdm winstreak', 'tdm killstreak', 'tdm deathstreak' ,],
     'current streaks':['overall winstreak', 'ctf winstreak', 'siege winstreak', 'tdm winstreak']

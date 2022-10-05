@@ -98,7 +98,7 @@ function Leaderboards(props){
                     <div style = {{
                         display:"flex",
                         flexDirection:'row',
-                        flexWrap:'nowrap',
+                        flexWrap:'wrap',
                         justifyContent:'center'
                     }}>
                         {stat_categories}

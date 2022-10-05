@@ -34,7 +34,7 @@ function populateCTFRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSe
         const restingStyle = {
             background: "rgba(198,151,64)",
             cursor: 'pointer',
-            fontSize: isDesktop ? "12pt" : '10pt',
+            fontSize: isDesktop ? "12pt" : '8pt',
             border: "3px solid rgb(141,113,24)",
             fontFamily: "Roboto, sans-serif",
             fontWeight: "bolder",
@@ -43,8 +43,8 @@ function populateCTFRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSe
             marginLeft: "0",
             marginRight: isDesktop? "0" : "5px",
             userSelect: "none",
-            height: isDesktop ? "30px" : '25px',
-            width: isDesktop ? "50px" : '40px',
+            height: isDesktop ? "30px" : '20px',
+            width: isDesktop ? "50px" : '35px',
             marginTop: isDesktop ? '3px' : '0px'
         
         }
@@ -109,6 +109,7 @@ function populateCTFRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSe
             const kills = isDisconnect == true && info != null ? info['kills'] : team[i]['kills'] 
             const deaths = isDisconnect == true && info != null ? info['deaths'] : team[i]['deaths'] 
             const caps = isDisconnect == true && info != null ? info['caps'] : team[i]['caps'] 
+            const color = info != null ? info['team'] :  "rgba(190, 177, 54, 0.8)"
 
             row.push(
                 <div ref={ref} style={{
@@ -141,7 +142,10 @@ function populateCTFRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSe
                         onMouseLeave={(e) => {
                             e.currentTarget.style.background = 'none'
                         }}>
-                        <h3>{isDisconnect == true && info != null ? `(${info['team'].toUpperCase()}) ` : null}{name}</h3>
+
+                        <h3 style={{
+                            color:color
+                        }}>{isDisconnect == true && info != null ? `(${info['team'].toUpperCase()}) ` : null}{name.length > 9? `${name.substring(0,9)}.` : name}</h3>
 
                     </div>
                     <div style={{
@@ -197,7 +201,7 @@ function populateCTFRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSe
 }
 
 function populateDMRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSearchName, isDesktop, liveGame,
-    map) {
+    map, isDisconnect) {
 
     const header = <div style={{
         display: 'flex',
@@ -245,8 +249,6 @@ function populateDMRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSea
         let row = [header]
         for (let i = 0; i < team.length; i++) {
             const name = team[i]['username']
-            const kills = team[i]['kills']
-            const deaths = team[i]['deaths']
             const suicides = team[i]['suicides']
             const player_weapons = team[i]['weapons']
             let ref = createRef()
@@ -254,7 +256,9 @@ function populateDMRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSea
                 ref.current.children[0].style.visibility = "visible"
             }
             const info = liveGame != null ? liveGame[name.toLowerCase()] : null
-
+            const kills = isDisconnect == true && info != null ? info['kills'] : team[i]['kills'] 
+            const deaths = isDisconnect == true && info != null ? info['deaths'] : team[i]['deaths'] 
+            const color = info != null ? info['team'] :  "rgba(190, 177, 54, 0.8)"
             row.push(
                 <div ref={ref} style={{
                     display: 'flex',
@@ -286,7 +290,9 @@ function populateDMRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSea
                         onMouseLeave={(e) => {
                             e.currentTarget.style.background = 'none'
                         }}>
-                        <h3>{name}</h3>
+                        <h3 style = {{
+                            color:color
+                        }}>{name.length > 9? `${name.substring(0,9)}.` : name}</h3>
 
                     </div>
                     <div style={{
@@ -335,7 +341,7 @@ function populateDMRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSea
     return populate(team)
 }
 function populateSiegeRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSearchName, isDesktop, liveGame,
-    map) {
+    map, isDisconnect) {
 
     const header = <div style={{
         display: 'flex',
@@ -387,8 +393,6 @@ function populateSiegeRow(team, cellWidth, setWeaponBreakdown, game_weapons, set
         let row = [header]
         for (let i = 0; i < team.length; i++) {
             const name = team[i]['username']
-            const kills = team[i]['kills']
-            const deaths = team[i]['deaths']
             const base_dmg = team[i]['base_dmg']
             const nodes = team[i]['nodes']
             const player_weapons = team[i]['weapons']
@@ -397,7 +401,9 @@ function populateSiegeRow(team, cellWidth, setWeaponBreakdown, game_weapons, set
                 ref.current.children[0].style.visibility = "visible"
             }
             const info = liveGame != null ? liveGame[name.toLowerCase()] : null
-
+            const kills = isDisconnect == true && info != null ? info['kills'] : team[i]['kills'] 
+            const deaths = isDisconnect == true && info != null ? info['deaths'] : team[i]['deaths'] 
+            const color = info != null ? info['team'] :  "rgba(190, 177, 54, 0.8)"
             row.push(
                 <div ref={ref} style={{
                     display: 'flex',
@@ -429,7 +435,9 @@ function populateSiegeRow(team, cellWidth, setWeaponBreakdown, game_weapons, set
                         onMouseLeave={(e) => {
                             e.currentTarget.style.background = 'none'
                         }}>
-                        <h3>{name}</h3>
+                        <h3 style = {{
+                            color:color
+                        }}>{name.length > 9? `${name.substring(0,9)}.` : name}</h3>
 
                     </div>
                     <div style={{

@@ -147,7 +147,7 @@ function DetailedLiveHistory(props) {
             </div>
             <div>
                 <div height={props.isDesktop ? '80px' : '80px'}
-                    width={props.isDesktop ? '80px' : '80px'} onMouseOver={showMedals} onMouseLeave={hideMedals}
+                    width={props.isDesktop ? '80px' : '80px'} onMouseDown={showMedals}
                     style={{
                         right: props.isDesktop ? "17%" : '0%',
                         top: props.isDesktop ? "0%" : "5%",
@@ -179,6 +179,14 @@ function DetailedLiveHistory(props) {
                     transform: "translate(-50%, -50%)"
 
                 }}>
+                    <img ref={imageRef} src="../../static/images/X.png" height={props.isDesktop ? '60px' : '30px'}
+                    width={props.isDesktop ? '60px' : '30px'} onMouseDown={hideMedals}
+                    style={{
+                        right: "0%",
+                        top: "0%",
+                        position: "absolute",
+                        filter: `${filters['v1']}`
+                    }}></img>
                     <h2>MEDALS:</h2>
                     <p>Nuke: {props.info['medals']['nuke']}</p>
                     <p>Brutal: {props.info['medals']['brutal']}</p>
@@ -205,7 +213,7 @@ function DetailedLiveHistory(props) {
 
                 </div>
                 <div height={props.isDesktop ? '80px' : '80px'}
-                    width={props.isDesktop ? '80px' : '80px'} onMouseOver={showInfo} onMouseLeave={hideInfo}
+                    width={props.isDesktop ? '80px' : '80px'} onMouseDown={showInfo}
                     style={{
                         right: "0%",
                         top: "0%",
@@ -237,6 +245,14 @@ function DetailedLiveHistory(props) {
                     transform: "translate(-50%, -50%)"
 
                 }}>
+                    <img ref={imageRef} src="../../static/images/X.png" height={props.isDesktop ? '60px' : '30px'}
+                    width={props.isDesktop ? '60px' : '30px'} onMouseDown={hideInfo}
+                    style={{
+                        right: "0%",
+                        top: "0%",
+                        position: "absolute",
+                        filter: `${filters['v1']}`
+                    }}></img>
                     <h2>General Information</h2>
                     <ul>
                         <li>1 distance unit is an "X12". 1 X12 is defined as going from the red base pad to the blue base pad on Outpost x12</li>
@@ -302,8 +318,8 @@ function DetailedLiveHistory(props) {
                 top: props.isDesktop ? "0%" : "30%",
                 marginTop: "60px"
             }}>
-                <p>KILLS: {props.info['kills']}</p>
-                <p style={{ marginBottom: "20px" }}>DEATHS: {props.info['deaths']}</p>
+                <p>KILLS: {props.info['kills']} ({props.info["kill_info"]["best_killstreak"]} STREAK)</p>
+                <p style={{ marginBottom: "20px" }}>DEATHS: {props.info['deaths']} ({props.info["death_info"]["best_deathstreak"]} STREAK)</p>
                 <p>DISTANCE TRAVELLED WITH FLAG:{props.info["flag_distance"]}</p>
                 <p>DISTANCE TRAVELLED WITHOUT FLAG: {props.info["noFlag_distance"]}</p>
                 <p>FLAG PICKSUP: {props.info["flag_pickups"]}</p>
