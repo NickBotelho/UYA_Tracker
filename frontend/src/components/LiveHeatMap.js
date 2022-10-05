@@ -86,6 +86,8 @@ function LiveHeatMap(props) {
                         marginLeft: `${radarPoints[0]}px`,
                         marginTop: `${radarPoints[1]}px`,
                         filter: `${kill == true? colors['kill'] : colors['death'] }`,
+                        top:"10%",
+                        left:"8%",
                         position: 'absolute',
                     }} />
             </div>)
