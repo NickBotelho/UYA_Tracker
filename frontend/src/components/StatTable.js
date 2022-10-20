@@ -4,9 +4,9 @@ import { categories } from "./extras.js";
 //fields: player json, broad type of stats (general, CTF...)
 function StatTable(props){
     const category = props.category
-    
     let arr = []
-    if (props.advanced == false && props.maps == false){
+
+    if (props.advanced == false && props.maps == false && props.maps == false && props.medals == false){
 
         for (let stat in categories[category]){
             arr.push(<StatField title = {categories[category][stat]['title']}
@@ -15,10 +15,28 @@ function StatTable(props){
             player = {props.player} 
             address = {props.address}
             key = {stat}
+            medals = {false}
+            streaks = {false}
             advanced = {false}
             maps = {false}/>)
         }
-    }else if (props.maps == true){
+    }else if (props.maps != null && props.maps == true){
+
+        for (let stat in categories[category]){
+            arr.push(<StatField title = {categories[category][stat]['title']}
+            category = {categories[category][stat]['category']} 
+            stat = {categories[category][stat]['stat']} 
+            player = {props.player} 
+            address = {props.address}
+            key = {stat}
+            medals = {false}
+            advanced = {false}
+            streaks = {false}
+            maps = {true}/>
+            )
+        }
+    }
+    else if (props.streaks != null && props.streaks == true){
 
         for (let stat in categories[category]){
             arr.push(<StatField title = {categories[category][stat]['title']}
@@ -28,7 +46,25 @@ function StatTable(props){
             address = {props.address}
             key = {stat}
             advanced = {false}
-            maps = {true}/>
+            maps = {false}
+            streaks = {true}
+            medals = {false}
+            />
+            )
+        }
+    }
+    else if (props.medals != null && props.medals == true){
+        for (let stat in categories[category]){
+            arr.push(<StatField title = {categories[category][stat]['title']}
+            category = {categories[category][stat]['category']} 
+            stat = {categories[category][stat]['stat']} 
+            player = {props.player} 
+            address = {props.address}
+            key = {stat}
+            advanced = {false}
+            maps = {false}
+            streaks = {false}
+            medals = {true}/>
             )
         }
     }
@@ -46,7 +82,7 @@ function StatTable(props){
             )
         }
     }
-   
+    // console.log(arr.length > 15 ? '400px' : 'auto')
     return (
         <div style = {{
             // border : "3px solid rgb(165,154,46)",
@@ -58,12 +94,17 @@ function StatTable(props){
             <table style = {{
                 fontSize:'20pt',
                 color: 'rgb(141,113,24)',
-                width:"300px",
-                // height:'400px',
+                width:arr.length > 15 ? "auto" : '300px',
+                height: arr.length > 15 ? '400px' : 'auto',
                 letterSpacing:"-1.5px",
                 borderCollapse:"collapse",
                 fontWeight:"bolder",
                 textShadow:"1px 1px 1px black",
+                display: arr.length > 15 ? "block" : 'inline',
+                scrollBehavior:"smooth",
+                scrollbarWidth:"5px",
+                overflowX:"hidden",
+                overflowY:"scroll",
             }}>
                 <caption style={{
                     paddingLeft:"10px",

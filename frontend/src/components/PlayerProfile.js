@@ -9,6 +9,8 @@ import { PlayerProfileController } from "./PlayerProfileController";
 import {AdvancedStatsController} from './AdvancedStatsController';
 import { MapStatsController } from "./MapStatsController";
 import { GameHistoryController } from "./GameHistoryController";
+import { StreaksController } from "./StreaksController";
+import { MedalController } from "./MedalController";
 import { HomeButton } from "./HomeButton";
 import {useMediaQuery} from 'react-responsive'
 
@@ -99,7 +101,7 @@ function PlayerProfile(props){
                 name: player_name,
             }),    
         }
-        const search_result = await fetch(`${address}/player/stats`, requestSearch)
+        const search_result = await fetch(`${address}/api/players/stats`, requestSearch)
         const data = await search_result.json()
         setData(data)
     }
@@ -147,6 +149,7 @@ function PlayerProfile(props){
                         key = {category}
                         table = {table}
                         changeTable = {changeTable}
+                        isDesktop = {isDesktop}
                     />
     
                 )
@@ -175,6 +178,9 @@ function PlayerProfile(props){
                             <AdvancedStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'per_min'} title = {"ADVANCED (MINS)"}/>
                             <AdvancedStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'per_gm'} title = {"ADVANCED (GMS)"}/>
                             <MapStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'maps'}/>
+                            <StreaksController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'best streaks'} title={"BEST STREAKS"}/>
+                            <StreaksController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'current streaks'} title={"CURRENT STREAKS"}/>
+                            <MedalController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={true} category = {'medals'} title = {"MEDALS"}/>
 
                         </div>
     
@@ -183,7 +189,7 @@ function PlayerProfile(props){
                             justifyContent:'center',
                             marginTop:'100px'
                         }}>
-                            {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} advanced = {false} maps = {false}/>}
+                            {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} advanced = {false} maps = {false} streaks = {false} medals = {false}/>}
                         </div>
     
     
@@ -223,6 +229,7 @@ function PlayerProfile(props){
                         address = {address}
                         key = {category}
                         table = {table}
+                        isDesktop = {isDesktop}
                         changeTable = {changeTable}
                     />
     
@@ -238,7 +245,7 @@ function PlayerProfile(props){
                         position:"relative",
                         background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                         url(${map})`,
-                        height:"100"
+                        height:"1200px"
                     }}>
                         <HomeButton/>
                         <div style = {{
@@ -264,6 +271,10 @@ function PlayerProfile(props){
                             <AdvancedStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'per_min'} title = {"ADVANCED (MINS)"}/>
                             <AdvancedStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'per_gm'} title = {"ADVANCED (GMS)"}/>
                             <MapStatsController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'maps'}/>
+                            <StreaksController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'best streaks'} title={"BEST STREAKS"}/>
+                            <StreaksController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'current streaks'} title={"CURRENT STREAKS"}/>
+                            <MedalController player = {player} address = {address} table = {table} changeTable = {changeTable} isDesktop={false} category = {'medals'} title = {"MEDALS"}/>
+
                         </div>
     
                         <div style ={{
@@ -271,7 +282,7 @@ function PlayerProfile(props){
                             justifyContent:'center',
                             marginTop:'50px'
                         }}>
-                            {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} advanced = {false} maps = {false}/>}
+                            {table != null ? table : <StatTable category = 'overall' player = {player} address = {address} advanced = {false} maps = {false} streaks = {false} medals = {false}/>}
                         </div>
     
     

@@ -36,7 +36,7 @@ function Searchbar(props){
                 name: info.name,
             }),    
         }
-        const search_result = await fetch(`${props.address}/player/stats`, requestSearch)
+        const search_result = await fetch(`${props.address}/api/players/stats`, requestSearch)
         const data = await search_result.json()
         if (data.status === 404){
             setNotFound("Name not found...")
@@ -51,7 +51,7 @@ function Searchbar(props){
     }
     async function keySearch(e){
         if (e.key === 'Enter'){
-            console.log(info)
+            // console.log(info)
             const requestSearch = {
                 method: "POST",
                 headers:  {
@@ -64,10 +64,10 @@ function Searchbar(props){
                     name: info.name,
                 }),    
             }
-            const search_result = await fetch(`${props.address}/player/stats`, requestSearch)
+            const search_result = await fetch(`${props.address}/api/players/stats`, requestSearch)
             const data = await search_result.json()
             if (data.status === 404){
-                console.log("name not found")
+                // console.log("name not found")
                 setNotFound("Name not found...")
             }
             else{

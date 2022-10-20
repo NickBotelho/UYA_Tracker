@@ -80,7 +80,7 @@ function GameHistory(props){
    
     
     if (games.max == 0){
-        getTotalGames(`${address}/general/total_games`)
+        getTotalGames(`${address}/api/general/total_games`)
     }
     
     if (games.games == null){
@@ -130,7 +130,6 @@ function GameHistory(props){
 
 
     if (isDesktop){
-        console.log(tooShort)
         return (
             <div  style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 

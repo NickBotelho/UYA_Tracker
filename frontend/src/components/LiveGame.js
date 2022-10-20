@@ -19,7 +19,7 @@ else{
     address = "https://uyatracker.herokuapp.com"
 }
 
-const REFRESH_TIME = 1200
+const REFRESH_TIME = 250
 function LiveGame(props){
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
@@ -101,6 +101,7 @@ function LiveGame(props){
             maxHeight:'250px',
             minHeight:'250px',
         }}>
+            <HomeButton/>
             <img src = "../../static/images/loading_circle.gif"
             height = '253' width = '255'></img>
         </div>
@@ -203,7 +204,7 @@ function LiveGame(props){
                         background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                             url(${map})`,
                         fontFamily:"Roboto, sans-serif",
-                        height: isDesktop? '100vh' : '750px'
+                        height: isDesktop? '100vh' : '1200px'
             
                         
                     }}>
@@ -240,10 +241,10 @@ function LiveGame(props){
                             justifyContent:"space-evenly",
                             flexDirection:'column'
                         }}>
-                            <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
+                            <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map} gamemode = {gameInfo.details.gamemode}/>
                             <LiveScore address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
                         </div>
-                        <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
+                        <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
                         <div style = {{
                             display:'flex',
                             justifyContent:"space-evenly",
@@ -264,7 +265,7 @@ function LiveGame(props){
                         background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                             url(${map})`,
                         fontFamily:"Roboto, sans-serif",
-                        height: isDesktop? '100vh' : '750px'
+                        height: isDesktop? '100vh' : '1000px'
             
                         
                     }}>
@@ -290,8 +291,8 @@ function LiveGame(props){
                         justifyContent:"center",
                     }}>
                         <LiveScore address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
-                        <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
-                        <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME}/>
+                        <LiveMap address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map} gamemode = {gameInfo.details.gamemode}/>
+                        <LivePlayerStates address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id} refresh = {REFRESH_TIME} map = {gameInfo.details.map}/>
                         {/* <LiveEvents address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.dme_id}/> */}
                     </div>
         

@@ -6,6 +6,7 @@ import { Redirect } from "react-router";
 import {useMediaQuery} from 'react-responsive'
 import "../../static/css/homepage.css";
 import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
+import { AnnouncementsWindow } from "./AnnouncementsWindow";
 const DEBUG = false
 var address = null
 if (DEBUG==true){
@@ -16,6 +17,7 @@ else{
 }
 
 function HomePage(props){
+    console.log("v3.1.0")
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
@@ -23,7 +25,7 @@ function HomePage(props){
         query: "(min-width: 600px)",
     });
     const isTooLarge = useMediaQuery({
-        query: "(min-height:600px)"
+        query: "(min-height:1300px)"
     })
     // const isMaxWidth = useMediaQuery({
     //     query:"(min-width: 2000px)"
@@ -37,12 +39,21 @@ function HomePage(props){
     }
 
     const map = GetLargeMap()
-    const background = {
+    const desktopBackground = {
         position:"relative",
         background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
         url(${map})`,
         fontFamily:"Roboto, sans-serif",
         height: isTooLarge ? "100vh" : "100",
+        zIndex:"1"
+    }
+    const mobileBackground = {
+        position:"relative",
+        background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
+        url(${map})`,
+        fontFamily:"Roboto, sans-serif",
+        height: "100vh",
+        zIndex:"1"
     }
     const titleStyle = {
         fontSize: isDesktop ? "75pt" : "40pt",
@@ -52,16 +63,23 @@ function HomePage(props){
         color: 'rgb(229, 197, 102)',
         textShadow: '6px 4px 4px black',
     }
-    const myRef = createRef()
+    let announcementsRef = createRef()
 
+    const hideAnnouncements = () => {
+        if (announcementsRef.current != null){
+            announcementsRef.current.style.visibility = "hidden"
+        }
+    }
+    const myRef = createRef()
     let [search, searchState] = useState()
     if (isDesktop){
         return(
-            <div style = {background}>
+            <div style = {desktopBackground} onMouseDown = {hideAnnouncements}>
                 <NavBar />
                 <h1 style = {titleStyle}>UYA Tracker</h1>
                 
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>
+                <AnnouncementsWindow address = {address} isDesktop = {isDesktop} reference = {announcementsRef} hide = {hideAnnouncements} />
                 
                 <div style = {fluidDistance}>
                     <div >
@@ -90,11 +108,12 @@ function HomePage(props){
     }
     else{
         return(
-            <div style = {background}>
+            <div style = {mobileBackground}>
                 <NavBar />
                 <h1 style = {titleStyle}>UYA Tracker</h1>
                 
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>
+                <AnnouncementsWindow address = {address} isDesktop = {isDesktop} reference = {announcementsRef} hide = {hideAnnouncements} />
                 
                 <div style = {fluidDistance}>
                     <div style = {{

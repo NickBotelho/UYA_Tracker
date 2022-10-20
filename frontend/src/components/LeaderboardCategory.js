@@ -17,6 +17,7 @@ function LeaderboardCategory(props){
                 currentBoard = {props.currentBoard}
                 changeBoard = {props.changeBoard}
                 isDesktop = {props.isDesktop}
+                stat_key = {stat}
                 key = {stat}
             />
         )
@@ -35,72 +36,38 @@ function LeaderboardCategory(props){
     }
     const categoryRef = createRef()
 
-    if (props.isDesktop){
-        return (
-            <div style = {{
-                lineHeight:"35px"
-            }}>
-                <div
-                ref = {categoryRef}
-                style ={{
-                    border : "3px solid rgb(141,113,24)",
-                    paddingTop :"10px",
-                    paddingRight:"10px",
-                    paddingBottom:"10px",
-                    paddingLeft:"10px",
-                    marginLeft:'2px',
-                    marginRight:'2px',
-                    textAlign:"center",
-                    backgroundColor:"rgba(190, 177, 54, 0.8)",
-                    fontSize:"20pt",
-                    whiteSpace:"nowrap",
-                    cursor:'pointer',
-                    paddingLeft:"10px",
-                    userSelect:"none"
-                }} onMouseDown = {showStats}
-                onMouseEnter = {buttonHover}
-                onMouseLeave = {buttonRest}>
-    
-                    {props.category.toUpperCase()}
-                </div>
-            </div>
-    
-        )
-    }
-    else{
-        return (
-            <div style = {{
-                lineHeight:"35px"
-            }}>
-                <div
-                ref = {categoryRef}
-                style ={{
-                    border : "3px solid rgb(141,113,24)",
-                    paddingTop :"2px",
-                    paddingRight:"5px",
-                    paddingBottom:"2px",
-                    paddingLeft:"2px",
-                    marginLeft:'2px',
-                    marginRight:'2px',
-                    textAlign:"center",
-                    backgroundColor:"rgba(190, 177, 54, 0.8)",
-                    fontSize:"12pt",
-                    whiteSpace:"nowrap",
-                    // borderBottom: '2px solid rgb(251, 245, 180)',
-                    paddingLeft:"10px",
-                }} onMouseDown = {showStats}
-                onMouseEnter = {buttonHover}
-                onMouseLeave = {buttonRest}>
-    
-                    {props.category.toUpperCase()}
-                </div>
-            </div>
-    
-        )
-    }
-    
 
+    return (
+        <div style = {{
+            lineHeight:"35px"
+        }}>
+            <div
+            ref = {categoryRef}
+            style ={{
+                border : "3px solid rgb(141,113,24)",
+                paddingTop :props.isDesktop? "5px" : "2px",
+                paddingRight:props.isDesktop? "13px" : "10px",
+                paddingBottom:props.isDesktop? "5px" : "2px",
+                paddingLeft:props.isDesktop? "13px" : "10px",
+                fontSize:props.isDesktop?"18pt":"12pt",
+                marginLeft:'0px',
+                // marginRight:'2px',
+                textAlign:"center",
+                backgroundColor:"rgba(190, 177, 54, 0.8)",
+                whiteSpace:"nowrap",
+                cursor:'pointer',
+                userSelect:"none",
 
+            }} onMouseDown = {showStats}
+            onMouseEnter = {buttonHover}
+            onMouseLeave = {buttonRest}>
+
+                {props.category.toUpperCase()}
+            </div>
+        </div>
+
+    )
+    
 }
 
 export {LeaderboardCategory}

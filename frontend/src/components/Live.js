@@ -71,7 +71,7 @@ function Live(props){
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                     url(${map})`,
                 fontFamily:"Roboto, sans-serif",
-                height: isDesktop? '100vh' : '750px'
+                height: isDesktop? '100vh' : '100vh'
     
                 
             }}>

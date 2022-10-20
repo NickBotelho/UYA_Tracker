@@ -40,8 +40,9 @@ function LeaderboardBoard(props){
                 stat:stat_keys[props.category][props.stat]
             }),    
         }
-        const search_result = await fetch(`${address}/stats/all`, requestSearch)
+        const search_result = await fetch(`${address}/api/stats/all`, requestSearch)
         const players = await search_result.json()
+        // console.log(props.category, props.stat)
         hasLoaded({
             data:players,
             category:props.category,

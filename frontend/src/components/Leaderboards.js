@@ -98,7 +98,7 @@ function Leaderboards(props){
                     <div style = {{
                         display:"flex",
                         flexDirection:'row',
-                        flexWrap:'nowrap',
+                        flexWrap:'wrap',
                         justifyContent:'center'
                     }}>
                         {stat_categories}
@@ -135,7 +135,7 @@ function Leaderboards(props){
         )
     }
     else{
-        console.log(isTooLarge)
+        // console.log(isTooLarge)
         return (
             <div style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 

@@ -1,6 +1,6 @@
 import pymongo
-from pymongo import MongoClient
 import time
+import datetime
 from config import MongoPW, MongoUser
 import os
 try:
@@ -12,8 +12,11 @@ except:
     print('failed to load credentials')
     exit(1)
 class Database():
-    def __init__(self,db,collection):
-        self.client = pymongo.MongoClient("mongodb+srv://{}:{}@cluster0.jydx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(MongoUser, MongoPW))
+    def __init__(self,db,collection, live = False):
+        if live:
+            self.client = pymongo.MongoClient("mongodb+srv://{}:{}@cluster0.xipwxkq.mongodb.net/?retryWrites=true&w=majority".format(MongoUser, MongoPW))
+        else:
+            self.client = pymongo.MongoClient("mongodb+srv://{}:{}@cluster0.jydx7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(MongoUser, MongoPW))
         self.db = self.client[db]
         self.collection = self.db[collection]
     def getDB(self):
@@ -84,6 +87,12 @@ class Database():
             return True
         else:
             return False
+    def hasLive(self, id):
+        game = self.collection.find_one({"game_id":id})
+        if game != None:
+            return True
+        else:
+            return False
     def getTime(self,name):
         player = self.collection.find_one({"name":name})
         if player != None:
@@ -142,11 +151,13 @@ class Database():
     def getEntireStat(self,category, stat):
         MIN_GAMES = 35
         MIN_CTF_GAMES = 10
-        if category != "advanced":
+        live_categories = {"medals"}
+        originals = {"overall", "ctf", "siege", "tdm", 'weapons'}
+        if category in originals:
             res = []
             i = 0
             total = self.getTotalPlayerCount()
-            for player in self.collection.find().sort([("stats.{}.{}".format(category, stat),-1)]):
+            for player in self.collection.find().sort([("stats.{}.{}".format(category, stat),-1)]).limit(100):
                 if player['stats']['overall']['games_played'] < MIN_GAMES:continue
                 if i < total:
                     i+=1
@@ -154,13 +165,77 @@ class Database():
                         "name":str(player['username']),
                         stat:int(player['stats'][category][stat])
                     })
+                else:
+                    break
             return res
+        elif category == 'live' or category == 'live/gm':
+            res = []
+            i = 0
+            total = self.getTotalPlayerCount()
+            for player in self.collection.find().sort([("advanced_stats.{}.{}".format(category, stat),-1)]).limit(100):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if i < total:
+                    i+=1
+                    res.append({
+                        "name":str(player['username']),
+                        stat:int(player['advanced_stats'][category][stat])
+                    })
+                else:
+                    break
+            return res
+        elif category in live_categories:
+            res = []
+            i = 0
+            total = self.getTotalPlayerCount()
+            for player in self.collection.find().sort([("advanced_stats.live.{}.{}".format(category, stat),-1)]).limit(100):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if i < total:
+                    i+=1
+                    res.append({
+                        "name":str(player['username']),
+                        stat:int(player['advanced_stats']['live'][category][stat])
+                    })
+                else:
+                    break
+            return res
+        elif category == 'best streaks':
+            dbstat = stat.split(":")
+            mode, dbstat = dbstat[0], dbstat[1]
+            res = []
+            i = 0
+            for player in self.collection.find().sort([("advanced_stats.streaks.{}.{}".format(mode, dbstat),-1)]).limit(100):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+
+                res.append({
+                    "name":str(player['username']),
+                    stat:int(player['advanced_stats']['streaks'][mode][dbstat])
+                })
+
+            return res
+        elif category == 'current streaks':
+            dbstat = stat.split(":")
+            mode, dbstat = dbstat[0], dbstat[1]
+            res = []
+            i = 0
+            now = datetime.datetime.now()
+            for player in self.collection.find().sort([("advanced_stats.streaks.{}.{}".format(mode, dbstat),-1)]).limit(2000):
+                if player['stats']['overall']['games_played'] < MIN_GAMES:continue
+                if 'last_login' in player and player['last_login'] != None:
+                    lastLogin = datetime.datetime.fromtimestamp(player['last_login'])
+                    if (now - lastLogin).days > 90: continue
+                    res.append({
+                        "name":str(player['username']),
+                        stat:int(player['advanced_stats']['streaks'][mode][dbstat])
+                    })
+
+            return res
+
         else:
             type = "per_min" if "min" in stat else "per_gm"
             res = []
             i = 0
             total = self.getTotalPlayerCount()
-            for player in self.collection.find().sort([("advanced_stats.{}.{}".format(type,stat),-1)]):
+            for player in self.collection.find().sort([("advanced_stats.{}.{}".format(type,stat),-1)]).limit(100):
                 if player['stats']['overall']['games_played'] < MIN_GAMES or\
                     (player['stats']['ctf']['ctf_wins'] + player['stats']['ctf']['ctf_losses'] < MIN_CTF_GAMES):continue
                 if i < total:
@@ -169,6 +244,8 @@ class Database():
                         "name":str(player['username']),
                         stat:float(player['advanced_stats'][type][stat])
                     })
+                else:
+                    break
             return res
     def getOnlinePlayers(self):
         res = []
@@ -204,7 +281,7 @@ class Database():
     def getTop10(self, category, stat):
         res = []
         i = 0
-        for player in self.collection.find().sort([('stats.{}.{}'.format(category,stat), -1)]):
+        for player in self.collection.find().sort([('stats.{}.{}'.format(category,stat), -1)]).limit(10):
             if i < 10:
                 i+=1
                 res.append(
@@ -213,6 +290,8 @@ class Database():
                         '{}_{}'.format(category, stat):int(player['stats'][category][stat])
                     }
                 )
+            else:
+                break
         return res
     def getAllPlayerStats(self, username):
         res = {}
@@ -258,28 +337,42 @@ class Database():
         del game['_id']
         return game
     def updateAnalytics(self, ip):
+        #datetime.datetime.fromisoformat(date string) reverts to datetime obj
         user = self.collection.find_one({"ip":ip})
+        now = datetime.datetime.now()
+        now = str(now)
         if not user:
             self.collection.insert_one(
                 {
                     'ip':ip,
                     'num_logins':1,
-                    'last_login':time.strftime("%a, %d %b %Y", time.localtime())
+                    'last_login':now,
+                    'logins': [now]
                 }
             )
         else:
-            logins = user['num_logins']
+            numLogins = user['num_logins']
+            logins = user['logins']
+            logins.insert(0, now)
             self.collection.find_one_and_update(
                 {
                     'ip':ip
                 },
                 {
                     '$set':{
-                        'num_logins':logins+1,
-                        'last_login':time.strftime("%a, %d %b %Y", time.localtime())
+                        'num_logins':numLogins+1,
+                        'last_login':now,
+                        'logins':logins,
                     }
                 }
             )
+    def getLiveGame(self, id):
+        game = self.collection.find_one({"game_id":id})
+        if game != None:
+            del game['_id']
+            return game
+        else:
+            return None
 
 
 

@@ -82,9 +82,9 @@ convertSize = {
         6:'3v3',
         8:'4v4'
     }
-def gameAnalytics(year):
+def gameAnalytics(year, game_history):
 
-    game_history = Database("UYA", "Game_History")
+    # game_history = Database("UYA", "Game_History")
     months = [0 for i in range(12)]
     weekdays = [0 for i in range(7)]
     year = int(year) if year != "all" else year
@@ -119,7 +119,7 @@ def gameAnalytics(year):
         '4v4':copy.deepcopy(oneSize)
     }
     
-    for game in game_history.collection.find():
+    for game in game_history.collection.find().max_time_ms(60000):
         gameSize = len(game['player_ids'])
         gameSize = gameSize - 1 if gameSize % 2 != 0 else gameSize
 

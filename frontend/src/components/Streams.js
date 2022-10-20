@@ -10,7 +10,7 @@ import { LiveMap } from "./LiveMap.js";
 import { LiveEvents } from "./LiveEvents.js";
 import { LivePlayer } from "./LivePlayer.js";
 import { LivePlayerStates } from "./LivePlayerStates.js";
-const DEBUG = true
+const DEBUG = false
 var address = null
 if (DEBUG==true){
     address = "http://127.0.0.1:5000"
