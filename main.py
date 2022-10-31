@@ -576,4 +576,4 @@ def log():
     cache.logGame(request.json)
     return "Message Received"
 
-app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
