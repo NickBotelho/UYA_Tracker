@@ -130,7 +130,18 @@ def getOnlineClans():
 def getOnlineChat():
     res = database.getChat()
     return json.dumps(res) if res != None else {}
-
+@app.route('/api/online/games/mostInteresting', methods=['GET'])
+def getMostInterestingGame():
+    res = database.getOnlineGamesObjects()
+    gameId = None
+    dmeId = None
+    mostFullGame = 0
+    for game in res:
+        if len(game['details']['players']) > mostFullGame:
+            mostFullGame = len(game['details']['players'])
+            dmeId = game['dme_id']
+            gameId = game['game_id']
+    return json.dumps({"gameId":gameId, "dmeId":dmeId})
 
 #############DB QUERIES################
 @app.route('/api/players/<path:name>', methods=['GET', 'POST'])
@@ -565,4 +576,4 @@ def log():
     cache.logGame(request.json)
     return "Message Received"
 
-# app.run(debug = True) #COMMENT OUT FOR PRODUCTION
+app.run(debug = True) #COMMENT OUT FOR PRODUCTION
