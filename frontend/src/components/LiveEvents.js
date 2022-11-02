@@ -94,6 +94,9 @@ function LiveEvents(props){
     if (rows.queued == true){
         myStorage.setItem("batch_num",rows.batch_num)
     }
+    if(props.isFullscreen || !props.hasEventFeed || props.isBigMap){
+        return null
+    }
     return (  
         <div style = {{
             width:props.isDesktop? "320px" : "100px",

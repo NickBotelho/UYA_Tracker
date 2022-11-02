@@ -78,14 +78,7 @@ function Streams(props){
             }}>
                 
             </div>
-                {/* <iframe src="https://player.twitch.tv/?channel=nickmercs&parent=localhost" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
-                <iframe src="https://player.twitch.tv/?channel=nadeshot&parent=localhost" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
-                <iframe src="https://player.twitch.tv/?channel=faux&parent=localhost" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
-                <iframe src="https://player.twitch.tv/?channel=alfie&parent=localhost" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe> */}
-                {/* <LiveMap/> */}
-                {/* <LivePlayerStates/> */}
-                {/* <LiveEvents isDesktop = {isDesktop}/> */}
-                <LiveMap isDesktop = {isDesktop}/>
+TEMPLATE
     
             </div>
             

@@ -7,7 +7,9 @@ import {useMediaQuery} from 'react-responsive'
 //<img src={`data:image/png;base64,${this.state.image}`}/>
 function LiveInfo(props){
 
-
+    if(props.isFullscreen || !props.hasEventFeed || props.isBigMap){
+        return null
+    }
     return (  
         <div style = {{
             height : props.isDesktop? '150px' : '75px',
