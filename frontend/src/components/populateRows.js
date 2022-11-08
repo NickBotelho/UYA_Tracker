@@ -105,12 +105,11 @@ function populateCTFRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSe
             const showLive = (e) => {
                 ref.current.children[0].style.visibility = "visible"
             }
-            const info = liveGame != null ? liveGame[name.toLowerCase()] : null
+            const info = liveGame != null && liveGame[name.toLowerCase()]['medals'] != undefined ? liveGame[name.toLowerCase()] : null
             const kills = isDisconnect == true && info != null ? info['kills'] : team[i]['kills'] 
             const deaths = isDisconnect == true && info != null ? info['deaths'] : team[i]['deaths'] 
             const caps = isDisconnect == true && info != null ? info['caps'] : team[i]['caps'] 
-            const color = info != null ? info['team'] :  "rgba(190, 177, 54, 0.8)"
-
+            const color = info != null ? info['team'] :  "rgb(141,113,24)"
             row.push(
                 <div ref={ref} style={{
                     display: 'flex',
@@ -255,10 +254,10 @@ function populateDMRow(team, cellWidth, setWeaponBreakdown, game_weapons, setSea
             const showLive = (e) => {
                 ref.current.children[0].style.visibility = "visible"
             }
-            const info = liveGame != null ? liveGame[name.toLowerCase()] : null
+            const info = liveGame != null && liveGame[name.toLowerCase()]['medals'] != undefined ? liveGame[name.toLowerCase()] : null
             const kills = isDisconnect == true && info != null ? info['kills'] : team[i]['kills'] 
             const deaths = isDisconnect == true && info != null ? info['deaths'] : team[i]['deaths'] 
-            const color = info != null ? info['team'] :  "rgba(190, 177, 54, 0.8)"
+            const color = info != null ? info['team'] :  "rgb(141,113,24)"
             row.push(
                 <div ref={ref} style={{
                     display: 'flex',
@@ -400,10 +399,10 @@ function populateSiegeRow(team, cellWidth, setWeaponBreakdown, game_weapons, set
             const showLive = (e) => {
                 ref.current.children[0].style.visibility = "visible"
             }
-            const info = liveGame != null ? liveGame[name.toLowerCase()] : null
+            const info = liveGame != null && liveGame[name.toLowerCase()]['medals'] != undefined ? liveGame[name.toLowerCase()] : null
             const kills = isDisconnect == true && info != null ? info['kills'] : team[i]['kills'] 
             const deaths = isDisconnect == true && info != null ? info['deaths'] : team[i]['deaths'] 
-            const color = info != null ? info['team'] :  "rgba(190, 177, 54, 0.8)"
+            const color = info != null ? info['team'] :  "rgb(141,113,24)"
             row.push(
                 <div ref={ref} style={{
                     display: 'flex',

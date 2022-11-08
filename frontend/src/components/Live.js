@@ -8,6 +8,7 @@ import {PlayersOnline} from './PlayersOnline'
 import {GamesOnline} from './GamesOnline'
 import {Chat} from './Chat'
 import { LiveMap2 } from "./LiveMap.js";
+import { LiveAutoPlayButton } from "./LiveAutoPlayButton.js";
 const DEBUG = false
 var address = null
 if (DEBUG==true){
@@ -75,7 +76,14 @@ function Live(props){
     
                 
             }}>
-                <HomeButton/>
+                <div style ={{
+                    display:'flex',
+                    justifyContent:"left"
+                }}>
+                    <HomeButton/>
+                    <LiveAutoPlayButton/>
+                </div>
+
                 <div style = {{
                 display:"flex",
                 justifyContent:"center"

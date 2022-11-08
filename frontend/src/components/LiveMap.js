@@ -49,6 +49,10 @@ function LiveMap(props) {
             }
         }
     }
+    // const queryString = window.location.search
+    // const urlParams = new URLSearchParams(queryString)
+    // let [isFullscreen, toggleFullscreen] = useState(urlParams.get("isFullscreen") == "true")
+    let isFullscreen = props.isFullscreen
     const radars = {
         'Bakisi_Isle': radarKisi,
         'Aquatos_Sewers': radarSewers,
@@ -87,7 +91,7 @@ function LiveMap(props) {
         "Command_Center": [[550, 500], [350, 300]],
         "Blackwater_Dox": [[550, 500], [350, 300]],
         "Marcadia_Palace": [[550, 500], [350, 300]],
-        Ultrawide: {
+        ultrawide: {
             'Bakisi_Isle': [1200, 900],
             'Aquatos_Sewers': [1200, 900],
             "Hoven_Gorge": [1200, 900],
@@ -98,7 +102,7 @@ function LiveMap(props) {
             "Command_Center": [1200, 900],
             "Blackwater_Dox": [1200, 900],
             "Marcadia_Palace": [1200, 900],
-        }
+        },
     }
     let mapName = props.map
     let [players, setPlayers] = useState({
@@ -114,7 +118,8 @@ function LiveMap(props) {
             headers: {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                "Access-Control-Allow-Credentials":'true'
             },
             credentials: "include",
             body: JSON.stringify({
@@ -148,6 +153,60 @@ function LiveMap(props) {
         }
         return res
     }
+    function getRadarHeight(isDesktop, isFullscreen, isUltrawide, isPx){
+        if (isFullscreen){
+            if (isPx){
+                return `${window.innerHeight * .8}px`
+            }
+            else
+            {
+                return window.innerHeight *.8
+            }
+        }
+        else if (isUltrawide){
+            if(isPx){
+                return `${radarBounds.ultrawide[mapName][1]}px`
+            }else{
+                return radarBounds.ultrawide[mapName][1]
+
+            }
+        }
+        else {
+            if(isPx){
+                return isDesktop ? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`
+            }else{
+                return isDesktop ? radarBounds[mapName][0][1] : radarBounds[mapName][1][1]
+
+            }
+        }
+    }
+    function getRadarWidth(isDesktop, isFullscreen, isUltrawide, isPx){
+        if (isFullscreen){
+            if (isPx){
+                return `${window.innerWidth * .8}px`
+            }
+            else
+            {
+                return window.innerWidth *.8
+            }
+        }
+        else if (isUltrawide){
+            if(isPx){
+                return `${radarBounds.ultrawide[mapName][0]}px`
+            }else{
+                return radarBounds.ultrawide[mapName][0]
+
+            }
+        }
+        else {
+            if(isPx){
+                return isDesktop ? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`
+            }else{
+                return isDesktop ? radarBounds[mapName][0][0] : radarBounds[mapName][1][0]
+
+            }
+        }
+    }
     const convertGameRotation = (gameRotation) => {
         return Math.floor(270 - (1.38 * gameRotation))
     }
@@ -157,6 +216,7 @@ function LiveMap(props) {
          */
 
         const radarPoints = convert([player['x'], player['y']], mapName)
+        // console.log(radarPoints)
         return <div key={idx}>
             {/* <img src = '../../static/images/dot.svg' */}
             <img src={player['hasFlag'] == true ? '../../static/images/flag.png' : player['hp'] > 0 ? '../../static/images/playerIndicator.png' : '../../static/images/skull.png'}
@@ -204,16 +264,17 @@ function LiveMap(props) {
         /**
          * coords = [x,y]
          */
+        // console.log( getRadarHeight(props.isDesktop, isFullscreen, false), getRadarWidth(props.isDesktop, isFullscreen, false))
         const bias = 10
         var edges = mapBounds[map]
         var xDist = edges[1] - edges[0]
         var xPercent = (coords[0] - edges[0]) / xDist
-        var radrBounds = props.isDesktop ? radarBounds[map][0][0] : radarBounds[map][1][0]
+        var radrBounds = getRadarWidth(props.isDesktop, props.isFullscreen, props.isBigMap, false)
         var xPlot = Math.floor(radrBounds * xPercent)
         edges = mapBounds[map]
         var yDist = edges[3] - edges[2]
         var yPercent = (coords[1] - edges[2]) / yDist
-        radrBounds = props.isDesktop ? radarBounds[map][0][1] : radarBounds[map][1][1]
+        radrBounds = getRadarHeight(props.isDesktop,  props.isFullscreen, props.isBigMap, false)
         var yPlot = Math.floor(radrBounds * yPercent + bias)
 
         return [xPlot, radrBounds - yPlot]
@@ -222,8 +283,8 @@ function LiveMap(props) {
         let res = []
         res.push(<div key = {0} style={{
             marginTop: props.isDesktop ? '75px' : '10px',
-            height: props.isDesktop ? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`,
-            width: props.isDesktop ? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`,
+            height: getRadarHeight(props.isDesktop,  props.isFullscreen, props.isBigMap, true),
+            width: getRadarWidth(props.isDesktop, props.isFullscreen, props.isBigMap, true),
             marginLeft: props.isDesktop ? '0' : '25px',
             border: "3px solid rgb(141,113,24)",
             borderCollapse: "collapse",
@@ -237,17 +298,18 @@ function LiveMap(props) {
 
     function displayMap(points) {
         let res = []
-
+        // console.log(getRadarHeight(props.isDesktop, isFullscreen), getRadarWidth(props.isDesktop, isFullscreen))
         res.push(<div key = {0} style={{
             marginTop: props.isDesktop ? '35px' : '10px',
-            height: props.isDesktop ? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`,
-            width: props.isDesktop ? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`,
+            height: getRadarHeight(props.isDesktop,  props.isFullscreen, props.isBigMap, true),
+            width: getRadarWidth(props.isDesktop, props.isFullscreen, props.isBigMap, true),
             border: "3px solid rgb(141,113,24)",
             borderCollapse: "collapse",
             marginLeft: props.isDesktop ? '0' : '5%',
         }}>
-            <img src={map} height={props.isDesktop ? `${radarBounds[mapName][0][1]}px` : `${radarBounds[mapName][1][1]}px`}
-                width={props.isDesktop ? `${radarBounds[mapName][0][0]}px` : `${radarBounds[mapName][1][0]}px`} style={{
+            <img src={map} 
+                height={ getRadarHeight(props.isDesktop,  props.isFullscreen, props.isBigMap, true)}
+                width={getRadarWidth(props.isDesktop, props.isFullscreen, props.isBigMap, true)} style={{
                     position: 'absolute'
                 }}></img>
 
@@ -329,4 +391,5 @@ function LiveMap(props) {
 
 
 }
+
 export { LiveMap }

@@ -90,8 +90,8 @@ function LiveScore(props){
                 textShadow: '6px 4px 4px black',
             }}>Scores</h2>
             <div style = {{
-                marginLeft: props.isDesktop? '50px':'0px',
-                width:props.isDesktop? "300px": '100%',
+                marginLeft: props.isDesktop? '0px':'0px',
+                width:props.isDesktop? "100%": '100%',
                 display:'flex',
                 flexDirection:'row',
                 flexWrap:'wrap',

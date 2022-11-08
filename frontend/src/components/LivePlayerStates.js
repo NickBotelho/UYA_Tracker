@@ -16,7 +16,7 @@ function LivePlayerStates(props){
     let [gameInfo, updateGame] = useState(null)
 
     let myStorage = window.localStorage;
-   
+
     async function getGameInfo(dme_id){
         const requestSearch = {
             method: "POST",
@@ -48,7 +48,9 @@ function LivePlayerStates(props){
         }
         return res
     }
-
+    if(props.isFullscreen || !props.hasPlayerInformation){
+        return null
+    }
     if (gameInfo == null){
         getGameInfo(props.dme_id)
         let cache = myStorage.getItem("player_states")

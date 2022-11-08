@@ -21,7 +21,7 @@ else {
 }
 
 const REFRESH_TIME = 250
-function LiveGame(props) {
+function LiveAutoPlayer(props) {
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
     });
@@ -33,8 +33,6 @@ function LiveGame(props) {
     let [gameInfo, updateGameInfo] = useState(null)
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
-    const game_id = urlParams.get('id')
-
     //////////SETTINGS
     const [isFullscreen, toggleFullscreen] = useState(false);
     const [isBigMap, toggleBigMap] = useState(false);
@@ -62,9 +60,6 @@ function LiveGame(props) {
     }
     //////////////////
 
-
-
-
     let [home, goHome] = useState(null)
     const returnHome = () => {
         goHome(true)
@@ -75,14 +70,11 @@ function LiveGame(props) {
     }
     useEffect(() => {
         const interval = setInterval(() => {
-            if (gameInfo?.data?.details.status != "In_Progress") {
-                getGames()
-            }
-        }, 10000);
+            getGames()
+        }, 5000);
         return () => clearInterval(interval);
     }, [gameInfo]);
     async function getGames() {
-        console.log(gameInfo)
         const requestSearch = {
             method: "GET",
             headers: {
@@ -93,20 +85,27 @@ function LiveGame(props) {
         }
 
         const search_result = await fetch(`${address}/api/online/games`, requestSearch)
+        const ids_result = await fetch(`${address}/api/online/games/mostInteresting`, requestSearch)
         const dme_result = await fetch(`${address}/api/live/available`, requestSearch)
         const dmes = await dme_result.json()
+        const mostInterestingGame = await ids_result.json()
         const games = await search_result.json()
-        // loadGames({
-        //     data:games,
-        //     dme:dmes
-        // })
-        for (let i = 0; i < games.length; i += 1) {
-            if (games[i]['game_id'].toString() == game_id.toString()) {
-                updateGameInfo({
-                    data: games[i],
-                    dme: dmes
-                })
+
+
+        if ((mostInterestingGame['gameId'] != null && mostInterestingGame['gameId'] != gameInfo?.data?.game_id) || gameInfo?.data?.details?.status == "Staging") {
+            for (let i = 0; i < games.length; i += 1) {
+                if (games[i]['game_id'].toString() == mostInterestingGame['gameId'].toString()) {
+                    window.localStorage.clear()
+                    updateGameInfo({
+                        data: games[i],
+                        dme: dmes
+                    })
+                }
             }
+        }
+        else if (mostInterestingGame['gameId'] == null) {
+            window.localStorage.clear()
+            updateGameInfo(null)
         }
         return games
     }
@@ -114,40 +113,51 @@ function LiveGame(props) {
     if (gameInfo == null) {
         getGames()
     }
+
+    // for (let i = 0; i < games.data.length; i+=1){
+    //     if (games.data[i]['game_id'].toString() == game_id.toString()){
+    //         updateGameInfo(games.data[i])
+    //     }
+    // }
     if (gameInfo == null) {
-        return <div style={{
-            background: `linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
-            url(${map})`,
-            position: 'fixed',
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            border: "8pt solid rgb(92, 73, 0)",
-            maxHeight: '250px',
-            minHeight: '250px',
-        }}>
-            <img src="../../static/images/loading_circle.gif"
-                height='253' width='255'></img>
-        </div>
-    }
+        return (
+            <div style={{
+                background: `linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
+        url(${map})`,
+                height: '100vh',
+                width: "100vw"
+            }}>
+
+                <div>
+                    <HomeButton />
+                </div>
+
+                <h1 style={{
+                    fontSize: isDesktop ? "75pt" : "35pt",
+                    textAlign: "center",
+                    color: 'rgb(229, 197, 102)',
+                    textShadow: '6px 4px 4px black',
+                    fontFamily: "Roboto, sans-serif",
 
 
-    if (gameInfo == null) {
-        return <div style={{
-            background: `linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
-            url(${map})`,
-            position: 'fixed',
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            border: "8pt solid rgb(92, 73, 0)",
-            maxHeight: '250px',
-            minHeight: '250px',
-        }}>
-            <HomeButton />
-            <img src="../../static/images/loading_circle.gif"
-                height='253' width='255'></img>
-        </div>
+                }}>THERE ARE NO ACTIVE GAMES</h1>
+
+
+                <div style={{
+                    position: 'fixed',
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    border: "8pt solid rgb(92, 73, 0)",
+                    maxHeight: '250px',
+                    minHeight: '250px',
+                }}>
+                    <img src="../../static/images/loading_circle.gif"
+                        height='253' width='255'></img>
+                </div>
+            </div>
+
+        )
     }
 
 
@@ -156,6 +166,7 @@ function LiveGame(props) {
     for (let i = 0; i < players.length; i += 1) {
         playerString += players[i] + "\n"
     }
+    // console.log(gameInfo.data.details.status)
     if (gameInfo.data.details.status == "Staging") {
 
 
@@ -245,14 +256,13 @@ function LiveGame(props) {
         )
     } else if (gameInfo.data.details.status == "In_Progress") {
         if (gameInfo.dme.includes(gameInfo.data.dme_id)) {
-            window.localStorage.clear()
             if (isDesktop) {
                 return (
                     <div style={{
                         background: `linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                             url(${map})`,
                         fontFamily: "Roboto, sans-serif",
-                        height: isFullscreen || isBigMap ? `${window.innerHeight + 0.3 * window.innerHeight}px`
+                        height: isFullscreen ? `${window.innerHeight + 0.2 * window.innerHeight}px`
                             : isDesktop ? '100vh' : '1200px'
 
 
@@ -384,7 +394,7 @@ function LiveGame(props) {
                         }}>
                             <LiveScore address={address} isDesktop={isDesktop} dme_id={gameInfo.data.dme_id} refresh={REFRESH_TIME} />
                             <LiveMap address={address} isDesktop={isDesktop} dme_id={gameInfo.data.dme_id} refresh={REFRESH_TIME} map={gameInfo.data.details.map} gamemode={gameInfo.data.details.gamemode} />
-                            <LivePlayerStates address={address} isDesktop={isDesktop} dme_id={gameInfo.data.dme_id} refresh={REFRESH_TIME} map={gameInfo.data.details.map} isFullscreen={false} hasPlayerInformation={true} />
+                            <LivePlayerStates address={address} isDesktop={isDesktop} dme_id={gameInfo.data.dme_id} refresh={REFRESH_TIME} map={gameInfo.data.details.map} />
                             {/* <LiveEvents address = {address} isDesktop = {isDesktop} dme_id = {gameInfo.data.dme_id}/> */}
                         </div>
 
@@ -393,6 +403,7 @@ function LiveGame(props) {
                 )
             }
         } else {
+            updateGameInfo(null)
             return (
                 <div style={{
                     background: `linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
@@ -457,5 +468,4 @@ function LiveGame(props) {
 
 
 }
-
-export { LiveGame }
+export { LiveAutoPlayer }
