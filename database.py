@@ -3,6 +3,7 @@ import pickle
 from model.predictGame import predictGame
 from graphs.graphs import gameAnalytics
 import datetime
+from collections import Counter
 uyaModel = pickle.load(open('model/uyaModel.sav', 'rb'))
 log = Database("UYA", "Logger", live=True)
 
@@ -276,3 +277,52 @@ def getAnnouncements():
 def clearAnnouncements():
     announcements = Database("UYA", "Announcements")
     announcements.collection.delete_many({})
+
+
+def getClanStats(clanName):
+    def calculatePowerStats(usernames):
+        player_stats = Database("UYA","Player_Stats")
+        stats = {
+            'kills':0,
+            'deaths':0,
+            "wins":0,
+            "losses":0
+        }
+        stats = Counter(stats)
+        players = [player_stats.collection.find_one({"username_lowercase":user.lower()}) for user in usernames]
+        for player in players:
+            if not player:continue
+
+            userStats = {
+                'kills':player['stats']['overall']['kills'],
+                'deaths':player['stats']['overall']['deaths'],
+                'wins':player['stats']['overall']['wins'],
+                'losses':player['stats']['overall']['losses'],
+            }
+            stats += Counter(userStats)
+        return dict(stats)
+    clans = Database("UYA", "Clans")
+    clan = clans.collection.find_one({"clan_name":clanName})
+    if not clan: return None
+    gameHistory = clan['game_history']
+    gameHistory.reverse()
+    return {
+        "clanName":clan['clan_name'],
+        "leader":clan['leader_account_name'],
+        "legacyStats":clan['stats'],
+        "advancedStats":clan['advanced_stats'],
+        "members":clan['member_names'],
+        "clanTag":clan['clan_tag'],
+        "gameHistory":gameHistory,
+        "powerStats": calculatePowerStats(clan['member_names'])
+    }
+
+def getAllClans():
+    clans = Database("UYA", "Clans")
+    clanNames = [clan['clan_name'] for clan in clans.collection.find()]
+    return {"clans":clanNames}
+
+def getAllRealClans():
+    clans = Database("UYA", "Clans")
+    clanNames = [clan['clan_name'] for clan in clans.collection.find() if len(clan['member_names']) > 1 or len(clan['game_history']) > 0]
+    return {"clans":clanNames}

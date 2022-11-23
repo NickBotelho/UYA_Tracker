@@ -6,6 +6,7 @@ from cache import Cache
 
 import database
 from graphs.graphs import monthNames, weekdaysNames
+from mongodb import Database
 
 app = Flask(__name__, template_folder = 'frontend/server/build/')
 cors = CORS(app)
@@ -221,6 +222,25 @@ def postDetailedGame_2():
         key = cache.generateGameDetailKey(game_id)
         res = cache.get(key)
         return res if res != None else {}
+
+@app.route("/api/clans/all", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def getAllClans():
+    if request.method == "GET":
+        return cache.get("allClans")
+
+@app.route("/api/clans/all/real", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def getAllRealClans():
+    if request.method == "GET":
+        return cache.get("allRealClans")
+
+@app.route("/api/clans/<path:clan>", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def getClanDetails(clan):
+    if request.method == "GET":
+        return cache.get(cache.generateClanKey(clan))
+       
 
 ################ML MODEL################
 @app.route('/api/model/index/<idx>', methods=['GET', 'POST'])
