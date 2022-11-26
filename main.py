@@ -387,7 +387,7 @@ def serveLogo():
 
 @app.route("apple-touch-icon.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
-def serveLogo():
+def serveAppleLogo():
     return send_file('frontend/server/build/apple-touch-icon.png', mimetype="image/x-icon")
 
 @app.route("/static/images/loading_circle.gif", methods = ["GET"])
