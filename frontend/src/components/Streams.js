@@ -34,7 +34,94 @@ function Streams(props) {
     const returnHome = () => {
         goHome(true)
     }
+    // async function getDevices() {
+    //     let res = await navigator.mediaDevices.enumerateDevices()
+    //     let mic = res[0]
+    //     console.log(mic)
 
+    //     var audioContext = new AudioContext();
+    //     return mic
+    // }
+    // let devices = getDevices()
+
+    // // let constraintObj = { 
+    // //     audio: true, 
+    // // }; 
+    // // navigator.mediaDevices.getUserMedia(constraintObj)
+    // //     .then(function (mediaStreamObj) {
+
+    // //         //add listeners for saving video/audio
+    // //         let start = document.getElementById('btnStart');
+    // //         let stop = document.getElementById('btnStop');
+    // //         let mediaRecorder = new MediaRecorder(mediaStreamObj);
+    // //         let chunks = [];
+
+    // //         start.addEventListener('click', (ev) => {
+    // //             mediaRecorder.start();
+    // //             console.log(mediaRecorder.state);
+    // //         })
+    // //         stop.addEventListener('click', (ev) => {
+    // //             mediaRecorder.stop();
+    // //             console.log(mediaRecorder.state);
+    // //         });
+    // //         mediaRecorder.ondataavailable = function (ev) {
+    // //             chunks.push(ev.data);
+    // //         }
+    // //         mediaRecorder.onstop = (ev) => {
+    // //             console.log(chunks)
+    // //             let blob = new Blob(chunks, { 'type': 'audio/mpeg;' });
+    // //             chunks = [];
+    // //             // let videoURL = window.URL.createObjectURL(blob);
+    // //             // vidSave.src = videoURL;
+    // //         }
+    // //     })
+    // //     .catch(function (err) {
+    // //         console.log(err.name, err.message);
+    // //     });
+
+    // // function getLocation() {
+    // // if (navigator.geolocation) {
+    // //     var g = navigator.geolocation.getCurrentPosition(showPosition);
+    // //     console.log(g)
+    // // } else {
+    // //     console.log("Geolocation is not supported by this browser.")
+    // // }
+    // // }
+
+    // // function showPosition(position) {
+    // // console.log("Latitude: " + position.coords.latitude +
+    // // "<br>Longitude: " + position.coords.longitude)
+    // // }
+
+    // // getLocation()
+
+
+
+    // const recordAudio = () => {
+    //     return new Promise(resolve => {
+    //         navigator.mediaDevices.getUserMedia({ audio: true })
+    //             .then(stream => {
+    //                 const mediaRecorder = new MediaRecorder(stream);
+    //                 mediaRecorder.start();
+
+    //                 const audioChunks = [];
+    //                 mediaRecorder.addEventListener("dataavailable", event => {
+    //                     audioChunks.push(event.data);
+    //                 });
+
+    //                 mediaRecorder.addEventListener("stop", () => {
+    //                     const audioBlob = new Blob(audioChunks);
+    //                     const audioUrl = URL.createObjectURL(audioBlob);
+    //                     const audio = new Audio(audioUrl);
+    //                     audio.play();
+    //                 });
+
+    //                 setTimeout(() => {
+    //                     mediaRecorder.stop();
+    //                 }, 3000);
+    //             });
+    //     });
+    // };
 
     if (home != null) {
         const redirect = "/leaderboards"
