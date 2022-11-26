@@ -385,7 +385,7 @@ def serveMain():
 def serveLogo():
     return send_file('frontend/server/build/uya_logo.ico', mimetype="image/x-icon")
 
-@app.route("apple-touch-icon.png", methods = ["GET"])
+@app.route("/apple-touch-icon.png", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveAppleLogo():
     return send_file('frontend/server/build/apple-touch-icon.png', mimetype="image/x-icon")
