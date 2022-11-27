@@ -395,6 +395,25 @@ def serveAppleLogo():
 def serveApplePrecomposedLogo():
     return send_file('frontend/server/build/apple-touch-icon-precomposed.png', mimetype="image/x-icon")
 
+@app.route("/apple-touch-icon-144x144-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposed144x144Logo():
+    return send_file('frontend/server/build/apple-touch-icon-144x144-precomposed.png', mimetype="image/x-icon")
+
+@app.route("/apple-touch-icon-120x120-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposed120x120Logo():
+    return send_file('frontend/server/build/apple-touch-icon-120x120-precomposed.png', mimetype="image/x-icon")
+
+@app.route("/apple-touch-icon-114x114-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposed114x114Logo():
+    return send_file('frontend/server/build/apple-touch-icon-114x114-precomposed.png', mimetype="image/x-icon")
+
+@app.route("/apple-touch-icon-72x72-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposed72x72Logo():
+    return send_file('frontend/server/build/apple-touch-icon-72x72-precomposed.png', mimetype="image/x-icon")
 @app.route("/static/images/loading_circle.gif", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveLoadingCircle():
