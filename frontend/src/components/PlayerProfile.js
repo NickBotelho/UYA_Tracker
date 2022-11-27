@@ -33,6 +33,8 @@ function PlayerProfile(props){
     const queryString = window.location.search
     const urlParams = new URLSearchParams(queryString)
     const player_name = urlParams.get('name')
+    document.title = `UYATracker | ${player_name}`
+
     let [table, changeTable] = useState(null)
 
     let [player, setData] = useState(null)

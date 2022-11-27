@@ -52,7 +52,7 @@ function NavBar(props) {
         setClans(true)
     }
 
-    const sections = ['Leaderboards', 'Game History', "Analytics", "Live", "Clans", "Information", "Autoplayer"]
+    const sections = ["Home", 'Leaderboards', 'Game History', "Analytics", "Live", "Clans", "Information", "Autoplayer"]
     const setSection = (section) => {
         switch (section) {
             case 'Leaderboards':

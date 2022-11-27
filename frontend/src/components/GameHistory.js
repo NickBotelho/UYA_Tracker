@@ -19,6 +19,8 @@ else{
 }
 
 function GameHistory(props){
+    document.title = "UYATracker | Game History"
+
     let [map, changeMap] = useState(GetLargeMap())
 
     const isMobile = useMediaQuery({

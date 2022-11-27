@@ -103,6 +103,7 @@ function DetailedGame(props) {
     let winners = []
     let losers = []
     let disconnects = []
+    document.title = `${game['map'].replace("_", " ")} ${game['gamemode']}`
 
     let tie = []
     if (game['gamemode'] == "CTF") {

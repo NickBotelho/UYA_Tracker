@@ -17,6 +17,8 @@ else {
 
 
 function Clans(props) {
+
+    document.title = "UYATracker | Clans"
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
     });
