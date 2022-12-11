@@ -110,7 +110,7 @@ function Information(props) {
                                 justifyContent: 'center',
                                 textAlign: "center",
                             }}>
-                                <iframe width= {isDesktop ? "600" : "300"} height={isDesktop ? "300" : "150"} src="https://www.youtube.com/embed/0jjPfo1uiVE" title="UYA Online: Custom Maps" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <iframe width= {isDesktop ? "600" : "300"} height={isDesktop ? "300" : "150"} src="https://www.youtube.com/embed/0jjPfo1uiVE" title="UYA Online: Custom Maps" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
                             </div>
 
@@ -120,7 +120,7 @@ function Information(props) {
 
                             <p style={spacing}>Join the discord!</p>
                             <div style={spacing}>
-                                <iframe src="https://discord.com/widget?id=357568581178884107&theme=dark" width={isDesktop ? "300" : "250"} height={isDesktop ? "500" : "500"} allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                                <iframe src="https://discord.com/widget?id=357568581178884107&theme=dark" width={isDesktop ? "300" : "250"} height={isDesktop ? "500" : "500"} allowtransparency="true" frameBorder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
                             </div>
 
                         </div>

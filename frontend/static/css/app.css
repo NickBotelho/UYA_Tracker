@@ -13,3 +13,87 @@
 .title{
     font-family:Eurostile;
 }
+
+.scrollbar-hide::-webkit-scrollbar{
+    display: none;
+    scrollbar-width: none;
+}
+
+.header{
+    color: rgb(229, 197, 102);
+    letter-spacing:-1.5px;
+    border-collapse:collapse;
+    font-weight:bolder;
+    text-shadow:3px 3px 3px black;
+    text-align: center;
+}
+
+.text{
+    font-size: 20pt;
+    color:rgb(141, 113, 24);
+    letter-spacing: -1.5px;
+    font-weight:bolder;
+    text-shadow: 1px 1px 1px black;
+}
+
+.text-mobile{
+    font-size: 14pt;
+    color:rgb(141, 113, 24);
+    letter-spacing: -1.5px;
+    font-weight:bolder;
+    text-shadow: 1px 1px 1px black;
+}
+
+.radio-text{
+    font-size: 20pt;
+    color: rgb(229, 197, 102);
+    letter-spacing: -1.5px;
+    font-weight:bolder;
+    text-shadow: 2px 2px 2px black;
+    margin:1px;
+}
+.radio-text-mobile{
+    font-size: 15pt;
+    color: rgb(229, 197, 102);
+    letter-spacing: -1.5px;
+    font-weight:bolder;
+    text-shadow: 1px 1px 1px black;
+    margin:1px;
+}
+
+
+.flex-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flex-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.dropdown{
+    background-color: rgb(141, 113, 24);
+}
+
+.dropdown-text{
+    color: rgb(229, 197, 102);
+    font-size: 14pt;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+}
+
+/* input[type="radio"]:checked::before {
+    color:plum;
+}
+
+.radio-button{
+    outline: max(2px, 0.15em) solid currentColor;
+    outline-offset: max(2px, 0.15em);
+    background-color: blue;
+} */

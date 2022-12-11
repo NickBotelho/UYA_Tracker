@@ -1,9 +1,9 @@
 import datetime
-from database import getRecentGames, getTotalGames, getGameDetails, getPlayerStats, getEntireStat, getTop10, getAnnouncements
+from database import getRecentGames, getTotalGames, getGameDetails, getPlayerStats, getEntireStat, getTop10, getAnnouncements, getClanStats, getAllClans, getAllRealClans
 
 class Cache():
     def __init__(self):
-        self.CACHE_LIMIT = 50
+        self.CACHE_LIMIT = 100
         self.cache = {} #key to cache
         self.keyToCurrentTime = {} #key to datetime obj
         self.keyToTimeLimit = { 
@@ -13,7 +13,10 @@ class Cache():
             'gameId':60*24,
             'playerStats':10,
             'entireStat':30,
-            'announcements':60*12
+            'announcements':60,
+            'clans':60*6,
+            'allClans':60*6,
+            'allRealClans':60*6,
         }
         self.dmeIdToLiveGameInfo = {}
     def clear(self, key = None):
@@ -62,6 +65,12 @@ class Cache():
             self.storeEntireStat(key)
         elif cacheType == 'announcements':
             self.announcements()
+        elif cacheType == 'clans':
+            self.storeEntireClan(key)
+        elif cacheType == 'allClans':
+            self.storeAllClans()
+        elif cacheType == 'allRealClans':
+            self.storeAllRealClans()
 
         return self.cache[key] if key in self.cache else None
                 
@@ -118,6 +127,23 @@ class Cache():
         args = key.split('-')
         category, stat = args[1], args[2]
         res = getEntireStat(category, stat)
+        self.cache[key] = res
+        self.keyToCurrentTime[key] = datetime.datetime.now()
+
+    def generateClanKey(self, clanName):
+        return f"clans-{clanName}"
+    def storeEntireClan(self, key):
+        args = key.split('-')
+        name = "".join(args[1:])
+        res = getClanStats(name)
+        self.cache[key] = res
+        self.keyToCurrentTime[key] = datetime.datetime.now()
+    def storeAllClans(self, key="allClans"):
+        res = getAllClans()
+        self.cache[key] = res
+        self.keyToCurrentTime[key] = datetime.datetime.now()
+    def storeAllRealClans(self, key='allRealClans'):
+        res = getAllRealClans()
         self.cache[key] = res
         self.keyToCurrentTime[key] = datetime.datetime.now()
 

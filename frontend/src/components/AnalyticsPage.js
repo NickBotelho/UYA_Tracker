@@ -17,6 +17,8 @@ else {
 
 
 function AnalyticsPage(props) {
+    document.title = "UYATracker | Analytics"
+
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
     });

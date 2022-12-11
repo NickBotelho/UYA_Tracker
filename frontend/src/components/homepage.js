@@ -17,7 +17,9 @@ else{
 }
 
 function HomePage(props){
-    console.log("v3.1.0")
+    document.title = "UYATracker"
+
+    // console.log("v3.1.0")
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
@@ -25,13 +27,13 @@ function HomePage(props){
         query: "(min-width: 600px)",
     });
     const isTooLarge = useMediaQuery({
-        query: "(min-height:1300px)"
+        query: "(min-height:1100px)"
     })
     // const isMaxWidth = useMediaQuery({
     //     query:"(min-width: 2000px)"
     // })
     // style = {isMaxWidth ? fixedDistance : null}
-
+    console.log(isTooLarge)
     const fluidDistance = {
         display:'flex',
         justifyContent: 'space-evenly',
@@ -75,7 +77,7 @@ function HomePage(props){
     if (isDesktop){
         return(
             <div style = {desktopBackground} onMouseDown = {hideAnnouncements}>
-                <NavBar />
+                <NavBar isDesktop={isDesktop}/>
                 <h1 style = {titleStyle}>UYA Tracker</h1>
                 
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>
@@ -107,9 +109,10 @@ function HomePage(props){
         );
     }
     else{
+        titleStyle['marginTop'] = '40px'
         return(
             <div style = {mobileBackground}>
-                <NavBar />
+                <NavBar isDesktop={isDesktop}/>
                 <h1 style = {titleStyle}>UYA Tracker</h1>
                 
                 <Searchbar myRef = {myRef} search = {search} searchState = {searchState} address = {address} isDesktop = {isDesktop}></Searchbar>

@@ -6,6 +6,7 @@ from cache import Cache
 
 import database
 from graphs.graphs import monthNames, weekdaysNames
+from mongodb import Database
 
 app = Flask(__name__, template_folder = 'frontend/server/build/')
 cors = CORS(app)
@@ -222,6 +223,25 @@ def postDetailedGame_2():
         res = cache.get(key)
         return res if res != None else {}
 
+@app.route("/api/clans/all", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def getAllClans():
+    if request.method == "GET":
+        return cache.get("allClans")
+
+@app.route("/api/clans/all/real", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def getAllRealClans():
+    if request.method == "GET":
+        return cache.get("allRealClans")
+
+@app.route("/api/clans/<path:clan>", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def getClanDetails(clan):
+    if request.method == "GET":
+        return cache.get(cache.generateClanKey(clan))
+       
+
 ################ML MODEL################
 @app.route('/api/model/index/<idx>', methods=['GET', 'POST'])
 @cross_origin(supports_credentials=True)
@@ -365,6 +385,40 @@ def serveMain():
 def serveLogo():
     return send_file('frontend/server/build/uya_logo.ico', mimetype="image/x-icon")
 
+@app.route("/flux.ico", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveFluxLogo():
+    return send_file('frontend/server/build/flux.ico', mimetype="image/x-icon")
+
+@app.route("/apple-touch-icon.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveAppleLogo():
+    return send_file('frontend/server/build/apple-touch-icon.png', mimetype="image/x-icon")
+    
+@app.route("/apple-touch-icon-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposedLogo():
+    return send_file('frontend/server/build/apple-touch-icon-precomposed.png', mimetype="image/x-icon")
+
+@app.route("/apple-touch-icon-144x144-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposed144x144Logo():
+    return send_file('frontend/server/build/apple-touch-icon-144x144-precomposed.png', mimetype="image/x-icon")
+
+@app.route("/apple-touch-icon-120x120-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposed120x120Logo():
+    return send_file('frontend/server/build/apple-touch-icon-120x120-precomposed.png', mimetype="image/x-icon")
+
+@app.route("/apple-touch-icon-114x114-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposed114x114Logo():
+    return send_file('frontend/server/build/apple-touch-icon-114x114-precomposed.png', mimetype="image/x-icon")
+
+@app.route("/apple-touch-icon-72x72-precomposed.png", methods = ["GET"])
+@cross_origin(supports_credentials=True)
+def serveApplePrecomposed72x72Logo():
+    return send_file('frontend/server/build/apple-touch-icon-72x72-precomposed.png', mimetype="image/x-icon")
 @app.route("/static/images/loading_circle.gif", methods = ["GET"])
 @cross_origin(supports_credentials=True)
 def serveLoadingCircle():

@@ -12,6 +12,7 @@ import {Streams} from './components/Streams'
 import {Medals} from './components/Medals'
 import {Information} from './components/Information'
 import {LiveAutoPlayer} from './components/LiveAutoPlayer'
+import {Clans} from './components/Clans'
 function Routing(props) {
     const navRoutes={
         homepage:"/home",
@@ -26,6 +27,7 @@ function Routing(props) {
         medals:'/medals',
         information:'/info',
         autoplayer:'/autoplayer',
+        clans:'/clans'
     }
     return (
         <div
@@ -50,6 +52,7 @@ function Routing(props) {
                         <Route exact path={navRoutes.stream} component = {Streams}/>
                         <Route exact path={navRoutes.information} component = {Information}/>
                         <Route exact path={navRoutes.autoplayer} component = {LiveAutoPlayer}/>
+                        <Route exact path={navRoutes.clans} component = {Clans}/>
 
 
                         <Route component={HomePage} />              

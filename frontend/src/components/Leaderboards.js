@@ -17,6 +17,8 @@ else{
 
 
 function Leaderboards(props){
+    document.title = "UYATracker | Leaderboards"
+
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });

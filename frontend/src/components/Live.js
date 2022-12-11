@@ -20,6 +20,7 @@ else{
 
 
 function Live(props){
+    document.title = "UYATracker | Live"
     // const [seconds, setSeconds] = useState(0);
     let [players, loadPlayers] = useState({
         needsRefresh:true,

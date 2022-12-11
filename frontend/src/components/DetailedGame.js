@@ -103,6 +103,7 @@ function DetailedGame(props) {
     let winners = []
     let losers = []
     let disconnects = []
+    document.title = `${game['map'].replace("_", " ")} ${game['gamemode']}`
 
     let tie = []
     if (game['gamemode'] == "CTF") {
@@ -232,12 +233,13 @@ function DetailedGame(props) {
                         justifyContent: 'center'
                     }}>
                         <div>
-                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 1 && game['liveGame'] != null ? `Winning Team: ${winningColor.toUpperCase()}` : "Tie Game"}</h4>
+                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 0 && game['liveGame'] != null ? `Winning Team: ${winningColor.toUpperCase()}`
+                                : winners.length>0? "Winning Team" : "Tie Game"}</h4>
                             <div style={{
                                 border: "4px solid rgb(141,113,24)",
 
                             }}>
-                                {winners.length > 1 ? winners : tie}
+                                {winners.length > 0 ? winners : tie}
 
                             </div>
                         </div>
