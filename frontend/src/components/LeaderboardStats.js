@@ -3,7 +3,6 @@ import {LeaderboardBoard} from "./LeaderboardBoard.js"
 import { statList, stat_keys } from "./extras.js";
 
 function LeaderboardStats(props){
-
     const buttonHover = (e) =>{
         statRef.current.style.background = 'rgba(217,163,58,0.8)'
     }

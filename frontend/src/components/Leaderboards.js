@@ -29,12 +29,8 @@ function Leaderboards(props){
     let [currentCategory, changeCategory] = useState(<div></div>)
     let [currentBoard, changeBoard] = useState(<div></div>)
 
-    const isTooLarge = useMediaQuery({
-        query: "(max-height:600px)"
-    })
     let stat_categories = []
     for (let category in statList){
-        // //console.log(category)
         stat_categories.push(
             <LeaderboardCategory
                 category = {category}
@@ -45,16 +41,13 @@ function Leaderboards(props){
                 address = {address}
                 isDesktop = {isDesktop}
                 key = {category}
-
             />
         )
 
     }
 
     let [home, goHome] = useState(null)
-    const returnHome = () =>{
-        goHome(true)
-    }
+
     if (home != null){
         const redirect = "/leaderboards"
         return <Redirect push to = {redirect}/>
@@ -67,17 +60,13 @@ function Leaderboards(props){
                     url(${map})`,
                 fontFamily:"Roboto, sans-serif",
                 height:'100vh'
-    
-                
             }}>
                 <HomeButton/>
-    
     
                 <div style = {{
                     display:"flex",
                     justifyContent:"center"
                 }}>
-         
                     <h1 style = {{
                         fontSize : "75pt",
                         textAlign:"center",
@@ -87,7 +76,6 @@ function Leaderboards(props){
     
                     }}>LEADERBOARDS</h1>
                 </div>
-    
     
                 <div style = {{
                     color: 'rgb(141,113,24)',
@@ -126,45 +114,30 @@ function Leaderboards(props){
                         {currentBoard}
                     </div>
                 </div>
-                
-    
-    
-    
-    
             </div>
-            
-    
         )
     }
     else{
-        // //console.log(isTooLarge)
         return (
             <div style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 
                     url(${map})`,
                 fontFamily:"Roboto, sans-serif",
                 height:'1050px',
-    
-                
             }}>
                 <HomeButton/>
-    
     
                 <div style = {{
                     display:"flex",
                     justifyContent:"center"
                 }}>
-         
                     <h1 style = {{
                         fontSize : "32pt",
                         textAlign:"center",
                         color: 'rgb(229, 197, 102)',
                         textShadow: '6px 4px 4px black',
-    
-    
                     }}>LEADERBOARDS</h1>
                 </div>
-    
     
                 <div style = {{
                     marginTop:'30px',
@@ -204,18 +177,9 @@ function Leaderboards(props){
                         {currentBoard}
                     </div>
                 </div>
-                
-    
-    
-    
-    
             </div>
-            
-    
         )
     }
-
-
 }
 
 export {Leaderboards}

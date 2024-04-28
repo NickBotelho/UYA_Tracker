@@ -77,7 +77,8 @@ function AllGameHistoryTable(props){
     }
     if (redirectID != null){
         const redirect = "/detailedgame"+"?id="+encodeURIComponent(redirectID) //redirectt will hoold game id
-        return <Redirect push to = {redirect}/>
+        isRedirecting(null)
+        window.open(redirect,'_blank')
     }
     
     if (props.isDesktop) { //desktop

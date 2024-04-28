@@ -8,9 +8,7 @@ function LeaderboardCategory(props){
     for (let stat in statList[props.category]){
         stat = statList[props.category][stat]
         let endpoint = endpoints[props.category][stat]
-        //console.log(endpoint)
-        // const api_key = stat_keys[props.category][stat]
-        // //console.log(api_key)
+
         category_stats.push(
             <LeaderboardStats
                 category = {props.category}
