@@ -7,7 +7,8 @@ function AllGameHistoryTable(props){
     let [redirectID, isRedirecting] = useState(null)
     const cellWidth = 250 //change for mobile
     let i = 0 
-    for (let entry = props.start; entry < (props.start + props.numEntries); entry++){
+    for (let entry = 0; entry < 15; entry++){
+        console.log(entry)
         const date = props.games[entry]['date']
         const map = props.games[entry]['map']
         const mode = props.games[entry]['gamemode']

@@ -45,55 +45,6 @@ function LiveEvents(props){
         );
     }
 
-    async function addRow(dme_id){
-        const requestSearch = {
-            method: "POST",
-            headers:  {
-                'Content-Type': "application/json; charset=utf-8",
-                Accept: "application/json",
-                "Cache-Control": "no-cache"
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                dme_id: dme_id,
-            }),    
-        }
-        const search_result = await fetch(`${props.address}/api/live/game`, requestSearch)
-        if (search_result.status == 200){
-            const gameInfo = await search_result.json()
-            let logger = gameInfo.logger
-            let newRow = logger.map(eventRow)
-            let currentRows = rows.rows
-            let batch_num = myStorage.getItem("batch_num")
-            if (batch_num == null || batch_num!=gameInfo.batch_num){
-                currentRows.unshift(newRow)
-                myStorage.setItem("batch_num", batch_num)
-            }
-            updateRows({
-                queued:true,
-                rows:currentRows,
-                batch_num:gameInfo.batch_num
-            })
-            return gameInfo
-        }
-    }
-    useEffect(() => {
-        const interval = setInterval(() => {
-            updateRows({
-                queued:false,
-                rows:rows.rows,
-            })
-        }, props.refresh);
-        return () => clearInterval(interval);
-    }, []);
-
-
-    if(rows.queued == false){
-        addRow(props.dme_id)
-    }
-    if (rows.queued == true){
-        myStorage.setItem("batch_num",rows.batch_num)
-    }
     if(props.isFullscreen || !props.hasEventFeed || props.isBigMap){
         return null
     }

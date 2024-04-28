@@ -17,10 +17,10 @@ import {useMediaQuery} from 'react-responsive'
 const DEBUG = false
 var address = null
 if (DEBUG==true){
-    address = "http://127.0.0.1:5000"
+    address = "https://localhost:7139"
 }
 else{
-    address = "https://uyatracker.herokuapp.com/"
+    address = "http://216.146.25.171"
 }
 
 function PlayerProfile(props){
@@ -58,20 +58,21 @@ function PlayerProfile(props){
 
     async function checkOnline(player){
         const requestSearch = {
-            method: "POST",
+            method: "GET",
             headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
-            body: JSON.stringify({
-                name: player,
-            }),    
         }
-        const search_result = await fetch(`${address}/players/online`, requestSearch)
-        const online_players = await search_result.json()
-        if (online_players.includes(player.toLowerCase())){
+        const search_result = await fetch(`${address}/api/online/players`, requestSearch)
+        let players = await search_result.json()
+        players = JSON.parse(players)
+        console.log(players, player)
+        if (players.some(user => user.username.toLowerCase() === player)){
+            console.log("g")
             setOnline(true)
         }else{
             setOnline(false)
@@ -81,7 +82,7 @@ function PlayerProfile(props){
 
     // write function to find it player is online
     //write current online players to DB and check DB
-    // console.log(`${player_name} is online : ${isOnline}`)
+    // //console.log(`${player_name} is online : ${isOnline}`)
     let online = null
     if (isOnline){
         online = <img src = {online_circle} height = {isDesktop ? "75" : "25"} width = {isDesktop ? "75" : "25"} style = {{
@@ -92,19 +93,20 @@ function PlayerProfile(props){
 
     async function getPlayerData(player){
         const requestSearch = {
-            method: "POST",
+            method: "GET",
             headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
-            body: JSON.stringify({
-                name: player_name,
-            }),    
         }
-        const search_result = await fetch(`${address}/api/players/stats`, requestSearch)
-        const data = await search_result.json()
+        const search_result = await fetch(`${address}/api/players/stats/${encodeURIComponent(player_name)}`, requestSearch)
+        let data = await search_result.json()
+        data = JSON.parse(data)
+
+        //console.log(data)
         setData(data)
     }
     if (player ===null){
@@ -133,13 +135,13 @@ function PlayerProfile(props){
                 maxHeight:'250px',
                 minHeight:'250px',
             }}>
-                <img src = "../../static/images/loading_circle.gif"
+                <img src = "../../server/build//loading_circle.gif"
                 height = '253' width = '255'></img>
             </div>
         }
         else{
     
-            // console.log(player)
+            // //console.log(player)
             const categories = ['overall', 'ctf', 'siege', 'tdm', 'weapon kills', 'weapon deaths']
             let controller = []
             for (let category in categories){
@@ -214,13 +216,13 @@ function PlayerProfile(props){
                 maxHeight:'250px',
                 minHeight:'250px',
             }}>
-                <img src = "../../static/images/loading_circle.gif"
+                <img src = "../../server/build//loading_circle.gif"
                 height = '253' width = '255'></img>
             </div>
         }
         else{
     
-            // console.log(player)
+            // //console.log(player)
             const categories = ['overall', 'ctf', 'siege', 'tdm', 'weapon kills', 'weapon deaths']
             let controller = []
             for (let category in categories){

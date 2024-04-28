@@ -82,7 +82,7 @@ function StatTable(props){
             )
         }
     }
-    // console.log(arr.length > 15 ? '400px' : 'auto')
+    // //console.log(arr.length > 15 ? '400px' : 'auto')
     return (
         <div style = {{
             // border : "3px solid rgb(165,154,46)",

@@ -7,7 +7,7 @@ function PlayerProfileController(props){
 
     let categoryRef = createRef()
     const showTable = () =>{
-        // console.log("tryna show table", props.category)
+        // //console.log("tryna show table", props.category)
         props.changeTable(
             <StatTable
                 category = {props.category}

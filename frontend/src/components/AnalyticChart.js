@@ -16,15 +16,15 @@ function AnalyticChart(props){
         setData(null)
     }
     async function getGraphData(){
-        const request = await fetch(`${props.address}/api/graphs/${props.graph_key}/${props.category}/${props.year}`,{
+        const request = await fetch(`${props.address}/api/games/analytics/${props.graph_key}/${props.category}/${props.year}`,{
             method: "GET",
-                headers:  {
-                    'Content-Type': "application/json; charset=utf-8",
-                    Accept: "application/json",
-                    "Cache-Control": "no-cache",
-
-                },
-                credentials: "include",
+            headers:  {
+                'Content-Type': "application/json; charset=utf-8",
+                Accept: "application/json",
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
+            },
         })
         const data = await request.json()
         setData({
@@ -49,7 +49,7 @@ function AnalyticChart(props){
             maxHeight:'250px',
             minHeight:'250px',
         }}>
-            <img src = "../../static/images/loading_circle.gif"
+            <img src = "../../server/build//loading_circle.gif"
             height = '253' width = '255'></img>
         </div>
     }

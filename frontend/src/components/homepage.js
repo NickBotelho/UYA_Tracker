@@ -10,16 +10,16 @@ import { AnnouncementsWindow } from "./AnnouncementsWindow";
 const DEBUG = false
 var address = null
 if (DEBUG==true){
-    address = "http://127.0.0.1:5000"
+    address = "https://localhost:7139"
 }
 else{
-    address = "https://uyatracker.herokuapp.com/"
+    address = "http://216.146.25.171"
 }
 
 function HomePage(props){
     document.title = "UYATracker"
 
-    // console.log("v3.1.0")
+    // //console.log("v3.1.0")
     const isMobile = useMediaQuery({
         query: "(min-width: 10px) and (max-width: 600px)", //norm is 390x800
       });
@@ -33,7 +33,7 @@ function HomePage(props){
     //     query:"(min-width: 2000px)"
     // })
     // style = {isMaxWidth ? fixedDistance : null}
-    console.log(isTooLarge)
+    //console.log(isTooLarge)
     const fluidDistance = {
         display:'flex',
         justifyContent: 'space-evenly',
@@ -85,20 +85,20 @@ function HomePage(props){
                 
                 <div style = {fluidDistance}>
                     <div >
-                        <Top10 title = "Overall Kills" category = 'overall' stat = 'kills' address = {address}/>     
+                        <Top10 title = "Overall Kills" category = 'overall' stat = 'kills' address = {address} api = {"api/stats/vanilla/top10/Overall/Kills"}/>     
                     </div>
                     <div >
-                        <Top10 title = "Overall Wins" category = 'overall' stat = 'wins' address = {address}/>     
+                        <Top10 title = "Overall Wins" category = 'overall' stat = 'wins' address = {address} api = {"api/stats/vanilla/top10/Overall/Wins"}/>     
                     </div>
                     
                 </div>
     
                 <div  style = {fluidDistance}>
                     <div >
-                        <Top10 title = "Flags Captured" category = 'ctf' stat = 'ctf_caps'address = {address}/>        
+                        <Top10 title = "Flags Captured" category = 'ctf' stat = 'FlagCaptures'address = {address} api = {"api/stats/vanilla/top10/Ctf/FlagCaptures"}/>        
                     </div>
                     <div >
-                        <Top10 title = "Flux Kills" category = 'weapons' stat = 'flux_kills'address = {address}/>       
+                        <Top10 title = "Flux Kills" category = 'weapons' stat = 'flux_kills'address = {address} api = {"api/stats/vanilla/top10/Weapons/Flux/Kills"}/>       
                     </div>
                     
                 </div>
@@ -122,7 +122,7 @@ function HomePage(props){
                     <div style = {{
                         marginTop:"25px"
                     }}>
-                        <Top10 title = "Overall Kills" category = 'overall' stat = 'kills' address = {address}/>     
+                        <Top10 title = "Overall Kills" category = 'overall' stat = 'kills' address = {address} api = {"api/stats/vanilla/top10/Overall/Kills"}/>     
                     </div>          
                 </div>
     

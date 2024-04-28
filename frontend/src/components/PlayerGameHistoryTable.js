@@ -11,7 +11,7 @@ function PlayerGameHistoryTable(props){
         const map = props.games[entry]['map'].replace("_", " ")
         const result = props.games[entry]['win'] == true ? 'Win' : "Loss"
         const game_id = props.games[entry]['game_id']
-        // console.log(date, map, entry)
+        // //console.log(date, map, entry)
         entries.push(
             <div style ={{
                 display:'flex',
@@ -62,7 +62,7 @@ function PlayerGameHistoryTable(props){
         const redirect = "/detailedgame"+"?id="+encodeURIComponent(redirectID) //redirectt will hoold game id
         return <Redirect push to = {redirect}/>
     }
-    // console.log(`is desktop = ${props.isDesktop}`)
+    // //console.log(`is desktop = ${props.isDesktop}`)
     if (props.isDesktop) { //desktop
         return(
             <div style = {{

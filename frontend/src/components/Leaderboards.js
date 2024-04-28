@@ -9,10 +9,10 @@ import {useMediaQuery} from 'react-responsive'
 const DEBUG = false
 var address = null
 if (DEBUG==true){
-    address = "http://127.0.0.1:5000"
+    address = "https://localhost:7139"
 }
 else{
-    address = "https://uyatracker.herokuapp.com/"
+    address = "http://216.146.25.171"
 }
 
 
@@ -34,7 +34,7 @@ function Leaderboards(props){
     })
     let stat_categories = []
     for (let category in statList){
-        // console.log(category)
+        // //console.log(category)
         stat_categories.push(
             <LeaderboardCategory
                 category = {category}
@@ -137,7 +137,7 @@ function Leaderboards(props){
         )
     }
     else{
-        // console.log(isTooLarge)
+        // //console.log(isTooLarge)
         return (
             <div style = {{
                 background:`linear-gradient(rgba(129,102,13,.5), rgba(129,102,13,.5)), 

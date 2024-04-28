@@ -15,10 +15,10 @@ function LiveWeapon(props) {
         "Blitz": blitz,
         "Flux": flux,
         "Rockets": rockets,
-        "Gravity Bomb": gravity,
+        "GravityBomb": gravity,
         "Mines": mines,
-        "Lava Gun": lava,
-        "Morph O' Ray": morph,
+        "LavaGun": lava,
+        "MorphORay": morph,
     }
     const weaponBars = {
         0:0,

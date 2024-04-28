@@ -14,10 +14,10 @@ function LiveLoadout(props){
         "Blitz":blitz,
         "Flux":flux,
         "Rockets":rockets,
-        "Gravity Bomb":gravity,
+        "GravityBomb":gravity,
         "Mines":mines,
-        "Lava Gun":lava,
-        "Morph O' Ray":morph,
+        "LavaGun":lava,
+        "MorphORay":morph,
     }
     function createWeapons(weapons){
         let res = []

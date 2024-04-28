@@ -16,7 +16,7 @@ if (DEBUG == true) {
     address = "http://127.0.0.1:5000"
 }
 else {
-    address = "https://uyatracker.herokuapp.com"
+    address = "http://216.146.25.171"
 }
 
 
@@ -37,7 +37,7 @@ function Streams(props) {
     // async function getDevices() {
     //     let res = await navigator.mediaDevices.enumerateDevices()
     //     let mic = res[0]
-    //     console.log(mic)
+    //     //console.log(mic)
 
     //     var audioContext = new AudioContext();
     //     return mic
@@ -58,17 +58,17 @@ function Streams(props) {
 
     // //         start.addEventListener('click', (ev) => {
     // //             mediaRecorder.start();
-    // //             console.log(mediaRecorder.state);
+    // //             //console.log(mediaRecorder.state);
     // //         })
     // //         stop.addEventListener('click', (ev) => {
     // //             mediaRecorder.stop();
-    // //             console.log(mediaRecorder.state);
+    // //             //console.log(mediaRecorder.state);
     // //         });
     // //         mediaRecorder.ondataavailable = function (ev) {
     // //             chunks.push(ev.data);
     // //         }
     // //         mediaRecorder.onstop = (ev) => {
-    // //             console.log(chunks)
+    // //             //console.log(chunks)
     // //             let blob = new Blob(chunks, { 'type': 'audio/mpeg;' });
     // //             chunks = [];
     // //             // let videoURL = window.URL.createObjectURL(blob);
@@ -76,20 +76,20 @@ function Streams(props) {
     // //         }
     // //     })
     // //     .catch(function (err) {
-    // //         console.log(err.name, err.message);
+    // //         //console.log(err.name, err.message);
     // //     });
 
     // // function getLocation() {
     // // if (navigator.geolocation) {
     // //     var g = navigator.geolocation.getCurrentPosition(showPosition);
-    // //     console.log(g)
+    // //     //console.log(g)
     // // } else {
-    // //     console.log("Geolocation is not supported by this browser.")
+    // //     //console.log("Geolocation is not supported by this browser.")
     // // }
     // // }
 
     // // function showPosition(position) {
-    // // console.log("Latitude: " + position.coords.latitude +
+    // // //console.log("Latitude: " + position.coords.latitude +
     // // "<br>Longitude: " + position.coords.longitude)
     // // }
 

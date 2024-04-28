@@ -905,14 +905,196 @@ const weapon_keys = {
 }
 
 const graph_keys = {
-    'Weapon Kills': 'weapon_kills',
-    'Weapon Usage': 'weapon_usage',
-    'Maps Played': 'map_count',
-    'Avg. Game Length': 'map_time',
-    'Weekday Activity': 'weekday_activity',
-    'Monthly Activity': 'month_activity',
-    'Time Played': "month_time"
+    'Weapon Kills': 'weaponKills',
+    'Weapon Usage': 'weaponUsage',
+    'Maps Played': 'mapCount',
+    'Avg. Game Length': 'mapTime',
+    'Weekday Activity': 'weekdays',
+    'Monthly Activity': 'months',
+    'Time Played': "monthTime"
 }
 
+const endpoints = { //maps above titles to their db keys
+    'overall': {
+        'games played': "api/stats/vanilla/all/Overall/GamesPlayed",
+        'wins': "api/stats/vanilla/all/Overall/Wins",
+        'losses': "api/stats/vanilla/all/Overall/Losses",
+        'kills': "api/stats/vanilla/all/Overall/Kills",
+        'deaths': "api/stats/vanilla/all/Overall/Deaths",
+        'nodes': "api/stats/vanilla/all/Overall/Nodes",
+        'base damage': "api/stats/vanilla/all/Overall/BaseDamage",
+        'suicides': "api/stats/vanilla/all/Overall/Suicides",
+    },
+    'ctf': {
+        'wins': "api/stats/vanilla/all/Ctf/Wins",
+        'losses': 'api/stats/vanilla/all/Ctf/Losses',
+        'kills': 'api/stats/vanilla/all/Ctf/Kills',
+        'deaths': 'api/stats/vanilla/all/Ctf/Deaths',
+        'nodes': 'api/stats/vanilla/all/Ctf/Nodes',
+        'base damage': 'api/stats/vanilla/all/Ctf/BaseDamage',
+        'flags': 'api/stats/vanilla/all/Ctf/FlagCaptures',
+        'saves': 'api/stats/vanilla/all/Ctf/FlagSaves'
+    },
+    'siege': {
+        'wins': 'api/stats/vanilla/all/Siege/Wins',
+        'losses': 'api/stats/vanilla/all/Siege/Losses',
+        'kills': 'api/stats/vanilla/all/Siege/Kills',
+        'deaths': 'api/stats/vanilla/all/Siege/Deaths',
+        'nodes': 'api/stats/vanilla/all/Siege/Nodes',
+        'base damage': 'api/stats/vanilla/all/Siege/BaseDamage',
+    },
+    'deathmatch': {
+        'wins': 'api/stats/vanilla/all/Deathmatch/Wins',
+        'losses': 'api/stats/vanilla/all/Deathmatch/Losses',
+        'kills': 'api/stats/vanilla/all/Deathmatch/Kills',
+        'deaths': 'api/stats/vanilla/all/Deathmatch/Deaths',
+    },
+    'weapon kills': {
+        'flux': 'api/stats/vanilla/all/Weapons/Flux/Kills',
+        'gravity bomb': 'api/stats/vanilla/all/Weapons/GravityBomb/Kills',
+        'blitz': 'api/stats/vanilla/all/Weapons/Blitz/Kills',
+        'n60': 'api/stats/vanilla/all/Weapons/N60/Kills',
+        'mines': 'api/stats/vanilla/all/Weapons/Mines/Kills',
+        'morph': 'api/stats/vanilla/all/Weapons/MorphORay/Kills',
+        'lava gun': 'api/stats/vanilla/all/Weapons/LavaGun/Kills',
+        'rocket': 'api/stats/vanilla/all/Weapons/Rocket/Kills',
+        'wrench': 'api/stats/vanilla/all/Weapons/Wrench/Kills'
 
-export { graph_keys, GetLargeMap, GetHalfLargeMap, getSpecifiedMap, categories, statList, stat_keys, weapon_keys }
+    },
+    'weapon deaths': {
+        'flux': 'api/stats/vanilla/all/Weapons/Flux/Deaths',
+        'gravity bomb': 'api/stats/vanilla/all/Weapons/GravityBomb/Deaths',
+        'blitz': 'api/stats/vanilla/all/Weapons/Blitz/Deaths',
+        'n60': 'api/stats/vanilla/all/Weapons/N60/Deaths',
+        'mines': 'api/stats/vanilla/all/Weapons/Mines/Deaths',
+        'morph': 'api/stats/vanilla/all/Weapons/MorphORay/Deaths',
+        'lava gun': 'api/stats/vanilla/all/Weapons/LavaGun/Deaths',
+        'rocket': 'api/stats/vanilla/all/Weapons/Rocket/Deaths',
+        'wrench': 'api/stats/vanilla/all/Weapons/Wrench/Deaths'
+    },
+    'advanced': {
+        'kills/min': 'api/stats/advanced/all/PerMinute/KillsPerMinute',
+        'deaths/min': 'api/stats/advanced/all/PerMinute/DeathsPerMinute',
+        'suicides/min': 'api/stats/advanced/all/PerMinute/SuicidesPerMinute',
+        'caps/min': 'api/stats/advanced/all/PerMinute/CapsPerMinute',
+        'saves/min': 'api/stats/advanced/all/PerMinute/SavesPerMinute',
+        'flux kills/min': 'api/stats/advanced/all/PerMinute/FluxKillsPerMinute',
+        'blitz kills/min': 'api/stats/advanced/all/PerMinute/BlitzKillsPerMinute',
+        'gravity bomb kills/min': 'api/stats/advanced/all/PerMinute/GravityBombKillsPerMinute',
+        'flux deaths/min': 'api/stats/advanced/all/PerMinute/FluxDeathsPerMinute',
+        'blitz deaths/min': 'api/stats/advanced/all/PerMinute/BlitzDeathsPerMinute',
+        'gravity bomb deaths/min': 'api/stats/advanced/all/PerMinute/GravityBombDeathsPerMinute',
+        'kills/gm': 'api/stats/advanced/all/PerGame/KillsPerGame',
+        'deaths/gm': 'api/stats/advanced/all/PerGame/DeathsPerGame',
+        'suicides/gm': 'api/stats/advanced/all/PerGame/SuicidesPerGame',
+        'caps/gm': 'api/stats/advanced/all/PerGame/CapsPerGame',
+        'saves/gm': 'api/stats/advanced/all/PerGame/SavesPerGame',
+        'flux kills/gm': 'api/stats/advanced/all/PerGame/FluxKillsPerGame',
+        'blitz kills/gm': 'api/stats/advanced/all/PerGame/BlitzKillsPerGame',
+        'gravity bomb kills/gm': 'api/stats/advanced/all/PerGame/GravityBombKillsPerGame',
+        'flux deaths/gm': 'api/stats/advanced/all/PerGame/FluxDeathsPerGame',
+        'blitz deaths/gm': 'api/stats/advanced/all/PerGame/BlitzDeathsPerGame',
+        'gravity bomb deaths/gm': 'api/stats/advanced/all/PerGame/GravityBombDeathsPerGame',
+    },
+    'medals': {
+        'nuke': 'api/stats/advanced/all/LiveTotals/Medals/Nuke',
+        'brutal': 'api/stats/advanced/all/LiveTotals/Medals/Brutal',
+        'relentless': 'api/stats/advanced/all/LiveTotals/Medals/Relentless',
+        'undying': 'api/stats/advanced/all/LiveTotals/Medals/Undying',
+        'merciless': 'api/stats/advanced/all/LiveTotals/Medals/Merciless',
+        'bloodthirsty': 'api/stats/advanced/all/LiveTotals/Medals/Bloodthirsty',
+        'distributor': 'api/stats/advanced/all/LiveTotals/Medals/Distributor',
+        'brutalized': 'api/stats/advanced/all/LiveTotals/Medals/Brtualized',
+        'thickskull': 'api/stats/advanced/all/LiveTotals/Medals/ThickSkull',
+        'shifty': 'api/stats/advanced/all/LiveTotals/Medals/Shifty',
+        'juggernaut': 'api/stats/advanced/all/LiveTotals/Medals/Juggernaut',
+        'olympiad': 'api/stats/advanced/all/LiveTotals/Medals/Olympiad',
+        'lockon': 'api/stats/advanced/all/LiveTotals/Medals/LockOn',
+        'dropper': 'api/stats/advanced/all/LiveTotals/Medals/Dropper',
+        'ratfuck': 'api/stats/advanced/all/LiveTotals/Medals/RatFuck',
+        'healthrunner':'api/stats/advanced/all/LiveTotals/Medals/HealthRunner',
+        'machinegun':'api/stats/advanced/all/LiveTotals/Medals/MachineGun',
+        'untouchable':'api/stats/advanced/all/LiveTotals/Medals/Untouchable',
+        'heatingup':'api/stats/advanced/all/LiveTotals/Medals/HeatingUp'
+    },
+    'live': {
+        'total distance': 'api/stats/advanced/all/LiveTotals/DistanceTravelled',
+        'no flag distance': 'api/stats/advanced/all/LiveTotals/NoFlagDistance',
+        'flag distance': 'api/stats/advanced/all/LiveTotals/FlagDistance',
+        'flag pickups': "api/stats/advanced/all/LiveTotals/FlagPickups",
+        'flag drops': 'api/stats/advanced/all/LiveTotals/FlagDrops',
+        'health boxes': 'api/stats/advanced/all/LiveTotals/HealthBoxes',
+        'packs grabbed': 'api/stats/advanced/all/LiveTotals/PacksGrabbed',
+        'niks given': "api/stats/advanced/all/LiveTotals/NicksGiven",
+        'niks received': "api/stats/advanced/all/LiveTotals/NicksReceived"
+    },
+    'live/gm': {
+        'total distance': 'api/stats/advanced/all/LivePerGame/DistanceTravelled',
+        'no flag distance': 'api/stats/advanced/all/LivePerGame/NoFlagDistance',
+        'flag distance': 'api/stats/advanced/all/LivePerGame/FlagDistance',
+        'flag pickups': "api/stats/advanced/all/LivePerGame/FlagPickups",
+        'flag drops': 'api/stats/advanced/all/LivePerGame/FlagDrops',
+        'health boxes': 'api/stats/advanced/all/LivePerGame/HealthBoxes',
+        'packs grabbed': 'api/stats/advanced/all/LivePerGame/PacksGrabbed',
+        'niks given': "api/stats/advanced/all/LivePerGame/NicksGiven",
+        'niks received': "api/stats/advanced/all/LivePerGame/NicksReceived"
+    },
+    'best streaks':{
+        'overall winstreak':"api/stats/advanced/all/Streaks/Overall/BestWinStreak",
+        'overall killstreak':"api/stats/advanced/all/Streaks/Overall/BestKillStreak",
+        'overall deathstreak':"api/stats/advanced/all/Streaks/Overall/BestDeathStreak",
+        
+        'ctf winstreak':"api/stats/advanced/all/Streaks/Ctf/BestWinStreak",
+        'ctf killstreak':"api/stats/advanced/all/Streaks/Ctf/BestKillStreak",
+        'ctf deathstreak':"api/stats/advanced/all/Streaks/Ctf/BestDeathStreak",
+        
+        'siege winstreak':"api/stats/advanced/all/Streaks/Siege/BestWinStreak",
+        'siege killstreak':"api/stats/advanced/all/Streaks/Siege/BestKillStreak",
+        'siege deathstreak':"api/stats/advanced/all/Streaks/Siege/BestDeathStreak",
+        
+        'tdm winstreak':"api/stats/advanced/all/Streaks/Deathmatch/BestWinStreak",
+        'tdm killstreak':"api/stats/advanced/all/Streaks/Deathmatch/BestKillStreak",
+        'tdm deathstreak':"api/stats/advanced/all/Streaks/Deathmatch/BestDeathStreak",
+    },
+    'current streaks':{
+        'overall winstreak':"api/stats/advanced/all/Streaks/Overall/CurrentWinStreak",
+        'overall losingstreak':"api/stats/advanced/all/Streaks/Overall/CurrentLoseStreak",
+        
+        'ctf winstreak':"api/stats/advanced/all/Streaks/Ctf/CurrentWinStreak",
+        'ctf losingstreak':"api/stats/advanced/all/Streaks/Ctf/CurrentLoseStreak",
+
+        'siege winstreak':"api/stats/advanced/all/Streaks/Siege/CurrentWinStreak",
+        'siege losingstreak':"api/stats/advanced/all/Streaks/Siege/CurrentLoseStreak",
+
+        'tdm winstreak':"api/stats/advanced/all/Streaks/Deathmatch/CurrentWinStreak",
+        'tdm losingstreak':"api/stats/advanced/all/Streaks/Deathmatch/CurrentLoseStreak",
+
+    }
+}
+
+const colorCodeToString = {
+    0: 'blue',
+    1: 'red',
+    2: 'green',
+    3: 'orange',
+    4: 'yellow',
+    5: 'purple',
+    6: 'aqua',
+    7: 'pink',
+  };
+
+  const mapCodeToString = {
+    0: 'BakisiIsle',
+    1: 'HovenGorge',
+    2: 'OutpostX12',
+    3: 'KorgonOutpost',
+    4: 'Metropolis',
+    5: 'BlackwaterCity',
+    6: 'CommandCenter',
+    7: 'AquatosSewers',
+    8: 'BlackwaterDox',
+    9: 'MarcadiaPalace',
+    10: 'MaraxusPrison',
+    11: 'SarathosSwamp',
+  };
+export { graph_keys, GetLargeMap, GetHalfLargeMap, getSpecifiedMap, categories, statList, stat_keys, weapon_keys, endpoints, colorCodeToString, mapCodeToString }

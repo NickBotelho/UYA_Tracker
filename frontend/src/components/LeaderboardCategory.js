@@ -1,14 +1,16 @@
 import React, { createRef, useState, useCallback } from "react";
 import { LeaderboardStats } from "./LeaderboardStats";
-import { statList, stat_keys } from "./extras";
+import { statList, stat_keys, endpoints } from "./extras";
 function LeaderboardCategory(props){
 
     let category_stats = []
 
     for (let stat in statList[props.category]){
         stat = statList[props.category][stat]
+        let endpoint = endpoints[props.category][stat]
+        //console.log(endpoint)
         // const api_key = stat_keys[props.category][stat]
-        // console.log(api_key)
+        // //console.log(api_key)
         category_stats.push(
             <LeaderboardStats
                 category = {props.category}
@@ -19,6 +21,7 @@ function LeaderboardCategory(props){
                 isDesktop = {props.isDesktop}
                 stat_key = {stat}
                 key = {stat}
+                endpoint = {endpoint}
             />
         )
 

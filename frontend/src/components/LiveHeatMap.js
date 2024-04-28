@@ -13,43 +13,43 @@ import radarMarc from '../../static/images/radars/marcadia.png'
 
 function LiveHeatMap(props) {
     const radars = {
-        'Bakisi_Isle': radarKisi,
-        'Aquatos_Sewers': radarSewers,
-        "Hoven_Gorge": radarHoven,
-        "Outpost_x12": radarX12,
-        "Korgon_Outpost": radarKorgon,
+        'BakisiIsle': radarKisi,
+        'AquatosSewers': radarSewers,
+        "HovenGorge": radarHoven,
+        "OutpostX12": radarX12,
+        "KorgonOutpost": radarKorgon,
         "Metropolis": radarMetro,
-        "Blackwater_City": radarBwc,
-        "Command_Center": radarCommand,
-        "Blackwater_Dox": radarDox,
-        "Marcadia_Palace": radarMarc,
+        "BlackwaterCity": radarBwc,
+        "CommandCenter": radarCommand,
+        "BlackwaterDox": radarDox,
+        "MarcadiaPalace": radarMarc,
     }
     const mapBounds = {
         //name: [left, right, bottom, top]
-        'Bakisi_Isle': [9650, 40500, 11000, 40000],
-        'Aquatos_Sewers': [21685, 28487, 17589, 24391],
-        "Hoven_Gorge": [7900, 24300, 7200, 25500],
-        "Outpost_x12": [5000, 50000, 7200, 23200],
-        "Korgon_Outpost": [10300, 30500, 12172, 31500],
+        'BakisiIsle': [9650, 40500, 11000, 40000],
+        'AquatosSewers': [21685, 28487, 17589, 24391],
+        "HovenGorge": [7900, 24300, 7200, 25500],
+        "OutpostX12": [5000, 50000, 7200, 23200],
+        "KorgonOutpost": [10300, 30500, 12172, 31500],
         "Metropolis": [40000, 57500, 12656, 30759],
-        "Blackwater_City": [8700, 19000, 7500, 26300],
-        "Command_Center": [19200, 23050, 21500, 25200],
-        "Blackwater_Dox": [10000, 19600, 10500, 19100],
-        "Marcadia_Palace": [25700, 35700, 50500, 60500],
+        "BlackwaterCity": [8700, 19000, 7500, 26300],
+        "CommandCenter": [19200, 23050, 21500, 25200],
+        "BlackwaterDox": [10000, 19600, 10500, 19100],
+        "MarcadiaPalace": [25700, 35700, 50500, 60500],
     }
     const radarBounds = {
         //[[desktop], [mobile]]
         //[xMax, yMax]
-        'Bakisi_Isle':[[300,300],[200,200]],
-        'Aquatos_Sewers':[[300,300],[200,200]],
-        "Hoven_Gorge":[[300,300],[200,200]],
-        "Outpost_x12":[[300,300],[200,200]],
-        "Korgon_Outpost":[[300,300],[200,200]],
+        'BakisiIsle':[[300,300],[200,200]],
+        'AquatosSewers':[[300,300],[200,200]],
+        "HovenGorge":[[300,300],[200,200]],
+        "OutpostX12":[[300,300],[200,200]],
+        "KorgonOutpost":[[300,300],[200,200]],
         "Metropolis":[[300,300],[200,200]],
-        "Blackwater_City":[[300,300],[200,200]],
-        "Command_Center":[[300,300],[200,200]],
-        "Blackwater_Dox":[[300,300],[200,200]],
-        "Marcadia_Palace":[[300,300],[200,200]],
+        "BlackwaterCity":[[300,300],[200,200]],
+        "CommandCenter":[[300,300],[200,200]],
+        "BlackwaterDox":[[300,300],[200,200]],
+        "MarcadiaPalace":[[300,300],[200,200]],
 
     }
     function convert(coords, map) {
@@ -59,12 +59,12 @@ function LiveHeatMap(props) {
         const bias = 10
         var edges = mapBounds[map]
         var xDist = edges[1] - edges[0]
-        var xPercent = (coords[0] - edges[0]) / xDist
+        var xPercent = (coords.X - edges[0]) / xDist
         var radrBounds = props.isDesktop ? radarBounds[map][0][0] : radarBounds[map][1][0]
         var xPlot = Math.floor(radrBounds * xPercent)
         edges = mapBounds[map]
         var yDist = edges[3] - edges[2]
-        var yPercent = (coords[1] - edges[2]) / yDist
+        var yPercent = (coords.Y - edges[2]) / yDist
         radrBounds = props.isDesktop ? radarBounds[map][0][1] : radarBounds[map][1][1]
         var yPlot = Math.floor(radrBounds * yPercent + bias)
 
@@ -79,7 +79,7 @@ function LiveHeatMap(props) {
         for (let i = 0; i < coords.length; i++) {
             let radarPoints = convert(coords[i], props.map)
             res.push(<div key={i}>
-                <img src= {kill == true ? '../../static/images/ryno.png' : '../../static/images/skull.png'}
+                <img src= {kill == true ? "../../server/build//ryno.png" : "../../server/build//skull.png" }
                     height={props.isDesktop?"10":"5"} width={props.isDesktop?"10":"5"}
                     style={{
                         userSelect: "none",
@@ -94,8 +94,15 @@ function LiveHeatMap(props) {
         }
         return res
     }
-    let killPoints = plot(props.kills, true)
-    let deathPoints = plot(props.deaths, false)
+    let killPoints = null
+    let deathPoints = null
+    if (props.kills != null){
+        let killPoints = plot(props.kills, true)
+    }
+
+    if (props.deaths != null){
+        let deathPoints = plot(props.deaths, false)
+    }
     return (
         <div style={{
             zIndex: "1",
@@ -107,7 +114,7 @@ function LiveHeatMap(props) {
                     left:"8%",
                     position:'absolute'
                 }} />
-                {killPoints}
+                {killPoints }
                 {deathPoints}
         </div>
     )

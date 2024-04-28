@@ -18,7 +18,7 @@ function LiveMapDEPRECATED(props){
     let [radar, updateRadar] = useState( null )
 
     let myStorage = window.localStorage;
-    // console.log(myStorage)
+    // //console.log(myStorage)
     async function getMap(dme_id){
         const requestSearch = {
             method: "POST",
@@ -56,7 +56,7 @@ function LiveMapDEPRECATED(props){
     if (radar == null){
         let cache = myStorage.getItem("radar")
         cache = cache != null? <img style = {{border : "3px solid rgb(141,113,24)",}} src={`data:image/png;base64, ${cache}`} height = {props.isDesktop? '100%' : '300'} alt = "Map"/> 
-        : <img style = {{border : "3px solid rgb(141,113,24)",}}  src = "../../static/images/loading_circle.gif" height = '253' width = '255' alt = "Map"></img>
+        : <img style = {{border : "3px solid rgb(141,113,24)",}}  src = "../../server/build//loading_circle.gif" height = '253' width = '255' alt = "Map"></img>
  
         return (
 

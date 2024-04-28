@@ -5,17 +5,17 @@ import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
 import { AllGameHistoryTable } from "./AllGameHistoryTable.js";
 import { HomeButton } from "./HomeButton.js";
 import online_circle from '../../static/images/online_circle.png';
-import forward from '../../static/images/forward_arrow.svg';
-import backward from '../../static/images/backward_arrow.svg';
+import forward from '../../server/build//forward_arrow.svg';
+import backward from '../../server/build//backward_arrow.svg';
 
 
 const DEBUG = false
 var address = null
 if (DEBUG==true){
-    address = "http://127.0.0.1:5000"
+    address = "https://localhost:7139"
 }
 else{
-    address = "https://uyatracker.herokuapp.com"
+    address = "http://216.146.25.171"
 }
 
 function GameHistory(props){
@@ -41,21 +41,18 @@ function GameHistory(props){
     const numEntries = 15
     async function getRecentGames(start, end){
         const requestSearch = {
-            method: "POST",
+            method: "GET",
             headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
-            body: JSON.stringify({
-                start:start,
-                end:end
-            }),  
         }
-        const res = await fetch(`${address}/general/recent_games`, requestSearch)
-        const recent_games = await res.json()
-        
+        const res = await fetch(`${address}/api/games/recentGames/${games.start}/${games.start+15}`, requestSearch)
+        let recent_games = await res.json()
+        recent_games = JSON.parse(recent_games)
         setGames({
             start:start,
             games:recent_games,
@@ -63,16 +60,17 @@ function GameHistory(props){
         })
     }
     async function getTotalGames(url){
-        const request = await fetch(url,{
-                method: "GET",
-                    headers:  {
-                        'Content-Type': "application/json; charset=utf-8",
-                        Accept: "application/json",
-                        "Cache-Control": "no-cache"
-                    },
-                    credentials: "include",
-            })
-        const total = await request.json()
+        const requestSearch = {
+            method: "GET",
+            headers:  {
+                'Content-Type': "application/json; charset=utf-8",
+                Accept: "application/json",
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
+            },
+        }
+        const total = await fetch(`${address}/api/games/totalGames`, requestSearch)
         setGames({
             start:games.start,
             games:games.games,
@@ -82,7 +80,7 @@ function GameHistory(props){
    
     
     if (games.max == 0){
-        getTotalGames(`${address}/api/general/total_games`)
+        getTotalGames(`${address}/api/general/totalGames`)
     }
     
     if (games.games == null){
@@ -121,7 +119,7 @@ function GameHistory(props){
                             maxHeight:'250px',
                             minHeight:'250px',
                         }}>
-                            <img src = "../../static/images/loading_circle.gif"
+                            <img src = "../../server/build//loading_circle.gif"
                             height = {isDesktop ? '250' : "125"} width = {isDesktop ? '250' : "125"}></img>
                         </div>
             </div>
@@ -130,7 +128,7 @@ function GameHistory(props){
         
     }
 
-
+    console.log(games)
     if (isDesktop){
         return (
             <div  style = {{
@@ -170,7 +168,7 @@ function GameHistory(props){
                     display:'flex',
                     justifyContent:'center'
                 }}>
-                    {games.start - numEntries < 0 ? null : <img src = '../../static/images/backward_arrow.svg'
+                    {games.start - numEntries < 0 ? null : <img src = '../../server/build//backward_arrow.svg'
                         onMouseDown={ () =>{
 
                             setGames({
@@ -180,7 +178,7 @@ function GameHistory(props){
                             })
                         }}height= {isDesktop ? "50" : "15"} width = {isDesktop ? "200" : "75"} 
                         style = {{userSelect:"none",cursor:"pointer"}}></img>}
-                    {games.start + numEntries > games.max ? null :<img src = '../../static/images/forward_arrow.svg'
+                    {games.start + numEntries > games.max ? null :<img src = '../../server/build//forward_arrow.svg'
                         onMouseDown={ () =>{
 
                             setGames({
@@ -243,7 +241,7 @@ function GameHistory(props){
                     display:'flex',
                     justifyContent:'center'
                 }}>
-                    {games.start - numEntries < 0 ? null : <img src = '../../static/images/backward_arrow.svg'
+                    {games.start - numEntries < 0 ? null : <img src = '../../server/build//backward_arrow.svg'
                         onMouseDown={ () =>{
 
                             setGames({
@@ -253,7 +251,7 @@ function GameHistory(props){
                             })
                         }}height= "20" width = "100"
                         style = {{userSelect:"none",cursor:"pointer"}}></img>}
-                    {games.start + numEntries > games.max ? null :<img src = '../../static/images/forward_arrow.svg'
+                    {games.start + numEntries > games.max ? null :<img src = '../../server/build//forward_arrow.svg'
                         onMouseDown={ () =>{
 
                             setGames({

@@ -9,10 +9,10 @@ import { AnalyticsCategory } from "./AnalyticsCategory.js";
 const DEBUG = false
 var address = null
 if (DEBUG == true) {
-    address = "http://127.0.0.1:5000"
+    address = "https://localhost:7139"
 }
 else {
-    address = "https://uyatracker.herokuapp.com"
+    address = "http://216.146.25.171"
 }
 
 
@@ -29,17 +29,17 @@ function AnalyticsPage(props) {
     let [currentCategory, changeCategory] = useState(<div></div>)
     let [currentBoard, changeBoard] = useState(<div></div>)
     let [year, changeYear] = useState("all")
-    const gameSizes = ["all", '1v1', '2v2', '3v3', '4v4']
+    const gameSizes = ["all", 'ones', 'twos', 'threes', 'fours']
     const colors = {
         'all': 'rgba(190, 177, 54, 0.8)',
-        '1v1': 'rgba(210, 178, 55, 0.8)',
-        '2v2': 'rgba(230, 179, 56, 0.8)',
-        '3v3': 'rgba(250, 180, 57, 0.8)',
-        '4v4': 'rgba(270, 180, 58, 0.8)',
+        'ones': 'rgba(210, 178, 55, 0.8)',
+        'twos': 'rgba(230, 179, 56, 0.8)',
+        'threes': 'rgba(250, 180, 57, 0.8)',
+        'fours': 'rgba(270, 180, 58, 0.8)',
     }
     let stat_categories = []
     for (let category in gameSizes) {
-        // console.log(category)
+        // //console.log(category)
         stat_categories.push(
             <AnalyticsCategory
                 category={gameSizes[category]}
@@ -87,7 +87,7 @@ function AnalyticsPage(props) {
         goHome(true)
     }
     let updateYear = () => {
-        // console.log(document.getElementById("yearInput").value)
+        // //console.log(document.getElementById("yearInput").value)
         changeYear(document.getElementById("yearInput").value)
         changeBoard(<div></div>)
         changeCategory(<div></div>)

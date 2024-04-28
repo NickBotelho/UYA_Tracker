@@ -1,6 +1,6 @@
 import React, { createRef, useState, useCallback, useEffect } from "react";
 import { Redirect } from "react-router";
-import {GetLargeMap, GetHalfLargeMap} from "./extras.js";
+import {colorCodeToString} from "./extras.js";
 import { HomeButton } from './HomeButton'
 import {useMediaQuery} from 'react-responsive'
 
@@ -16,47 +16,7 @@ function LiveScore(props){
         queued: false,
         score:{}
     })
-    let myStorage = window.localStorage;
-    async function getScore(dme_id){
-        const requestSearch = {
-            method: "POST",
-            headers:  {
-                'Content-Type': "application/json; charset=utf-8",
-                Accept: "application/json",
-                "Cache-Control": "no-cache"
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                dme_id: dme_id,
-            }),    
-        }
-        const search_result = await fetch(`${props.address}/api/live/game`, requestSearch)
-        if (search_result.status == 200){
-            const gameInfo = await search_result.json()
-            let s = gameInfo.scores
-            
-    
-            setScores({
-                queued:true,
-                score: s
-            })
-            return gameInfo
-        }
-        
-    }
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setScores( scores => ({
-                score:scores.score,
-                queued:false
-            }))
-        }, props.refresh);
-        return () => clearInterval(interval);
-    }, []);
 
-    if (scores.queued == false){
-        getScore(props.dme_id)
-    }
     const displayScore = (team, value)=>{
         return <div style={{
             textShadow: '2px 2px 2px black',
@@ -69,9 +29,12 @@ function LiveScore(props){
             <h4>{value}</h4>
         </div>
     }
+
     let teams = []
-    for (const [team, value] of Object.entries(scores.score)){
-        teams.push(displayScore(team, value))
+    for (let i = 0; i< props.message.Teams.length; i++){
+        let teamColor = colorCodeToString[props.message.Teams[i].TeamColor]
+        let score = props.message.Teams[i].Score
+        teams.push(displayScore(teamColor, score))
     }
     return (  
         <div style = {{

@@ -13,14 +13,14 @@ function AnnouncementsWindow(props) {
                 'origin': 'null'
             },
         }
-        const res = await fetch(`${props.address}/server/announcements/read`, requestSearch)
+        const res = await fetch(`${props.address}/api/announcements`, requestSearch)
         const players = await res.json()
         setAnnouncements(players)
     }
     function printAnnouncements() {
         var res = []
         for (var i = 0; i < annoucements.length ; i++) {
-            // console.log(annoucements[i])
+            // //console.log(annoucements[i])
             res.push(
                 <h3 key={i} style ={{
                     textAlign:'center',
@@ -34,13 +34,13 @@ function AnnouncementsWindow(props) {
         getAnnouncements()
         return null
     }
-    // console.log(annoucements)
+    // //console.log(annoucements)
     if (annoucements.length == 0) {
         return null
     }
 
     var res =printAnnouncements()
-    // console.log(res)
+    // //console.log(res)
     return (
         <div ref={props.reference} onMouseDown={props.hide} style={{
             marginTop: '10px',

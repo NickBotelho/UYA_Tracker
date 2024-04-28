@@ -9,10 +9,10 @@ import { Dropdown } from "./general/Dropdown.js";
 const DEBUG = false
 var address = null
 if (DEBUG == true) {
-    address = "http://127.0.0.1:5000"
+    address = "https://localhost:7139"
 }
 else {
-    address = "https://uyatracker.herokuapp.com"
+    address = "http://216.146.25.171"
 }
 
 
@@ -34,12 +34,13 @@ function Clans(props) {
     async function getClans() {
         const requestSearch = {
             method: "GET",
-            headers: {
+            headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
         }
         const search_result = await fetch(`${address}/api/clans/all`, requestSearch)
         if (search_result.status == 200) {
@@ -49,12 +50,13 @@ function Clans(props) {
     async function getRealClans() {
         const requestSearch = {
             method: "GET",
-            headers: {
+            headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
         }
         const search_result = await fetch(`${address}/api/clans/all/real`, requestSearch)
         if (search_result.status == 200) {
@@ -86,7 +88,7 @@ function Clans(props) {
             maxHeight: isDesktop ? '250px' : "80px",
             minHeight: isDesktop ? '250px' : "80px"
         }}>
-            <img src="../../static/images/loading_circle.gif"
+            <img src="../../server/build//loading_circle.gif"
                 height={isDesktop ? '250px' : "80px"} width={isDesktop ? '250px' : "80px"}></img>
         </div>)
 
@@ -136,7 +138,7 @@ function Clans(props) {
                             />
                             Real Clans Only
                         </label>
-                        <ScrollableList isDesktop={isDesktop} title="Clans" listMembers={clans.clans} handleClick={searchClan} listLength={20} />
+                        <ScrollableList isDesktop={isDesktop} title="Clans" listMembers={clans} handleClick={searchClan} listLength={20} />
                     </div>
                     <ClanInformation currentClan={currentClan} isDesktop={isDesktop} address={address} />
                 </div >
@@ -192,7 +194,7 @@ function Clans(props) {
                             />
                             Real Clans Only
                         </label>
-                        <Dropdown title="" values={clans.clans} handleClick={searchClan} />
+                        <Dropdown title="" values={clans} handleClick={searchClan} />
                     </div>
                     <ClanInformation currentClan={currentClan} isDesktop={isDesktop} address={address} />
 

@@ -27,13 +27,13 @@ function DetailedLiveHistory(props) {
     const toggleOff = () => {
         imageRef.current.style.filter = filters['v1']
     }
-    const weapons = ["Flux", "Blitz", "Gravity Bomb", "Morph O' Ray", "Mines", "Rockets", "Lava Gun", "N60"]
+    const weapons = ["Flux", "Blitz", "GravityBomb", "MorphORay", "Mines", "Rockets", "LavaGun", "N60"]
     const weaponInfo = () => {
         let res = []
         for (let key in props.info["weapons"]) {
             if (weapons.includes(key)) {
                 res.push(
-                    <WeaponBreakdown info={props.info["weapons"][key]} key={key} updateGun={updateGun} isDesktop={props.isDesktop} />
+                    <WeaponBreakdown info={props.info["weapons"][key]} weapon={key} updateGun={updateGun} isDesktop={props.isDesktop} key={key}/>
                 )
             }
 
@@ -82,7 +82,7 @@ function DetailedLiveHistory(props) {
 
             }}>
                 <div>
-                    <img src="../../static/images/X.png" height={props.isDesktop ? '80px' : '80px'}
+                    <img src= "../../server/build//x.png" height={props.isDesktop ? '80px' : '80px'}
                         width={props.isDesktop ? '80px' : '80px'} onMouseDown={hide}
                         style={{
                             left: "0%",
@@ -136,7 +136,7 @@ function DetailedLiveHistory(props) {
 
         }}>
             <div>
-                <img ref={imageRef} src="../../static/images/X.png" height={props.isDesktop ? '80px' : '60px'}
+                <img ref={imageRef} src="../../server/build//x.png" height={props.isDesktop ? '80px' : '60px'}
                     width={props.isDesktop ? '80px' : '60px'} onMouseDown={hide} onMouseOver={toggleOn} onMouseLeave={toggleOff}
                     style={{
                         left: "0%",
@@ -179,7 +179,7 @@ function DetailedLiveHistory(props) {
                     transform: "translate(-50%, -50%)"
 
                 }}>
-                    <img ref={imageRef} src="../../static/images/X.png" height={props.isDesktop ? '60px' : '30px'}
+                    <img ref={imageRef} src="../../server/build//x.png" height={props.isDesktop ? '60px' : '30px'}
                     width={props.isDesktop ? '60px' : '30px'} onMouseDown={hideMedals}
                     style={{
                         right: "0%",
@@ -245,7 +245,7 @@ function DetailedLiveHistory(props) {
                     transform: "translate(-50%, -50%)"
 
                 }}>
-                    <img ref={imageRef} src="../../static/images/X.png" height={props.isDesktop ? '60px' : '30px'}
+                    <img ref={imageRef} src="../../server/build//x.png" height={props.isDesktop ? '60px' : '30px'}
                     width={props.isDesktop ? '60px' : '30px'} onMouseDown={hideInfo}
                     style={{
                         right: "0%",

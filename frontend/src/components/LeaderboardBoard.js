@@ -1,9 +1,9 @@
 import React, { createRef, useState, useCallback , useEffect} from "react";
 import {LeaderboardCategory} from "./LeaderboardCategory.js"
-import forward from '../../static/images/forward_arrow.svg';
+import forward from '../../server/build//forward_arrow.svg';
 // import forward from '../../server/build/forward_arrow.svg';
 
-import backward from '../../static/images/backward_arrow.svg';
+import backward from '../../server/build//backward_arrow.svg';
 import {stat_keys} from './extras'
 import { Redirect } from "react-router";
 
@@ -28,21 +28,18 @@ function LeaderboardBoard(props){
 
     async function getTop10(){
         const requestSearch = {
-            method: "POST",
+            method: "GET",
             headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
-            body: JSON.stringify({
-                category:props.category,
-                stat:stat_keys[props.category][props.stat]
-            }),    
         }
-        const search_result = await fetch(`${address}/api/stats/all`, requestSearch)
+        const search_result = await fetch(`${address}/${props.endpoint}`, requestSearch)
         const players = await search_result.json()
-        // console.log(props.category, props.stat)
+        // //console.log(props.category, props.stat)
         hasLoaded({
             data:players,
             category:props.category,
@@ -79,10 +76,10 @@ function LeaderboardBoard(props){
                 paddingLeft:"10px",
            }} 
                 onClick={() => {
-                    setSearch(player.name)
+                    setSearch(player.username)
                 }} 
-                value ={player.name}
-                >{`${((page*10)+index)+1}. ${player.name}`}</td>
+                value ={player.username}
+                >{`${((page*10)+index)+1}. ${player.username}`}</td>
                 <td style = {{textAlign:"right",
                 backgroundColor:"rgb(190, 177, 54)",
                 opacity:"0.8", 
@@ -90,7 +87,7 @@ function LeaderboardBoard(props){
                 borderBottom: '2px solid rgb(251, 245, 180)',
                 paddingRight:"10px",
                 cursor:'pointer',
-            }} ref = {ref2}>{player[stat_keys[props.category][props.stat]]}</td>
+            }} ref = {ref2}>{player.statValue}</td>
             </tr>
 
         );
@@ -140,7 +137,7 @@ function LeaderboardBoard(props){
     if (isLoaded == null){
         return <div style = {{border:"3pt solid rgb(92, 73, 0)", maxHeight:"100px", minWidth:"100px",
         }}>
-            <img src = "../../static/images/loading_circle.gif"
+            <img src = "../../server/build//loading_circle.gif"
         height = '100' width = '100'></img>
         </div>
     }else{
@@ -179,11 +176,11 @@ function LeaderboardBoard(props){
                     justifyContent:'center'
                 }}>
 
-                    <img src = '../../static/images/backward_arrow.svg' onMouseDown={prevPage}
+                    <img src = '../../server/build//backward_arrow.svg' onMouseDown={prevPage}
                     height= {props.isDesktop ? "25" : "20"} width = {props.isDesktop ? "150" : "85"}
                     style = {{userSelect:"none"}}></img>
                     
-                    <img src = '../../static/images/forward_arrow.svg' onMouseDown={nextPage}
+                    <img src = '../../server/build//forward_arrow.svg' onMouseDown={nextPage}
                     height= {props.isDesktop ? "25" : "20"} width = {props.isDesktop ? "150" : "85"}
                     style = {{userSelect:"none"}}></img>
                 </div>

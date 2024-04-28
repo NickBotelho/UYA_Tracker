@@ -17,7 +17,7 @@ if (DEBUG == true) {
     address = "http://127.0.0.1:5000"
 }
 else {
-    address = "https://uyatracker.herokuapp.com"
+    address = "http://216.146.25.171"
 }
 
 const REFRESH_TIME = 250
@@ -152,7 +152,7 @@ function LiveAutoPlayer(props) {
                     maxHeight: '250px',
                     minHeight: '250px',
                 }}>
-                    <img src="../../static/images/loading_circle.gif"
+                    <img src="../../server/build//loading_circle.gif"
                         height='253' width='255'></img>
                 </div>
             </div>
@@ -166,7 +166,7 @@ function LiveAutoPlayer(props) {
     for (let i = 0; i < players.length; i += 1) {
         playerString += players[i] + "\n"
     }
-    // console.log(gameInfo.data.details.status)
+    // //console.log(gameInfo.data.details.status)
     if (gameInfo.data.details.status == "Staging") {
 
 

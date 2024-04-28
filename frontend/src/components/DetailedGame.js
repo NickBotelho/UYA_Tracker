@@ -8,10 +8,10 @@ import { populateCTFRow, populateDMRow, populateSiegeRow } from "./populateRows.
 const DEBUG = false
 var address = null
 if (DEBUG == true) {
-    address = "http://127.0.0.1:5000"
+    address = "https://localhost:7139"
 }
 else {
-    address = "https://uyatracker.herokuapp.com/"
+    address = "http://216.146.25.171"
 }
 
 function DetailedGame(props) {
@@ -34,19 +34,19 @@ function DetailedGame(props) {
 
     async function getGameDetails(game_id) {
         const requestSearch = {
-            method: "POST",
-            headers: {
+            method: "GET",
+            headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
-            body: JSON.stringify({
-                id: game_id
-            }),
         }
-        const res = await fetch(`${address}/api/games/details`, requestSearch)
-        const gameInfo = await res.json()
+        const res = await fetch(`${address}/api/games/${game_id}`, requestSearch)
+        let gameInfo = await res.json()
+        gameInfo = JSON.parse(gameInfo)
+        //console.log(gameInfo)
         setGame(gameInfo)
     }
 
@@ -93,7 +93,7 @@ function DetailedGame(props) {
                 maxHeight:'250px',
                 minHeight:'250px',
             }}>
-                <img src = "../../static/images/loading_circle.gif"
+                <img src = "../../server/build//loading_circle.gif"
                 height = '253' width = '255'></img>
             </div>
         </div>
@@ -107,24 +107,24 @@ function DetailedGame(props) {
 
     let tie = []
     if (game['gamemode'] == "CTF") {
-        winners = populateCTFRow(game['game_results']['winners'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'], false)
-        losers = populateCTFRow(game['game_results']['losers'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'], false)
-        disconnects = 'disconnect' in game['game_results'] ? populateCTFRow(game['game_results']['disconnect'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'], true) : null
+        winners = populateCTFRow(game['game_results']['winners'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map'], false)
+        losers = populateCTFRow(game['game_results']['losers'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map'], false)
+        disconnects = game['game_results']['disconnect'].length > 0 ? populateCTFRow(game['game_results']['disconnect'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map'], true) : null
         mode = 5
-        if (winners.length == 1 && losers.length == 1) {
-            tie = populateCTFRow(game['game_results']['tie'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'], false, true)
+        if (winners.length == 0 && losers.length == 0) {
+            tie = populateCTFRow(game['game_results']['tie'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map'], false, true)
         }
     }
     else if (game['gamemode'] == 'Siege') {
-        winners = populateSiegeRow(game['game_results']['winners'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'])
-        losers = populateSiegeRow(game['game_results']['losers'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'])
-        disconnects = 'disconnect' in game['game_results'] ? populateSiegeRow(game['game_results']['disconnect'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map']) : null
+        winners = populateSiegeRow(game['game_results']['winners'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map'])
+        losers = populateSiegeRow(game['game_results']['losers'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map'])
+        disconnects = game['game_results']['disconnect'].length > 0 ? populateSiegeRow(game['game_results']['disconnect'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map']) : null
         mode = 5
     }
     else {
-        winners = populateDMRow(game['game_results']['winners'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'])
-        losers = populateDMRow(game['game_results']['losers'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map'])
-        disconnects = 'disconnect' in game['game_results'] ? populateDMRow(game['game_results']['disconnect'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['liveGame'], game['map']) : null
+        winners = populateDMRow(game['game_results']['winners'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map'])
+        losers = populateDMRow(game['game_results']['losers'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map'])
+        disconnects = game['game_results']['disconnect'].length > 0 ? populateDMRow(game['game_results']['disconnect'], cellWidth, setWeaponBreakdown, game['weapons'], setSearchName, isDesktop, game['live'], game['map']) : null
 
         mode = 3
     }
@@ -136,9 +136,9 @@ function DetailedGame(props) {
         let redirect = "/gamehistory"
         return <Redirect push to={redirect} />
     }   
-    // console.log(game)     
+    // //console.log(game)     
     let firstWinner = game['game_results']["winners"].length > 0 ? game['game_results']['winners'][0]['username'] : null
-    let winningColor = game['liveGame'] != null && firstWinner != null ? game['liveGame'][firstWinner.toLowerCase()]['team'] : null
+    let winningColor = game['live'] != null && firstWinner != null ? game['live']['results'][firstWinner.toLowerCase()]['team'] : null
 
     if (isDesktop) {
 
@@ -233,7 +233,7 @@ function DetailedGame(props) {
                         justifyContent: 'center'
                     }}>
                         <div>
-                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 0 && game['liveGame'] != null ? `Winning Team: ${winningColor.toUpperCase()}`
+                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 0 && game['live'] != null ? `Winning Team: ${winningColor.toUpperCase()}`
                                 : winners.length>0? "Winning Team" : "Tie Game"}</h4>
                             <div style={{
                                 border: "4px solid rgb(141,113,24)",
@@ -395,7 +395,7 @@ function DetailedGame(props) {
 
                     }}>
                         <div>
-                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 1 && game['liveGame'] != null ? `Winning Team: ${winningColor.toUpperCase()}` : "Tie Game"}</h4>
+                            <h4 style={{ color: 'rgb(229, 197, 102)' }}>{winners.length > 1 && game['live'] != null ? `Winning Team: ${winningColor.toUpperCase()}` : "Tie Game"}</h4>
                             <div style={{
                                 border: "4px solid rgb(141,113,24)",
 

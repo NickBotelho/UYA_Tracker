@@ -23,12 +23,13 @@ function ClanInformation(props) {
     async function getClanInfo(clan) {
         const requestSearch = {
             method: "GET",
-            headers: {
+            headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
         }
         const search_result = await fetch(`${props.address}/api/clans/${clan}`, requestSearch)
         if (search_result.status == 200) {
@@ -47,7 +48,7 @@ function ClanInformation(props) {
             maxHeight: props.isDesktop ? '675px' : "160px",
             minHeight: props.isDesktop ? '1000px' : "160px"
         }}>
-            <img src="../../static/images/loading_circle.gif"
+            <img src="../../server/build//loading_circle.gif"
                 height={props.isDesktop ? '675px' : "160px"} width={props.isDesktop ? '1000px' : "160px"}></img>
         </div>)
 

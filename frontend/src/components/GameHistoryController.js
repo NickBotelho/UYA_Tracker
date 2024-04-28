@@ -7,20 +7,19 @@ function GameHistoryController(props){
 
     async function getRecentGames(player){
         const requestSearch = {
-            method: "POST",
+            method: "GET",
             headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
-            body: JSON.stringify({
-                name: player['username'],
-                num_games:10
-            }),  
         }
-        const res = await fetch(`${props.address}/api/players/recent_games`, requestSearch)
-        const recent_games = await res.json()
+        const res = await fetch(`${props.address}/api/players/recent_games/${encodeURIComponent(props.player.username)}`, requestSearch)
+        let recent_games = await res.json()
+        recent_games = JSON.parse(recent_games)
+        //console.log(recent_games)
         setGames(recent_games)
     }
 
@@ -44,7 +43,7 @@ function GameHistoryController(props){
         getRecentGames(props.player)
         return <div style = {{border:"3pt solid rgb(92, 73, 0)", maxHeight:"100px", minWidth:"100px",
         }}>
-            <img src = "../../static/images/loading_circle.gif"
+            <img src = "../../server/build//loading_circle.gif"
         height = '100' width = '100'></img>
         </div>
     }

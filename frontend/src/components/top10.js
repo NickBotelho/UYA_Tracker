@@ -9,40 +9,38 @@ import marcadia from '../../static/images/marcadia.png';
 import metropolis from '../../static/images/metropolis.png';
 import {GetMap} from '../../static/images/maps.js';
 
-// fields:
-// category
 function Top10(props){
     const category = props.category
     const stat = props.stat
-    const url = `${props.address}/api/stats/top10/${category}/${stat}`
+    const url = `${props.address}/${props.api}`
 
-
+    //console.log(url)
     
-    const [isLoaded, hasLoaded] = useState(null);
+    const [isLoaded, hasLoaded] = useState(null); //
     const [searching, setSearch] = useState(null);
     
     async function getTop10(url){
         const requestSearch = {
-            method: "POST",
+            method: "GET",
             headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
-            credentials: "include",
-            body: JSON.stringify({
-                category:props.category,
-                stat:props.stat
-            }),  
         }
-        const res = await fetch(`${props.address}/api/stats/top10`, requestSearch)
-        const players = await res.json()
+
+        const search_result = await fetch(url, requestSearch)
+        const players = await search_result.json()
+        //console.log(players)
+        //console.log(players[0])
         hasLoaded(players)
+        return players
     }
     if (isLoaded === null){
         getTop10(url)
     }
-   
     const hoverStyle = {
         backgroundColor: "rgb(217,163,58)",
         cursor:'pointer'
@@ -85,10 +83,10 @@ function Top10(props){
 
            }} 
                 onClick={() => {
-                    setSearch(player.name)
+                    setSearch(player.username)
                 }} 
-                value ={player.name}
-                >{`${(index+1)}. ${player.name}`}</td>
+                value ={player.username}
+                >{`${(index+1)}. ${player.username}`}</td>
                 <td style = {{textAlign:"right",
                 backgroundColor:"rgb(190, 177, 54)",
                 opacity:"0.8", 
@@ -97,7 +95,7 @@ function Top10(props){
                 paddingRight:"10px",
                 cursor:'pointer'
             }} ref = {ref2}
-            >{player[`${props.category}_${props.stat}`]}</td>
+            >{player.statValue}</td>
             </tr>
 
         );
@@ -110,11 +108,11 @@ function Top10(props){
     if (isLoaded === null){
         return <div style = {{maxHeight:"100px", minWidth:"100px",
         }}>
-            <img src = "../../static/images/loading_circle.gif"
+            <img src = "../../server/build//loading_circle.gif"
         height = '100' width = '100'></img>
         </div>
     }else{
-        // console.log(isLoaded)
+        // //console.log(isLoaded)
         return(
             <div className='outside_border' ref = {props.reference}>
                 <table 

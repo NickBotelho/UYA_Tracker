@@ -18,11 +18,11 @@ function WeaponBreakdown(props) {
     const weaponPics = {
         "Flux": flux,
         "Blitz": blitz,
-        "Gravity Bomb": gravity,
+        "GravityBomb": gravity,
         "Rockets": rockets,
-        "Morph O' Ray": morph,
+        "MorphORay": morph,
         "N60": n60,
-        "Lava Gun": lava,
+        "LavaGun": lava,
         "Mines": mines
     }
 
@@ -51,7 +51,7 @@ function WeaponBreakdown(props) {
             flexDirection: "column",
             flexWrap: "wrap",
         }}>
-            <img ref={imageRef} src={weaponPics[props.info["weapon"]]} onMouseOver={toggleOn} onMouseLeave={toggleOff}
+            <img ref={imageRef} src={weaponPics[props.weapon]} onMouseOver={toggleOn} onMouseLeave={toggleOff}
                 height={props.isDesktop ? '75' : "35"} width={props.isDesktop ? '75' : "35"} style={{
                     filter: `${filters['v1']}`
 

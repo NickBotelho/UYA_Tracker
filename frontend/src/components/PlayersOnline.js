@@ -1,9 +1,9 @@
 import React, { createRef, useState, useCallback , useEffect} from "react";
 import {LeaderboardCategory} from "./LeaderboardCategory.js"
-import forward from '../../static/images/forward_arrow.svg';
+import forward from '../../server/build//forward_arrow.svg';
 // import forward from '../../server/build/forward_arrow.svg';
 
-import backward from '../../static/images/backward_arrow.svg';
+import backward from '../../server/build//backward_arrow.svg';
 import {stat_keys} from './extras'
 import { Redirect } from "react-router";
 
@@ -24,12 +24,15 @@ function PlayersOnline(props){
             headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
         }
 
         const search_result = await fetch(`${props.address}/api/online/players`, requestSearch)
-        const players = await search_result.json()
+        let players = await search_result.json()
+        players = JSON.parse(players)
         let on = []
         for (var player in players){
             on.push(players[player].username)

@@ -1,9 +1,9 @@
 import React, { createRef, useState, useCallback , useEffect} from "react";
 import {LeaderboardCategory} from "./LeaderboardCategory.js"
-import forward from '../../static/images/forward_arrow.svg';
+import forward from '../../server/build//forward_arrow.svg';
 // import forward from '../../server/build/forward_arrow.svg';
 
-import backward from '../../static/images/backward_arrow.svg';
+import backward from '../../server/build//backward_arrow.svg';
 import {stat_keys} from './extras'
 import { Redirect } from "react-router";
 
@@ -24,16 +24,20 @@ function GamesOnline(props){
             headers:  {
                 'Content-Type': "application/json; charset=utf-8",
                 Accept: "application/json",
-                "Cache-Control": "no-cache"
+                "Cache-Control": "no-cache",
+                'Access-Control-Allow-Origin': '*',
+                'origin':'null'
             },
         }
 
         const search_result = await fetch(`${props.address}/api/online/games`, requestSearch)
-        const games = await search_result.json()
+        let games = await search_result.json()
+        games = JSON.parse(games)
+        //console.log(games)
         let on = []
         for (var game in games){
             on.push({
-                host:games[game].details.host,
+                host:games[game].host,
                 game_id:games[game].game_id,
                 dme_id:games[game].dme_id
             })
@@ -66,6 +70,7 @@ function GamesOnline(props){
             <tr key = {index} ref = {ref3} onMouseEnter = {buttonHover}
             onMouseLeave={buttonLeave} 
             onClick={() => {
+                //console.log(game.game_id)
                 setSearch(game.game_id)
             }} 
             >
@@ -81,7 +86,7 @@ function GamesOnline(props){
            }} 
                 
                 value ={game.game_id}
-                >{`${game.host}'s`}</td>
+                >{`${game.host}`}</td>
                 
             </tr>
 

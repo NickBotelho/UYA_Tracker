@@ -2,7 +2,7 @@ import React, { createRef, useState, useCallback } from "react";
 
 //prop fields : player, stat (field of player dict)
 function StatField(props){
-    // console.log(props.advanced, props.streaks, props.maps, props.medals)
+    // //console.log(props.advanced, props.streaks, props.maps, props.medals)
     if (props.advanced == true){
         var stat_value = props.player.advanced_stats[props.category][props.stat]
     }

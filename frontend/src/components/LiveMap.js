@@ -1,7 +1,7 @@
 import React, { createRef, useState, useCallback, useEffect } from "react";
 import { Redirect } from "react-router";
 import io from 'socket.io-client'
-import { GetLargeMap, GetHalfLargeMap } from "./extras.js";
+import { GetLargeMap, GetHalfLargeMap, colorCodeToString } from "./extras.js";
 import radarKisi from '../../static/images/radars/kisi.png'
 import radarHoven from '../../static/images/radars/hoven.png'
 import radarX12 from '../../static/images/radars/x12.png'
@@ -12,6 +12,10 @@ import radarCommand from '../../static/images/radars/command.png'
 import radarSewers from '../../static/images/radars/sewers.png'
 import radarDox from '../../static/images/radars/dox.png'
 import radarMarc from '../../static/images/radars/marcadia.png'
+import radarMaraxus from '../../static/images/radars/maraxus.png'
+import radarSarathos from '../../static/images/radars/sarathos.png'
+import radarCatacrom from '../../static/images/radars/catacrom.png'
+import radarMountainPass from '../../static/images/radars/mountain_pass.png'
 import { useMediaQuery } from 'react-responsive'
 
 function LiveMap(props) {
@@ -54,105 +58,104 @@ function LiveMap(props) {
     // let [isFullscreen, toggleFullscreen] = useState(urlParams.get("isFullscreen") == "true")
     let isFullscreen = props.isFullscreen
     const radars = {
-        'Bakisi_Isle': radarKisi,
-        'Aquatos_Sewers': radarSewers,
-        "Hoven_Gorge": radarHoven,
-        "Outpost_x12": radarX12,
-        "Korgon_Outpost": radarKorgon,
+        'BakisiIsle': radarKisi,
+        'AquatosSewers': radarSewers,
+        "HovenGorge": radarHoven,
+        "OutpostX12": radarX12,
+        "KorgonOutpost": radarKorgon,
         "Metropolis": radarMetro,
-        "Blackwater_City": radarBwc,
-        "Command_Center": radarCommand,
-        "Blackwater_Dox": radarDox,
-        "Marcadia_Palace": radarMarc,
+        "BlackwaterCity": radarBwc,
+        "CommandCenter": radarCommand,
+        "BlackwaterDox": radarDox,
+        "MarcadiaPalace": radarMarc,
+        "MaraxusPrison":radarMaraxus,
+        "SarathosSwamp":radarSarathos,
+        "CatacromGraveyard": radarCatacrom,
+        "MountainPass": radarMountainPass,
+
+        "BlackwaterCityV2":radarBwc,
+        "MetropolisV2":radarMetro,
+        "HovenGorgeV2":radarHoven,
+        "BlackwaterDoxV2":radarDox,
+        "BakisiIsleV2":radarKisi,
     }
     const mapBounds = {
         //name: [left, right, bottom, top]
-        'Bakisi_Isle': [9650, 40500, 11000, 40000],
-        'Aquatos_Sewers': [21685, 28487, 17589, 24391],
-        "Hoven_Gorge": [7900, 24300, 7200, 25500],
-        "Outpost_x12": [5000, 50000, 7200, 23200],
-        "Korgon_Outpost": [10300, 30500, 12172, 31500],
+        'BakisiIsle': [9650, 40500, 11000, 40000],
+        'AquatosSewers': [21685, 28487, 17589, 24391],
+        "HovenGorge": [7900, 24300, 7200, 25500],
+        "OutpostX12": [5000, 50000, 7200, 23200],
+        "KorgonOutpost": [10300, 30500, 12172, 31500],
         "Metropolis": [40000, 57500, 12656, 30759],
-        "Blackwater_City": [8700, 19000, 7500, 26300],
-        "Command_Center": [19200, 23050, 21500, 25200],
-        "Blackwater_Dox": [10000, 19600, 10500, 19100],
-        "Marcadia_Palace": [25700, 35700, 50500, 60500],
+        "BlackwaterCity": [8700, 19000, 7500, 26300],
+        "CommandCenter": [19200, 23050, 21500, 25200],
+        "BlackwaterDox": [10000, 19600, 10500, 19100],
+        "MarcadiaPalace": [25700, 35700, 50500, 60500],
+        "MaraxusPrison":[23989, 40584, 34992, 52330],
+        "SarathosSwamp":[14637, 39522, 4000, 37170],
+        "CatacromGraveyard":[14080, 29780, 12157, 26832],
+        "MountainPass":[23625, 43900, 45148, 60927],
     }
     const radarBounds = {
         //[[desktop], [mobile]]
         //[xMax, yMax]
-        'Bakisi_Isle': [[550, 500], [350, 300]],
-        'Aquatos_Sewers': [[550, 500], [350, 300]],
-        "Hoven_Gorge": [[550, 500], [350, 300]],
-        "Outpost_x12": [[550, 225], [350, 175]],
-        "Korgon_Outpost": [[550, 500], [350, 300]],
+        'BakisiIsle': [[550, 500], [350, 300]],
+        'AquatosSewers': [[550, 500], [350, 300]],
+        "HovenGorge": [[550, 500], [350, 300]],
+        "OutpostX12": [[550, 225], [350, 175]],
+        "KorgonOutpost": [[550, 500], [350, 300]],
         "Metropolis": [[550, 500], [350, 300]],
-        "Blackwater_City": [[400, 550], [300, 350]],
-        "Command_Center": [[550, 500], [350, 300]],
-        "Blackwater_Dox": [[550, 500], [350, 300]],
-        "Marcadia_Palace": [[550, 500], [350, 300]],
+        "BlackwaterCity": [[400, 550], [300, 350]],
+        "CommandCenter": [[550, 500], [350, 300]],
+        "BlackwaterDox": [[550, 500], [350, 300]],
+        "MarcadiaPalace": [[550, 500], [350, 300]],
+        "MaraxusPrison": [[550, 500], [350, 300]],
+        "SarathosSwamp": [[550, 500], [350, 300]],
+        "CatacromGraveyard": [[550, 500], [350, 300]],
+        "MountainPass": [[550, 500], [350, 300]],
+
         ultrawide: {
-            'Bakisi_Isle': [1200, 900],
-            'Aquatos_Sewers': [1200, 900],
-            "Hoven_Gorge": [1200, 900],
-            "Outpost_x12": [1200, 600],
-            "Korgon_Outpost": [1200, 900],
+            'BakisiIsle': [1200, 900],
+            'AquatosSewers': [1200, 900],
+            "HovenGorge": [1200, 900],
+            "OutpostX12": [1200, 600],
+            "KorgonOutpost": [1200, 900],
             "Metropolis": [1200, 900],
-            "Blackwater_City": [1200, 10010],
-            "Command_Center": [1200, 900],
-            "Blackwater_Dox": [1200, 900],
-            "Marcadia_Palace": [1200, 900],
+            "BlackwaterCity": [1200, 10010],
+            "CommandCenter": [1200, 900],
+            "BlackwaterDox": [1200, 900],
+            "MarcadiaPalace": [1200, 900],
+            "MaraxusPrison": [1200, 900],
+            "SarathosSwamp": [1200, 900],
+            "CatacromGraveyard": [1200, 900],
+            "MountainPass": [1200, 900],
         },
     }
     let mapName = props.map
     let [players, setPlayers] = useState({
-        playerInfo: null,
-        updateId: null
+        playerInfo: sortPlayers(props.message),
     })
     let map = radars[mapName]
     let myStorage = window.localStorage;
 
-    async function getMap(dme_id) {
-        const requestSearch = {
-            method: "POST",
-            headers: {
-                'Content-Type': "application/json; charset=utf-8",
-                Accept: "application/json",
-                "Cache-Control": "no-cache",
-                "Access-Control-Allow-Credentials":'true'
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                dme_id: dme_id,
-            }),
-        }
-        const search_result = await fetch(`${props.address}/api/live/map`, requestSearch)
-        // const search_result = await fetch(`${props.address}/api/live/map`, requestSearch)
-        // const radarPost = await search_result
-        const playerInfos = await search_result.json()
-        setPlayers({
-            playerInfo: sortPlayers(playerInfos),
-            updateId: playerInfos['updateId'],
-            dme_id: dme_id
-        })
-
-    }
     function sortPlayers(info) {
-        const totalPlayers = info['x'].length
+        const totalPlayers = info.Lobby.length
         let res = []
         for (let i = 0; i < totalPlayers; i++) {
             let current = {}
-            current['x'] = info['x'][i]
-            current['y'] = info['y'][i]
-            current['name'] = info['names'][i]
-            current['hp'] = info['hp'][i]
-            current['color'] = info['color'][i]
-            current['hasFlag'] = info['hasFlag'][i]
-            current['rotation'] = info['rotations'][i]
+            current['x'] = info.Lobby[i].State.Location.X
+            current['y'] = info.Lobby[i].State.Location.Y
+            current['name'] = info.Lobby[i].Username
+            current['hp'] = info.Lobby[i].State.Health
+            current['color'] = colorCodeToString[info.Lobby[i].TeamColor]
+            current['hasFlag'] = info.Lobby[i].State.HasFlag
+            current['rotation'] = info.Lobby[i].State.Rotation
             res.push(current)
         }
         return res
     }
+
+
     function getRadarHeight(isDesktop, isFullscreen, isUltrawide, isPx){
         if (isFullscreen){
             if (isPx){
@@ -214,9 +217,8 @@ function LiveMap(props) {
         /**
          * player is a dict object of x,y,names,color,hp
          */
-
         const radarPoints = convert([player['x'], player['y']], mapName)
-        // console.log(radarPoints)
+        // //console.log(radarPoints)
         return <div key={idx}>
             {/* <img src = '../../static/images/dot.svg' */}
             <img src={player['hasFlag'] == true ? '../../static/images/flag.png' : player['hp'] > 0 ? '../../static/images/playerIndicator.png' : '../../static/images/skull.png'}
@@ -264,7 +266,7 @@ function LiveMap(props) {
         /**
          * coords = [x,y]
          */
-        // console.log( getRadarHeight(props.isDesktop, isFullscreen, false), getRadarWidth(props.isDesktop, isFullscreen, false))
+        // //console.log( getRadarHeight(props.isDesktop, isFullscreen, false), getRadarWidth(props.isDesktop, isFullscreen, false))
         const bias = 10
         var edges = mapBounds[map]
         var xDist = edges[1] - edges[0]
@@ -279,32 +281,16 @@ function LiveMap(props) {
 
         return [xPlot, radrBounds - yPlot]
     }
-    function displayBlankMap() {
-        let res = []
-        res.push(<div key = {0} style={{
-            marginTop: props.isDesktop ? '75px' : '10px',
-            height: getRadarHeight(props.isDesktop,  props.isFullscreen, props.isBigMap, true),
-            width: getRadarWidth(props.isDesktop, props.isFullscreen, props.isBigMap, true),
-            marginLeft: props.isDesktop ? '0' : '25px',
-            border: "3px solid rgb(141,113,24)",
-            borderCollapse: "collapse",
-        }} >
-            <img src="../../static/images/loading_circle.gif"
-                height='253' width='255'></img>
-        </div>)
-        return res
-
-    }
 
     function displayMap(points) {
         let res = []
-        // console.log(getRadarHeight(props.isDesktop, isFullscreen), getRadarWidth(props.isDesktop, isFullscreen))
+        // //console.log(getRadarHeight(props.isDesktop, isFullscreen), getRadarWidth(props.isDesktop, isFullscreen))
         res.push(<div key = {0} style={{
             marginTop: props.isDesktop ? '35px' : '10px',
             height: getRadarHeight(props.isDesktop,  props.isFullscreen, props.isBigMap, true),
             width: getRadarWidth(props.isDesktop, props.isFullscreen, props.isBigMap, true),
-            border: "3px solid rgb(141,113,24)",
-            borderCollapse: "collapse",
+            // border: "3px solid rgb(141,113,24)",
+            // borderCollapse: "collapse",
             marginLeft: props.isDesktop ? '0' : '5%',
         }}>
             <img src={map} 
@@ -318,77 +304,11 @@ function LiveMap(props) {
         </div>)
         return res
     }
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setPlayers({
-                updateId: players['updateId'],
-                playerInfo: null,
-            });
-        }, props.refresh);
-        return () => clearInterval(interval);
-    }, []);
 
 
-
-
-
-
-
-
-
-
-
-    let cachedDmeId = myStorage.getItem("dmeId")
-    // console.log(cachedDmeId, typeof cachedDmeId)
-    if (cachedDmeId == null || cachedDmeId == "undefined") {
-        myStorage.setItem("updateId", JSON.stringify(-1))
-        myStorage.setItem("dmeId", JSON.stringify(props.dme_id))
-    }else{
-        cachedDmeId = parseInt(cachedDmeId)
-        if (cachedDmeId != props.dme_id){
-            myStorage.setItem("updateId", JSON.stringify(-1))
-            myStorage.setItem("dmeId", JSON.stringify(props.dme_id))
-        }
-    }
-  
-
-
-    if (players.playerInfo == null) {
-        getMap(props.dme_id)
-        let cache = myStorage.getItem("playerInfo")
-        if (cache == null) {
-            let blankMap = displayBlankMap()
-            return <div>{ blankMap }</div>
-        } else {
-            // console.log("Player info not loaded, display last good cache")
-            cache = JSON.parse(cache)
-            const points = cache.map(createPlayer)
-            let lastGoodUpdate = displayMap(points)
-            return <div>{lastGoodUpdate}</div>
-
-        }
-    } else {
-        let lastUpdateId = parseInt(myStorage.getItem("updateId"))
-        let dmeId = parseInt(myStorage.getItem("dmeId"))
-        if (lastUpdateId != null && lastUpdateId > players.updateId) { //not a new update
-            // console.log("display cache b/c update id is behind", lastUpdateId, dmeId, props.dme_id)
-            let cache = JSON.parse(myStorage.getItem("playerInfo"))
-            const points = cache.map(createPlayer)
-            let lastGoodUpdate = displayMap(points)
-            return <div>{lastGoodUpdate}</div>
-
-        }
-
-        myStorage.setItem("playerInfo", JSON.stringify(players.playerInfo))
-        myStorage.setItem("updateId", JSON.stringify(players.updateId))
-        myStorage.setItem("dmeId", JSON.stringify(players.dmeId))
-        const points = players.playerInfo.map(createPlayer)
-        // console.log("Updating caches and display new update")
-        let newUpdate = displayMap(points)
-        return <div>{newUpdate}</div>
-
-    }
-
+    const points = sortPlayers(props.message).map(createPlayer)
+    let newUpdate = displayMap(points)
+    return <div>{newUpdate}</div>
 
 }
 
